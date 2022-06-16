@@ -72,6 +72,8 @@ Use the following ".sketchCommands" to describe the sketch:
 
 === Lines
 
+image::/images/lines.png[]
+
 [source, javascript]
 ----
 .movePointerTo([x,y])           // move pointer without drawing, can only be used at start
