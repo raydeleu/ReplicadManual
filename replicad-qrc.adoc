@@ -6,9 +6,13 @@
 == Process 
 The process to draw a shape in Replicad looks like this: 
 
-image::process.png[]
+image::/images/processv2.png[]
 
-The "pre-baked" sketches can be used as a shortcut to speed-up the process. 
+Replicad is a library that is based on another library library called opencascade.js (see https://github.com/donalffons/opencascade.js). The functions in this library are explained at https://ocjs.org/. There are Replicad functions that are close to the opencascade kernel but also more user friendly functions that shield the user from the complexity of this library. The normal flow to define a shape is to start with a 2-dimensional sketch of the shape, then use a function like extrude or revolve to define a 3 dimensional shape. This 3 dimensional shape can then be modified, for example by rounding edges. In its simplest form this modification is applied to all edges at once. A more advanced approach is to select individual edges or faces to apply the modification. When the shape is complete it can be transformed, for example by translating, rotating et cetera. Finally a shape can be combined with another shape. Combinations can mean fusing the shapes together, subtracting one shape from the other or finding the intersection between two shapes. 
+
+A beginner can start with the pre-baked shapes to shorten the path to determine a shape. There are 2 dimensional pre-baked shapes like rectangles and circles, and 3 dimensional shapes like spheres or cylinders. 
+
+A finished shape can be exported to a standardised format like STL or STEP. The easiest way is to do this in the Visualizer https://studio.replicad.xyz/visualiser.  
 
 <<<
 == File template
@@ -63,11 +67,13 @@ let sketch = new Sketcher("XZ",-5)
 
 ----
 <<<
-Use the following commands to describe the sketch: 
+Use the following ".sketchCommands" to describe the sketch: 
+
+
+=== Lines
 
 [source, javascript]
 ----
-".sketchCommands  = "
 .movePointerTo([x,y])           // move pointer without drawing, can only be used at start
 .lineTo([x,y])                  // line to absolute coordinates
 .line(dx,dy)                    // line to relative coordinates
@@ -78,6 +84,12 @@ Use the following commands to describe the sketch:
 .polarLineTo([radius,theta])    // line to absolute polar coordinates
 .polarLine(distance,angle)      // line to relative polar coordinates
 .tangentLine(distance)          // tangent extension over distance
+----
+
+=== Arcs and ellipses
+
+[source,javascript]
+----
 .threePointsArcTo(point_end,point_mid) // arc from current to end via mid, absolute coordinates
 .threePointsArc(dx,dy,dx_via,dy_via)   // arc from current to end via mid, relative coordinates
 .sagittaArcTo(point_end,sagitta)    // arc from current to end with sag , absolute coordinates
@@ -88,10 +100,15 @@ Use the following commands to describe the sketch:
 .tangentArc(dx,dy)                  // arc tangent to current line to end, relative coordinates
 .ellipseTo([x,y],r_hor,r_vert)      // ellipse from current to end, absolute coordinates, radii to hor and vert
 .ellipse(dx,dy,r_hor,r_vert)        // ellipse from current to end, relative coordinates, radii to hor and vert
-
 // extra parameters ellipse: startangle, endangle, counterclockwise? 
 .halfEllipseTo([x,y],r_min)         // half ellipse with r_min as sag, absolute coordinates    
 .halfEllipse(dx,dy,r_min)// half ellipse with r_min as sag, relative coordinates
+----
+
+=== Free form curves
+
+[source,javascript]
+----
 .bezierCurveTo([x,y],points[])      // Bezier curve to end along points[]
 .quadraticBezierCurveTo([x,y],[x_ctrl,y_ctrl]) // Quadratic bezier curve to end with control point
 .cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end) 
@@ -139,7 +156,7 @@ makeNewFaceWithinFace(face,wire)
 makeNonPlanarFace(wire)
 makePolygon(points[])
 makeOffset(face,offset,tolerance)
-MakePlaneFromFace()
+makePlaneFromFace()
 
 ----
 
