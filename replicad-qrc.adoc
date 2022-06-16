@@ -89,6 +89,7 @@ image::/images/lines.png[]
 ----
 
 === Arcs and ellipses
+image::/images/arcs.png[]
 
 [source,javascript]
 ----
