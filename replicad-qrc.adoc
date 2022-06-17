@@ -130,7 +130,7 @@ image::/images/baked-sketch.png[width=650]
 [cols="1,3",stripes=even]
 |===
 m| sketchRectangle(length,width)                    | create a sketch of a rectangle with length and width
-m| sketchRoundedRectangle(length,width,fillet,{plane:"XY",origin:dist|[point]})  | create a sketch of a rounded rectangle 
+m| sketchRoundedRectangle(length,width,fillet,{plane:"XY",origin:dist/[point]})  | create a sketch of a rounded rectangle 
 m| sketchCircle(radius,{config})                    | create a sketch of a circle
 m| sketchFaceOffset(shape,thickness)                | create a sketch by defining an offset from an existing face in the scene
 |===
@@ -218,9 +218,9 @@ m| makeSolid(faces[]/shell)                                     |
 
 [cols="1,3",stripes=even]
 |===
-m| makeCylinder(radius,height,[location],[direction])
-m| makeSphere(radius)
-m| makeVertex([point])
+m| makeCylinder(radius,height,[location],[direction])           |
+m| makeSphere(radius)                                           |
+m| makeVertex([point])                                          |
 |===
 
 
@@ -254,7 +254,7 @@ let foundFaces = new FaceFinder().inPlane("XZ",35)
 |===
 m| .inPlane("XZ",35)                                                            |
 m| .ofSurfaceType("CYLINDRE")                                                   |
-| surface types                                                                 | "PLANE" / "CYLINDRE" / "CONE" /"SPHERE"/ "TORUS" / "BEZIER_SURFACE"       /"BSPLINE_SURFACE"/"REVOLUTION_SURFACE"/"EXTRUSION_SURFACE"/ "OFFSET_SURFACE"/"OTHER_SURFACE" 
+|                                                                               | surface types : "PLANE" / "CYLINDRE" / "CONE" /"SPHERE"/ "TORUS" / "BEZIER_SURFACE"       /"BSPLINE_SURFACE"/"REVOLUTION_SURFACE"/"EXTRUSION_SURFACE"/ "OFFSET_SURFACE"/"OTHER_SURFACE" 
 m| .containsPoint([0,-15,80])                                                   |
 m| .atAngleWith(direction,angle)                                                | atAngleWith("Z",20)
 m| .atDistance(distance,point)                                                  |  
@@ -263,10 +263,11 @@ m| .inList(elementList[])                                                       
 m| .inPlane(inputPlane,origin)                                                  | inPlane("XY",30)
 m| .parallelTo(plane/face/standardplane)                                        |
 m| find(shape,options), options {unique: true}                                                          | returns all the elements that fit the filters
+|===
+
 
             new FaceFinder().inPlane("XZ", 30).find(house)
 
-|===
 
 <<<
 === Edges
@@ -277,8 +278,8 @@ m| find(shape,options), options {unique: true}                                  
 m| .inDirection([x,y,z/"X"/"Y"/"Z")                     | find all edges that have the direction
 m| .ofLength(number)                                    | find all edges with a particular length
 m| .ofCurveType(  todo?)                                | find all edges of a certain curve type
-m| .parallelTo(plane | StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
-m| .inPlane(PlaneName | Plane)                          | find all edges that are exactly in a defined plane
+m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
+m| .inPlane(PlaneName / Plane)                          | find all edges that are exactly in a defined plane
 m| .shouldKeep todo?                                    | tbd
 |===
 
