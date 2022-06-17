@@ -252,22 +252,17 @@ let foundFaces = new FaceFinder().inPlane("XZ",35)
 
 [cols="1,3",stripes=even]
 |===
-m| .inPlane("XZ",35)
-m| .ofSurfaceType("CYLINDRE")  
-        "PLANE" / "CYLINDRE" / "CONE" /"SPHERE"/ "TORUS" / "BEZIER_SURFACE" /
-        "BSPLINE_SURFACE"/"REVOLUTION_SURFACE"/"EXTRUSION_SURFACE"/ 
-        "OFFSET_SURFACE"/"OTHER_SURFACE" 
-m| .containsPoint([0,-15,80])
-m| .atAngleWith(direction,angle)    // atAngleWith("Z",20)
-m| .atDistance(distance,point)      //  
-m| .inBox(corner1,corner2)
-m| .inList(elementList[])
-m| .inPlane(inputPlane,origin)      // inPlane("XY",30)
-m| .parallelTo(plane|face|standardplane)
-
-
-m| find(shape,options)         // returns all the elements that fit the filters
-            options {unique: true}
+m| .inPlane("XZ",35)                                                            |
+m| .ofSurfaceType("CYLINDRE")                                                   |
+| surface types                                                                 | "PLANE" / "CYLINDRE" / "CONE" /"SPHERE"/ "TORUS" / "BEZIER_SURFACE"       /"BSPLINE_SURFACE"/"REVOLUTION_SURFACE"/"EXTRUSION_SURFACE"/ "OFFSET_SURFACE"/"OTHER_SURFACE" 
+m| .containsPoint([0,-15,80])                                                   |
+m| .atAngleWith(direction,angle)                                                | atAngleWith("Z",20)
+m| .atDistance(distance,point)                                                  |  
+m| .inBox(corner1,corner2)                                                      |
+m| .inList(elementList[])                                                       |
+m| .inPlane(inputPlane,origin)                                                  | inPlane("XY",30)
+m| .parallelTo(plane/face/standardplane)                                        |
+m| find(shape,options), options {unique: true}                                                          | returns all the elements that fit the filters
 
             new FaceFinder().inPlane("XZ", 30).find(house)
 
@@ -279,35 +274,35 @@ m| find(shape,options)         // returns all the elements that fit the filters
 
 [cols="1,3",stripes=even]
 |===
-m| .inDirection([x,y,z]|"X"|"Y"|"Z")
-m| .ofLength(number)
-m| .ofCurveType(  todo?)
-m| .parallelTo(plane | StandardPlane e.g. "XY")
-m| .inPlane(PlaneName | Plane)
-m| .shouldKeep todo? 
-
+m| .inDirection([x,y,z/"X"/"Y"/"Z")                     | find all edges that have the direction
+m| .ofLength(number)                                    | find all edges with a particular length
+m| .ofCurveType(  todo?)                                | find all edges of a certain curve type
+m| .parallelTo(plane | StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
+m| .inPlane(PlaneName | Plane)                          | find all edges that are exactly in a defined plane
+m| .shouldKeep todo?                                    | tbd
 |===
 
 === Combine filters
 
 [cols="1,3",stripes=even]
 |===
-m| and
-m| either     |   
+m| and                                                  | both filters should be applied
+m| either                                               | only one of the filters may be applied
+| example                                               m|
+    
+            
             const houseSides = new FaceFinder().either([
             (f) => f.inPlane("YZ", 50),
             (f) => f.inPlane("YZ", -50),]);
+          
+            
 m| not      |
-            const frontWindow = new EdgeFinder()
+| example   m|        
+             const frontWindow = new EdgeFinder()
             .ofCurveType("CIRCLE")
             .not((f) => f.inPlane("XZ"));
-
+             
 |===
-
-
-Todo
-
-
 
 
 == Transform shapes
@@ -329,7 +324,7 @@ m| .mirror("YZ",[-10,0])                                |
 m| .clone()                                             | 
 |===
 
-----
+
 
 
 
@@ -339,17 +334,13 @@ m| .clone()                                             |
 
 [cols="1,3",stripes=even]
 |===
-m| .cut(tool,{optimisation:"none" | "commonFace" | "sameFace"})
-m| .fuse(otherShape,.. )
-m| .intersect(tool)
-
-compoundShapes(shapeArray[])
-makeCompound(shapeArray[])
+m| .cut(tool,{optimisation:"none" / "commonFace" / "sameFace"})     | cut the tool-shape from the shape  
+m| .fuse(otherShape,.. )                                            | fuse the othershape with the shape. Other applications call this a union between to shapes
+m| .intersect(tool)                                                 | find the volume that is common to the two shapes considered in this method
+m| compoundShapes(shapeArray[])                                     | tbd
+m| makeCompound(shapeArray[])                                       | tbd
 |===
 
-
-
-todo 
 
 
 
