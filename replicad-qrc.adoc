@@ -91,22 +91,22 @@ m| .tangentLine(distance)         | tangent extension over distance
 === Arcs and ellipses
 image::/images/arcs.png[]
 
-[source,javascript]
-----
-.threePointsArcTo(point_end,point_mid) // arc from current to end via mid, absolute coordinates
-.threePointsArc(dx,dy,dx_via,dy_via)   // arc from current to end via mid, relative coordinates
-.sagittaArcTo(point_end,sagitta)    // arc from current to end with sag , absolute coordinates
-.sagittaArc(dx,dy,sagitta)          // arc from current to end with sag, relative coordinates
-.vSagittaArc(dy,sagitta)            // vertical line to endpoint with sag, relative y
-.hSagittaArc(dx,sagitta)            // horizontal line to endpoint with sag, relative x
-.tangentArcTo([x,y])                // arc tangent to current line to end, absolute coordinates
-.tangentArc(dx,dy)                  // arc tangent to current line to end, relative coordinates
-.ellipseTo([x,y],r_hor,r_vert)      // ellipse from current to end, absolute coordinates, radii to hor and vert
-.ellipse(dx,dy,r_hor,r_vert)        // ellipse from current to end, relative coordinates, radii to hor and vert
-// extra parameters ellipse: startangle, endangle, counterclockwise? 
-.halfEllipseTo([x,y],r_min)         // half ellipse with r_min as sag, absolute coordinates    
-.halfEllipse(dx,dy,r_min)// half ellipse with r_min as sag, relative coordinates
-----
+[cols="1,3",stripes=even]
+|===
+m| .threePointsArcTo(point_end,point_mid)   | arc from current to end via mid, absolute coordinates
+m| .threePointsArc(dx,dy,dx_via,dy_via)     | arc from current to end via mid, relative coordinates
+m| .sagittaArcTo(point_end,sagitta)         | arc from current to end with sag , absolute coordinates
+m| .sagittaArc(dx,dy,sagitta)               | arc from current to end with sag, relative coordinates
+m| .vSagittaArc(dy,sagitta)                 | vertical line to endpoint with sag, relative y
+m| .hSagittaArc(dx,sagitta)                 | horizontal line to endpoint with sag, relative x
+m| .tangentArcTo([x,y])                     | arc tangent to current line to end, absolute coordinates
+m| .tangentArc(dx,dy)                       | arc tangent to current line to end, relative coordinates
+m| .ellipseTo([x,y],r_hor,r_vert)           | ellipse from current to end, absolute coordinates, radii to hor and vert
+m| .ellipse(dx,dy,r_hor,r_vert)             | ellipse from current to end, relative coordinates, radii to hor and vert
+m|                                          | extra parameters ellipse: startangle, endangle, counterclockwise? 
+m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, absolute coordinates    
+m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
+|===
 
 === Free form curves
 
