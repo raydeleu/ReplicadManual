@@ -231,13 +231,11 @@ m| makeVertex([point])                                          |
 
 [cols="1,3",stripes=even]
 |===
-m| .chamfer(radiusConfig,filter?)
-m| .fillet(radiusConfig,filter?)
-m| .shell(thickness, (f) => f.inPlane("YZ",-20),{tolerance:number})
-m|                     radiusConfig    = number or func
-m|                     filter          = (e) => e.Edgefinder
-m| makeOffset(shape,thickness)
-m| addHolesInFace(face,holeWires[])
+m| .fillet(radiusConfig,filter?)                                    | round an edge of a shape with a fixed radius or a radius that is defined by a function. The filter refers to the selection mechanism defined in the next secion. It has the general shape of (e) => e.inDirection("X")  
+m| .chamfer(radiusConfig,filter?)                                   | take of a sharp edge by creating a transitional face, default at 45 degrees to a edge
+m| .shell(thickness, (f) => f.inPlane("YZ",-20),{tolerance:number}) | create a thin walled object from a shape, removing the indicated face from the shape to provide access to the hollow inside. 
+m| makeOffset(shape,thickness)                                      | create a shape that is offset from the original shape by the thickness. A positive number results in an increased size of the shape, a negative value will result in a smaller shape
+m| addHolesInFace(face,holeWires[])                                 | create a hole in a shape using the wires that are indicated in the parameters to this function. 
 |===
 
 
