@@ -112,90 +112,96 @@ m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, re
 
 image::/images/curves.png[width=650]
 
-[source,javascript]
-----
-.bezierCurveTo([x,y],points[])      // Bezier curve to end along points[]
-.quadraticBezierCurveTo([x,y],[x_ctrl,y_ctrl]) // Quadratic bezier curve to end with control point
-.cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end) 
-.smoothSplineTo([x,y],splineconfig) // smooth spline to end, absolute coordinates 
-.smoothSpline(dx,dy,splineconfig)// smooth spline to end, absolute coordinates 
-splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
-----
+[cols="1,3",stripes=even]
+|===
+m| .bezierCurveTo([x,y],points[])                   | Bezier curve to end along points[]
+m| .quadraticBezierCurveTo([x,y],[x_ctrl,y_ctrl])   | Quadratic bezier curve to end with control point
+m| .cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end)| Cubic bezier curve with begin and end control points 
+m| .smoothSplineTo([x,y],splineconfig)              | smooth spline to end, absolute coordinates 
+m| .smoothSpline(dx,dy,splineconfig)//              | smooth spline to end, absolute coordinates 
+m|                                                  m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
+|===
 
 <<<
 == Pre-baked sketches
 
-[source, javascript]
-----
-sketchRectangle(length,width)
-sketchRoundedRectangle(length,width,fillet,{plane:"XY",origin:dist|[point]})
-sketchCircle(radius,{config})
-// special case of creating a sketch/wire from a face
-sketchFaceOffset(shape,thickness)
-----
+image::/images/baked-sketch.png[width=650]
+
+[cols="1,3",stripes=even]
+|===
+m| sketchRectangle(length,width)                    | create a sketch of a rectangle with length and width
+m| sketchRoundedRectangle(length,width,fillet,{plane:"XY",origin:dist|[point]})  | create a sketch of a rounded rectangle 
+m| sketchCircle(radius,{config})                    | create a sketch of a circle
+m| sketchFaceOffset(shape,thickness)                | create a sketch by defining an offset from an existing face in the scene
+|===
+
 <<<
 == Create 3D face/wire
 
 === Create wires in 3D 
 In comparison to sketches which create wires or faces in 2D
 
-[source, javascript]
-----
-makeLine([point],[point])
-makeCircle(radius,[center],[normal])
-makeEllipse(major,minor,[center],[normal])
-makeHelix(pitch,height,radius,[center],[dir],lefthand?)
-makeThreePointArc([point1],[point2],[point3])
-makeEllipseArc(major,minor,anglestart,angleEnd,[center],[normal],[xDir?])
-makeBSplineApproximation([points[]])
-makeBezierCurve([points[]])
-makeTangentArc([startPoint],[tangentPoint],[endPoint])
-----
+[cols="1,3",stripes=even]
+|===
+m| makeLine([point],[point])                                                |
+m| makeCircle(radius,[center],[normal])                                     |
+m| makeEllipse(major,minor,[center],[normal])                               |
+m| makeHelix(pitch,height,radius,[center],[dir],lefthand?)                  |
+m| makeThreePointArc([point1],[point2],[point3])                            |
+m| makeEllipseArc(major,minor,anglestart,angleEnd,[center],[normal],[xDir?])|
+m| makeBSplineApproximation([points[]])                                     |
+m| makeBezierCurve([points[]])                                                 |
+m| makeTangentArc([startPoint],[tangentPoint],[endPoint])                      |    
+|===
 
 === Create faces in 3D
 
-[source, javascript]
-----
-makeFace(wire)
-makeNewFaceWithinFace(face,wire)
-makeNonPlanarFace(wire)
-makePolygon(points[])
-makeOffset(face,offset,tolerance)
-makePlaneFromFace()
 
-----
+
+[cols="1,3",stripes=even]
+|===
+m| makeFace(wire)                           |
+m| makeNewFaceWithinFace(face,wire)         |
+m| makeNonPlanarFace(wire)                  |
+m| makePolygon(points[])                    |
+m| makeOffset(face,offset,tolerance)        |
+m| makePlaneFromFace()                      |
+|=== 
+
 
 <<<
+
 == Create shapes
 
-[source, javascript]
-----
+image::/images/thickness.png[width=650]
+
+
 shape = sketch."thicknessCommand"
-
 "thicknessCommand ="
-.face()             // create a face from the sketch
 
-.extrude(distance,extrusionConfig?)
+[cols="1,3",stripes=even]
+|===
+m| .face()                              | create a face from the sketch
+m| .extrude(distance,extrusionConfig?)  |
+m|             extrusionConfig          | {     extrusionDirection:[point],
+                                         ExtrusionProfile:ExtrusionProfile,
+                                        origin:[point],
+                                        twistAngle:deg}
 
-            extrusionConfig = {     extrusionDirection:[point],
-                                    ExtrusionProfile:ExtrusionProfile,
-                                    origin:[point],
-                                    twistAngle:deg}
+m|             extrusionProfile:        |   {     profile:"linear" / "s-curve",
+                                            endFactor: scale}
 
-            extrusionProfile: {     profile:"linear" | "s-curve",
-                                    endFactor: scale}
+m| .loftWith([otherSketches],loftConfig,returnShell?) |
 
-.loftWith([otherSketches],loftConfig,returnShell?)
-
-            loftConfig =        {   endPoint:[point],
-                                    ruled: boolean,
+            loftConfig =        |       {   endPoint:[point],
+                                        ruled: boolean,
                                     startPoint:[point]}
 
-.revolve(revolutionAxis:[point],config?)    // default is z-axis
+m| .revolve(revolutionAxis:[point],config?)    | default is z-axis
 
-            config      =       origin:[point]
+m|            config                            |      origin:[point]
 
-.sweepSketch((plane, origin) => sketchFunction(plane,origin)); 
+m| .sweepSketch((plane, origin) => sketchFunction(plane,origin)); |
 
             function sketchFunction(plane,origin) 
             {let section = new Sketcher(plane,origin)
@@ -203,20 +209,19 @@ shape = sketch."thicknessCommand"
                     .close()
             return section}
 
-            sketchRectangle(2, 30, { plane, origin })
-
-makeSolid(faces[]|shell)
-----
+m|             sketchRectangle(2, 30, { plane, origin })        |
+m| makeSolid(faces[]/shell)                                     |
+|===
 
 
 == Pre-baked shapes
 
-[source, javascript]
-----
-makeCylinder(radius,height,[location],[direction])
-makeSphere(radius)
-makeVertex([point])
----- 
+[cols="1,3",stripes=even]
+|===
+m| makeCylinder(radius,height,[location],[direction])
+m| makeSphere(radius)
+m| makeVertex([point])
+|===
 
 
 
@@ -224,18 +229,16 @@ makeVertex([point])
 <<<
 == Modify shapes
 
-[source, javascript]
-----
-.chamfer(radiusConfig,filter?)
-.fillet(radiusConfig,filter?)
-.shell(thickness, (f) => f.inPlane("YZ",-20),{tolerance:number})
-
-                    radiusConfig    = number or func
-                    filter          = (e) => e.Edgefinder
-
-makeOffset(shape,thickness)
-addHolesInFace(face,holeWires[])
-----
+[cols="1,3",stripes=even]
+|===
+m| .chamfer(radiusConfig,filter?)
+m| .fillet(radiusConfig,filter?)
+m| .shell(thickness, (f) => f.inPlane("YZ",-20),{tolerance:number})
+m|                     radiusConfig    = number or func
+m|                     filter          = (e) => e.Edgefinder
+m| makeOffset(shape,thickness)
+m| addHolesInFace(face,holeWires[])
+|===
 
 
 == Find features
@@ -245,65 +248,61 @@ addHolesInFace(face,holeWires[])
 [source, javascript]
 ----
 let foundFaces = new FaceFinder().inPlane("XZ",35)
-
-
 ----
 
-[source, javascript]
-----
+[cols="1,3",stripes=even]
+|===
+m| .inPlane("XZ",35)
+m| .ofSurfaceType("CYLINDRE")  
+        "PLANE" / "CYLINDRE" / "CONE" /"SPHERE"/ "TORUS" / "BEZIER_SURFACE" /
+        "BSPLINE_SURFACE"/"REVOLUTION_SURFACE"/"EXTRUSION_SURFACE"/ 
+        "OFFSET_SURFACE"/"OTHER_SURFACE" 
+m| .containsPoint([0,-15,80])
+m| .atAngleWith(direction,angle)    // atAngleWith("Z",20)
+m| .atDistance(distance,point)      //  
+m| .inBox(corner1,corner2)
+m| .inList(elementList[])
+m| .inPlane(inputPlane,origin)      // inPlane("XY",30)
+m| .parallelTo(plane|face|standardplane)
 
-.inPlane("XZ",35)
-.ofSurfaceType("CYLINDRE")  
-        "PLANE"|"CYLINDRE"|"CONE"|"SPHERE"|"TORUS"|"BEZIER_SURFACE"| 
-        "BSPLINE_SURFACE"|"REVOLUTION_SURFACE"|"EXTRUSION_SURFACE"| 
-        "OFFSET_SURFACE"|"OTHER_SURFACE" 
-.containsPoint([0,-15,80])
-.atAngleWith(direction,angle)    // atAngleWith("Z",20)
-.atDistance(distance,point)      //  
-.inBox(corner1,corner2)
-.inList(elementList[])
-.inPlane(inputPlane,origin)      // inPlane("XY",30)
-.parallelTo(plane|face|standardplane)
 
-
-find(shape,options)         // returns all the elements that fit the filters
+m| find(shape,options)         // returns all the elements that fit the filters
             options {unique: true}
 
             new FaceFinder().inPlane("XZ", 30).find(house)
 
-----
+|===
+
 <<<
 === Edges
 
 
-[source, javascript]
-----
-.inDirection([x,y,z]|"X"|"Y"|"Z")
-.ofLength(number)
-.ofCurveType(  todo?)
-.parallelTo(plane | StandardPlane e.g. "XY")
-.inPlane(PlaneName | Plane)
-.shouldKeep todo? 
+[cols="1,3",stripes=even]
+|===
+m| .inDirection([x,y,z]|"X"|"Y"|"Z")
+m| .ofLength(number)
+m| .ofCurveType(  todo?)
+m| .parallelTo(plane | StandardPlane e.g. "XY")
+m| .inPlane(PlaneName | Plane)
+m| .shouldKeep todo? 
 
-----
+|===
 
 === Combine filters
 
-[source, javascript]
-----
-and
-
-either
+[cols="1,3",stripes=even]
+|===
+m| and
+m| either     |   
             const houseSides = new FaceFinder().either([
             (f) => f.inPlane("YZ", 50),
             (f) => f.inPlane("YZ", -50),]);
-not
+m| not      |
             const frontWindow = new EdgeFinder()
             .ofCurveType("CIRCLE")
             .not((f) => f.inPlane("XZ"));
 
-----
-
+|===
 
 
 Todo
@@ -315,20 +314,20 @@ Todo
 
 The transform functions require a shape or face. A sketch cannot be transformed, with the exception of creating an offset. 
 
-[source, javascript]
-----
 transformedShape = shape."transformCommand"
 
-"transformCommand = "
-.translate([dx,dy,dz])
-.translateX(dx)
-.translateY(dy)
-.translateZ(dz)
-.rotate(angleDeg,axisOrigin[x,y,x],axisEnd[x,y,x])
-.scale(number)
-.mirror("YZ",[-10,0])
-.clone()
-
+[cols="1,3",stripes=even]
+|===
+m| "transformCommand = "                                |
+m| .translate([dx,dy,dz])                               |
+m| .translateX(dx)                                      |
+m| .translateY(dy)                                      |
+m| .translateZ(dz)                                      |
+m| .rotate(angleDeg,axisOrigin[x,y,x],axisEnd[x,y,x])   |
+m| .scale(number)                                       |
+m| .mirror("YZ",[-10,0])                                |
+m| .clone()                                             | 
+|===
 
 ----
 
@@ -338,15 +337,15 @@ transformedShape = shape."transformCommand"
 <<<
 == Combine shapes
 
-[source, javascript]
-----
-.cut(tool,{optimisation:"none" | "commonFace" | "sameFace"})
-.fuse(otherShape,.. )
-.intersect(tool)
+[cols="1,3",stripes=even]
+|===
+m| .cut(tool,{optimisation:"none" | "commonFace" | "sameFace"})
+m| .fuse(otherShape,.. )
+m| .intersect(tool)
 
 compoundShapes(shapeArray[])
 makeCompound(shapeArray[])
-----
+|===
 
 
 
