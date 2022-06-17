@@ -110,6 +110,8 @@ m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, re
 
 === Free form curves
 
+image::/images/curves.png[width=650]
+
 [source,javascript]
 ----
 .bezierCurveTo([x,y],points[])      // Bezier curve to end along points[]
