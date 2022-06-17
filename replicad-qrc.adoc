@@ -74,19 +74,19 @@ Use the following ".sketchCommands" to describe the sketch:
 
 image::/images/lines.png[]
 
-[source, javascript]
-----
-.movePointerTo([x,y])           // move pointer without drawing, can only be used at start
-.lineTo([x,y])                  // line to absolute coordinates
-.line(dx,dy)                    // line to relative coordinates
-.vLineTo(y)                     // vertical line to absolute y
-.vLine(dy)                      // vertical line to relative y
-.hLineTo(x)                     // horizontal line to absolute x
-.hLine(dx)                      // horizontal line to relative x
-.polarLineTo([radius,theta])    // line to absolute polar coordinates
-.polarLine(distance,angle)      // line to relative polar coordinates
-.tangentLine(distance)          // tangent extension over distance
-----
+[cols="1,3",stripes=even]
+|===
+m| .movePointerTo([x,y])          | move pointer without drawing, can only be used at start
+m| .lineTo([x,y])                 | line to absolute coordinates
+m| .line(dx,dy)                   | line to relative coordinates
+m| .vLineTo(y)                    | vertical line to absolute y
+m| .vLine(dy)                     | vertical line to relative y
+m| .hLineTo(x)                    | horizontal line to absolute x
+m| .hLine(dx)                     | horizontal line to relative x
+m| .polarLineTo([radius,theta])   | line to absolute polar coordinates
+m| .polarLine(distance,angle)     | line to relative polar coordinates
+m| .tangentLine(distance)         | tangent extension over distance
+|===
 
 === Arcs and ellipses
 image::/images/arcs.png[]
