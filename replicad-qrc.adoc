@@ -177,7 +177,7 @@ image::/images/thickness.png[width=650]
 
 
 shape = sketch."thicknessCommand"
-"thicknessCommand ="
+
 
 [cols="1,3",stripes=even]
 |===
@@ -198,7 +198,7 @@ m| .sweepSketch((plane, origin) => sketchFunction(plane,origin)); |
 m| makeSolid(faces[]/shell)                                     |
 |===
 
-[source,javascript
+[source,javascript]
 ----
             function sketchFunction(plane,origin) 
             {let section = new Sketcher(plane,origin)
@@ -269,7 +269,7 @@ m| find(shape,options), options {unique: true}                                  
 
 [cols="1,3",stripes=even]
 |===
-m| .inDirection([x,y,z/"X"/"Y"/"Z")                     | find all edges that have the direction
+m| .inDirection([x,y,z]/"X"/"Y"/"Z")                     | find all edges that have the direction
 m| .ofLength(number)                                    | find all edges with a particular length
 m| .ofCurveType(  todo?)                                | find all edges of a certain curve type
 m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
@@ -283,21 +283,19 @@ m| .shouldKeep todo?                                    | tbd
 |===
 m| and                                                  | both filters should be applied
 m| either                                               | only one of the filters may be applied
-| example                                               m|
-    
-            
+m| not                                                  | select all other edges than those selected by this filter
+|===
+
+[source, javascript]
+----        
             const houseSides = new FaceFinder().either([
             (f) => f.inPlane("YZ", 50),
             (f) => f.inPlane("YZ", -50),]);
-          
-            
-m| not      |
-| example   m|        
+     
              const frontWindow = new EdgeFinder()
             .ofCurveType("CIRCLE")
-            .not((f) => f.inPlane("XZ"));
-             
-|===
+            .not((f) => f.inPlane("XZ"));  
+----            
 
 
 == Transform shapes
