@@ -250,19 +250,45 @@ let foundFaces = new FaceFinder().inPlane("XZ",35)
 [source, javascript]
 ----
 
-inPlane("XZ",35)
-ofSurfaceType("CYLINDRE")  
+.inPlane("XZ",35)
+.ofSurfaceType("CYLINDRE")  
         "PLANE"|"CYLINDRE"|"CONE"|"SPHERE"|"TORUS"|"BEZIER_SURFACE"| 
         "BSPLINE_SURFACE"|"REVOLUTION_SURFACE"|"EXTRUSION_SURFACE"| 
         "OFFSET_SURFACE"|"OTHER_SURFACE" 
-containsPoint([0,-15,80])
-atAngleWith(direction,angle)    // atAngleWith("Z",20)
-atDistance(distance,point)      //  
-inBox(corner1,corner2)
-inList(elementList[])
-inPlane(inputPlane,origin)      // inPlane("XY",30)
-parallelTo(plane|face|standardplane)
+.containsPoint([0,-15,80])
+.atAngleWith(direction,angle)    // atAngleWith("Z",20)
+.atDistance(distance,point)      //  
+.inBox(corner1,corner2)
+.inList(elementList[])
+.inPlane(inputPlane,origin)      // inPlane("XY",30)
+.parallelTo(plane|face|standardplane)
 
+
+find(shape,options)         // returns all the elements that fit the filters
+            options {unique: true}
+
+            new FaceFinder().inPlane("XZ", 30).find(house)
+
+----
+<<<
+=== Edges
+
+
+[source, javascript]
+----
+.inDirection([x,y,z]|"X"|"Y"|"Z")
+.ofLength(number)
+.ofCurveType(  todo?)
+.parallelTo(plane | StandardPlane e.g. "XY")
+.inPlane(PlaneName | Plane)
+.shouldKeep todo? 
+
+----
+
+=== Combine filters
+
+[source, javascript]
+----
 and
 
 either
@@ -274,14 +300,9 @@ not
             .ofCurveType("CIRCLE")
             .not((f) => f.inPlane("XZ"));
 
-find(shape,options)         // returns all the elements that fit the filters
-            options {unique: true}
-
-            new FaceFinder().inPlane("XZ", 30).find(house)
-
 ----
-<<<
-=== Edges
+
+
 
 Todo
 
