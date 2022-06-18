@@ -1,5 +1,6 @@
 :sectnums: 
 
+// End of header
 
 = Replicad Quick Reference 
 
@@ -49,8 +50,13 @@ const main = (
 return  shape   |  
 return  {shape: [shape], highlight: [foundFeature]}
 }
-
 ----
+
+
+////
+add explanation how to display more models in the visualizer and give them different colours
+//// 
+
 
 
 
@@ -74,6 +80,8 @@ Use the following ".sketchCommands" to describe the sketch:
 
 image::/images/lines.png[]
 
+Lines can be sketched using the line functions. Be aware that points are generally defined as a tuple or array, i.e. enclosed in square brackets. This array either contains the absolute distance in the x and y direction from the origin, or the distance and angle in case of polar coordinates. Relative distances to the x- and y-axis are defined as two separate values dx and dy. 
+
 [cols="1,3",stripes=even]
 |===
 m| .movePointerTo([x,y])          | move pointer without drawing, can only be used at start
@@ -91,6 +99,9 @@ m| .tangentLine(distance)         | tangent extension over distance
 === Arcs and ellipses
 image::/images/arcs.png[]
 
+The following commands are available to create circular and elliptical arcs in your sketch. Just as with lines be aware that points are generally defined as a tuple or array, i.e. enclosed in square brackets. Relative distances to the x- and y-axis are defined as two separate values dx and dy. 
+The elliptic curves can be defined in more detail with three extra parameters. If the values are omitted the default values are used. 
+
 [cols="1,3",stripes=even]
 |===
 m| .threePointsArcTo(point_end,point_mid)   | arc from current to end via mid, absolute coordinates
@@ -103,7 +114,7 @@ m| .tangentArcTo([x,y])                     | arc tangent to current line to end
 m| .tangentArc(dx,dy)                       | arc tangent to current line to end, relative coordinates
 m| .ellipseTo([x,y],r_hor,r_vert)           | ellipse from current to end, absolute coordinates, radii to hor and vert
 m| .ellipse(dx,dy,r_hor,r_vert)             | ellipse from current to end, relative coordinates, radii to hor and vert
-m|                                          | extra parameters ellipse: startangle, endangle, counterclockwise? 
+m| .ellipse(dx,dy,r_h,r_v,a_start,a_end,true)| extra parameters ellipse: startangle, endangle, counterclockwise? 
 m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, absolute coordinates    
 m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
 |===
@@ -114,12 +125,12 @@ image::/images/curves.png[width=650]
 
 [cols="1,3",stripes=even]
 |===
-m| .bezierCurveTo([x,y],points[])                   | Bezier curve to end along points[]
-m| .quadraticBezierCurveTo([x,y],[x_ctrl,y_ctrl])   | Quadratic bezier curve to end with control point
-m| .cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end)| Cubic bezier curve with begin and end control points 
-m| .smoothSplineTo([x,y],splineconfig)              | smooth spline to end, absolute coordinates 
-m| .smoothSpline(dx,dy,splineconfig)//              | smooth spline to end, absolute coordinates 
-m|                                                  m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
+m| .bezierCurveTo([x,y],points[])                       | Bezier curve to end along points[]
+m| .quadraticBezierCurveTo([x,y],[x_ctrl,y_ctrl])       | Quadratic bezier curve to end with control point
+m| .cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end)   | Cubic bezier curve with begin and end control points 
+m| .smoothSplineTo([x,y],splineconfig)                  | smooth spline to end, absolute coordinates 
+m| .smoothSpline(dx,dy,splineconfig)                    | smooth spline to end, absolute coordinates 
+m|                                                      m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
 |===
 
 <<<
