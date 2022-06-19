@@ -336,13 +336,15 @@ m| .clone()                                             |
 <<<
 == Combine shapes
 
+image::/images/booleans-icons.png[width=650]
+
 [cols="1,3",stripes=even]
 |===
 m| .cut(tool,{optimisation:"none" / "commonFace" / "sameFace"})     | cut the tool-shape from the shape  
 m| .fuse(otherShape,.. )                                            | fuse the othershape with the shape. Other applications call this a union between to shapes
 m| .intersect(tool)                                                 | find the volume that is common to the two shapes considered in this method
-m| compoundShapes(shapeArray[])                                     | tbd
-m| makeCompound(shapeArray[])                                       | tbd
+m| compoundShapes(shapeArray[])                                     | this function is identical to makeCompound 
+m| makeCompound(shapeArray[])                                       | allows to combine an array of any type of shape into a single entity that can be displayed.  
 |===
 
 
