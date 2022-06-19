@@ -17,7 +17,7 @@ A beginner can start with the pre-baked shapes to shorten the path to determine 
 == Visualiser
 A model in Replicad is built using a javascript input file (see next Section). This file defines a "main" function that should return the shapes that you want to visualise or export. The easiest way to check that the part is generated correctly and to export the result is to use the *Visualiser* that is offered on the Replicad site https://replicad.xyz/visualiser.  
 
-image::/images/interface_black.png[]
+image::/images/interface_black.png[width=800]
 
 The Visualiser supports exporting to JSON, STL and STEP format.   
 
