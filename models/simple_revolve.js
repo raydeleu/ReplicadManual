@@ -1,11 +1,12 @@
-const main = ({ Sketcher }) => {
+const main = ({ Sketcher, sketchRectangle }) => {
   
-    const base = new Sketcher("XZ")
-    .hLine(-25)
-    .halfEllipse(0, 40, 5, true)
+    const sketch = new Sketcher("XZ")
     .hLine(25)
+    .halfEllipse(0, 40, 15, true)
+    .hLine(-25)
     .close()
-    .revolve([0, 0, 1]);
+
+    let base = sketch.clone().revolve([0, 0, 1]);
 
   const hole = new Sketcher()
     .quadraticBezierCurveTo([0, 20], [20, 30])
@@ -13,5 +14,9 @@ const main = ({ Sketcher }) => {
     .extrude(40)
     .translateY(-12);
 
-  return base.cut(hole);
+  
+  let cutter = sketchRectangle(40,40).extrude(40).translate([20,-20,0])  
+  let revolveShape = base.cut(cutter)
+
+  return [{shape:revolveShape},{shape:sketch.extrude(0.1),color:"lightgrey"}]
 };

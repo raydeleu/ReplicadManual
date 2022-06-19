@@ -73,6 +73,14 @@ const main = (
     .extrude(200)
     .translate([100, 100, 0]);
   const sphere = makeSphere(100).translate([50, 30, 20]);
+  // const combi  = box.clone().cut(sphere.clone()).cut(icosahedron.clone().translate([20, 20, 220]))
 
-  return box.cut(sphere).cut(icosahedron.translate([20, 20, 220]));
+  let shapes = [
+  {shape: icosahedron, name: "icosehadron", color: "steelblue"},
+  {shape: box       , name: "box", color: "yellow"},
+  {shape: sphere, name: "sphere", color: "grey"}
+  // {shape: combi , name: "combi", color:  "light-grey"}
+  ]
+
+  return shapes;
 };

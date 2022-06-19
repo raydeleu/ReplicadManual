@@ -40,5 +40,5 @@ let topSweep   = topPath.sweepSketch((plane, origin) => topSection(plane,origin)
 
 // fuse the two shapes together to display them
 // return baseShape.fuse(topSweep)
-return basePath
+return baseShape
 };
