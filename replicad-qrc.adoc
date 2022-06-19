@@ -190,7 +190,7 @@ m| makePlaneFromFace()                      |
 
 == Create shapes
 
-image::/images/thickness.png[width=650]
+image::/images/thickness.png[width=800]
 
 
 shape = sketch."thicknessCommand"
