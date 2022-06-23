@@ -170,14 +170,14 @@ A drawing can be understood as an adapted version of a sketch. A sketch starts w
 
 [cols="1,3",stripes=even]
 |===
-m| .clone() 
+m| .clone()                                 | 
 m| .mirror([center/dir],[origin],mode? )    | mode? "center" or "plane"  
 m| .translate(xDist,yDist)                  | 
-m| .rotate(angle,[center])                   |
+m| .rotate(angle,[center])                  |
 m| .stretch(ratio,direction,origin)         | 
 m| .cut(cuttingDrawing)                     |                        
 m| .fuse(other)|                            |
-m| .sketchOnFace(face,scaleMode)  | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
+m| .sketchOnFace(face,scaleMode)            | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
 m| .sketchOnPlane                           | 
 m| .toSVG(margin)                           | format the drawing as an SVG image
 m| .toSVGPaths()                            | format the drawing as a list of SVG paths
