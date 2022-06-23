@@ -149,8 +149,43 @@ image::/images/baked-sketch.png[width=650]
 m| sketchRectangle(length,width)                    | create a sketch of a rectangle with length and width
 m| sketchRoundedRectangle(length,width,fillet,{plane:"XY",origin:dist/[point]})  | create a sketch of a rounded rectangle 
 m| sketchCircle(radius,{config})                    | create a sketch of a circle
+m| sketchEllipse(xRadius,yRadius,{planeConfig})     | create a sketch of an ellipse
+m| sketchPolysides(radius,numSides,sagitta?,{planeConfig})| create a sketch of a regular polygon, where the sides of the polygon are lines or arcs with a sag from the straight line. The radius is defined without the sagitta.  
+m| sketchText(string,{textConfig?},{planeConfig} | create a sketch of a text. The textConfig defines the fontFamily, fontSize, startX,startY 
 m| sketchFaceOffset(shape,thickness)                | create a sketch by defining an offset from an existing face in the scene
+m| sketchParametricFunction(function,{planeconfig},namedParameters?,approximation?| create a sketch of a parametric function
 |===
+
+<<< 
+== Create a drawing
+A drawing can be understood as an adapted version of a sketch. A sketch starts with identifying the sketching plane first and then defining a wire. As the plane is defined up front, the sketch is in fact a 3D shape from its origin. In contrast a drawing is considered a pure 2D shape that can be placed on a plane after its creation. Compared to a sketch a drawing has the following advantages: 
+
+* drawings can be translated, rotated (in 2D space) and scaled;
+* drawings can be used in 2D boolean operations;
+* drawings can be exported directly in 2D formats;
+* drawings can be placed on other shapes, not only planes
+
+
+=== Methods for drawings
+
+[cols="1,3",stripes=even]
+|===
+m| .clone() 
+m| .mirror([center/dir],[origin],mode? )    | mode? "center" or "plane"  
+m| .translate(xDist,yDist)                  | 
+m| .rotate(angle,[center])                   |
+m| .stretch(ratio,direction,origin)         | 
+m| .cut(cuttingDrawing)                     |                        
+m| .fuse(other)|                            |
+m| .sketchOnFace(face,scaleMode)  | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
+m| .sketchOnPlane                           | 
+m| .toSVG(margin)                           | format the drawing as an SVG image
+m| .toSVGPaths()                            | format the drawing as a list of SVG paths
+m| .toSVGViewBox                            | return the SVG viewbox that corresponds to this drawing
+|=== 
+
+
+
 
 <<<
 == Create 3D face/wire
@@ -231,9 +266,10 @@ m| makeSolid(faces[]/shell)                                     |
 
 [cols="1,3",stripes=even]
 |===
-m| makeCylinder(radius,height,[location],[direction])           |
-m| makeSphere(radius)                                           |
-m| makeVertex([point])                                          |
+m| makeCylinder(radius,height,[location],[direction])           |create a cylinder
+m| makeBaseBox(xLength,yLength,zLength)                         |create a box
+m| makeSphere(radius)                                           |create a sphere
+m| makeVertex([point])                                          |create a vertex/point
 |===
 
 
