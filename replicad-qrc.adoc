@@ -176,7 +176,7 @@ m| .translate(xDist,yDist)                  |
 m| .rotate(angle,[center])                  |
 m| .stretch(ratio,direction,origin)         | 
 m| .cut(cuttingDrawing)                     |                        
-m| .fuse(other)|                            |
+m| .fuse(other)                             |
 m| .sketchOnFace(face,scaleMode)            | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
 m| .sketchOnPlane                           | 
 m| .toSVG(margin)                           | format the drawing as an SVG image
