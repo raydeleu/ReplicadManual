@@ -35,7 +35,7 @@ function main(
 {
     Sketcher,
     sketchRectangle,
-    .. functions used in the code below ..
+    // .. functions used in the code below ..
 })
 {
     // add code to describe the shape
@@ -48,15 +48,40 @@ Alternatively you can use the arrow notation for the javascript function
 
 [source, javascript]
 ----
+
+const defaultParams = {                // setting the value of the parameters
+  height:       100,
+  baseWidth:     20,
+  ...}
+
 const main = (
-  { Sketcher, sketchRectangle, ... },
-  {}
+  { Sketcher, sketchRectangle, ... },   // functions used within the main program
+  { height, basewidth, ....        }    // parameters to adjust the model
 ) => {
     // add code to describe the shape
 return  shape   |  
 return  {shape: [shape], highlight: [foundFeature]}
 }
 ----
+
+If you want to display multiple shapes, the returned variable should be an array of all shapes. In this array it is possible to define 
+* the variable name of the shape, 
+* the name of the shape as a "string", 
+* the color of the shape in the Visualiser, using the X11 "color name", see https://en.wikipedia.org/wiki/X11_color_names#Color_name_chart
+* the opacity, where opacity 1 is the default (visible) and 0 is fully transparant. 
+
+An example of an array is: 
+
+[source, javascript]
+----
+let shapeArray = [
+{shape: plunge, name: "plunge", color:"steelblue", opacity: 0.5}, 
+{shape: body, color: "orange",opacity:0.5},
+{shape: filler, color: "red"}]
+---- 
+
+
+
 
 
 ////
