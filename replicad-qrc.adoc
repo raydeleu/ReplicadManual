@@ -95,7 +95,7 @@ add explanation how to display more models in the visualizer and give them diffe
 
 
 == Sketch
-To start a sketch, use the `new Sketcher` command 
+To start a sketch, use the `new Sketcher` command. Note the keyword `new` that is required to create a new object of the type `Sketcher`.  
 
 [source, javascript]
 ----
@@ -107,7 +107,7 @@ let sketch = new Sketcher("XZ",-5)
 
 ----
 <<<
-Use the following ".sketchCommands" to describe the sketch: 
+Use the following ".methods" to describe the sketch: 
 
 
 === Lines
@@ -125,7 +125,7 @@ m| .vLineTo(y)                    | vertical line to absolute y
 m| .vLine(dy)                     | vertical line to relative y
 m| .hLineTo(x)                    | horizontal line to absolute x
 m| .hLine(dx)                     | horizontal line to relative x
-m| .polarLineTo([radius,theta])   | line to absolute polar coordinates
+m| .polarLineTo([radius,theta])   | line to absolute polar coordinates. Note that the absolute polar coordinates are defined as an vector [radius,theta]
 m| .polarLine(distance,angle)     | line to relative polar coordinates
 m| .tangentLine(distance)         | tangent extension over distance
 |===
@@ -193,8 +193,32 @@ A drawing can be understood as an adapted version of a sketch. A sketch starts w
 * drawings can be exported directly in 2D formats;
 * drawings can be placed on other shapes, not only planes
 
+The drawing can be defined with the `draw()` function. As this function already includes the creation of a new object the `new` keyword is not needed. 
+
+[source, javascript]
+----
+const shape1 = draw()
+    .lineTo([20,0])
+    .line(0,5)
+    .hLine(10)
+    .vLine(5)
+    .polarLineTo([22,45])
+    .polarLine(10,150)
+    .halfEllipse(-10, -15, 5)
+    .smoothSpline(2, -5)
+    .close() 
+----    
+
 
 === Methods for drawings
+As a drawing is a type of sketch (that is not yet assigned to a plane) the methods described earlier to create a sketch such as 
+
+* <<Lines>>
+* <<Arcs and ellipses>>
+* <<Free form curves>>  
+
+can also be used to define a drawing.
+
 
 [cols="1,3",stripes=even]
 |===
