@@ -266,9 +266,10 @@ m| makeEllipse(major,minor,[center],[normal])                               |
 m| makeHelix(pitch,height,radius,[center],[dir],lefthand?)                  |
 m| makeThreePointArc([point1],[point2],[point3])                            |
 m| makeEllipseArc(major,minor,anglestart,angleEnd,[center],[normal],[xDir?])|
-m| makeBSplineApproximation([points[]])                                     |
+m| makeBSplineApproximation([points[],{tolerance:,smoothing,degMax:6,degMin:1,BSplineApproximationConfig={}])                                     |
 m| makeBezierCurve([points[]])                                                 |
-m| makeTangentArc([startPoint],[tangentPoint],[endPoint])                      |    
+m| makeTangentArc([startPoint],[tangentPoint],[endPoint])                      |   
+m| assembleWire([Edges])                                                        |
 |===
 
 === Create faces in 3D
