@@ -294,9 +294,13 @@ m| makePlaneFromFace()                      |
 
 image::/images/thickness.png[width=800]
 
+The generic command to create a 3D shape from a 2D sketch is: 
 
-shape = sketch."thicknessCommand"
+```` javascript
+shape = sketch."thicknessMethod"
+````
 
+The following methods are available to add thickness or volume to a 2D sketch: 
 
 [cols="1,3",stripes=even]
 |===
@@ -311,10 +315,8 @@ m|               {   endPoint:[point],
 
 m| .revolve(revolutionAxis:[point],config?)    | revolve a face around the z-axis to create a solid shape. Adapt the axis of rotation and the origin in the configuration. 
 m|             origin:[point]                   |config                            
-m| .sweepSketch((plane, origin) => sketchFunction(plane,origin)); |
-
-  |
-m| makeSolid(faces[]/shell)                                     |
+m| .sweepSketch( (plane, origin) => sketchFunction(plane,origin) ); |  Sweep the sketch defined by the sketchFunction along the sketch used as the object for this method. 
+m| makeSolid(faces[]/shell)                                     | Create a solid from the volume that is defined by the array of faces or by a surface. 
 |===
 
 [source,javascript]
