@@ -296,11 +296,12 @@ image::/images/thickness.png[width=800]
 
 The generic command to create a 3D shape from a 2D sketch is: 
 
-```` javascript
-shape = sketch."thicknessMethod"
-````
+[source,javascript]
+----
+let shape = sketch.thicknessMethod
+----
 
-The following methods are available to add thickness or volume to a 2D sketch: 
+The following `.thicknessMethods` are available to add thickness or volume to a 2D sketch: 
 
 [cols="1,3",stripes=even]
 |===
@@ -318,6 +319,9 @@ m|             origin:[point]                   |config
 m| .sweepSketch( (plane, origin) => sketchFunction(plane,origin) ); |  Sweep the sketch defined by the sketchFunction along the sketch used as the object for this method. 
 m| makeSolid(faces[]/shell)                                     | Create a solid from the volume that is defined by the array of faces or by a surface. 
 |===
+
+The `sketchFunction` used in the `.sweepSketch()` can be derived from either a standard sketching function, such as `sketchRectangle(2, 30, { plane, origin })` or by defining your own closed sketch using a `Sketcher` object. This object should then refer to a `(plane, origin)` like this: 
+
 
 [source,javascript]
 ----
