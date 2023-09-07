@@ -1,0 +1,65 @@
+function main(
+  {makeBaseBox
+   ,makeOffset
+   ,makeSolid
+   })
+  
+ {
+  // dimensions of GNS3000 GPS receiver
+  let gnsLength = 79.25;
+  let gnsWidth = 45.25
+  let gnsDepth = 11.4;
+
+  // tolerance to fit receiver in holder
+  let hTolerance = 0.5
+  // thickness of holder around receiver
+  let hThickness = 2.0
+
+  // add tolerance to main dimensions
+  gnsLength = gnsLength + hTolerance;
+  gnsWidth = gnsWidth + hTolerance;
+  gnsDepth = gnsDepth + hTolerance;
+  let gnsRadius = gnsDepth/2 - hTolerance/2;
+
+  // create gns receiver shape
+  let gnsBox = makeBaseBox(gnsWidth,gnsLength,gnsDepth);
+  gnsBox = gnsBox.fillet(gnsRadius,(e)=>e.inDirection("Y"))
+  gnsBox = gnsBox.translate([0,0,hThickness])
+
+  // create a holder for the receiver by offsetting the receiver shape
+  let holderLength = gnsLength + 2*hThickness
+  let holderWidth = gnsWidth + 2*hThickness
+  let holderDepth = gnsDepth + 2*hThickness
+  let holderRadius = holderDepth/2 - hTolerance/2;
+  let holder = makeBaseBox(holderWidth,holderLength,holderDepth)
+  holder = holder.fillet(holderRadius,(e)=>e.inDirection("Y"))
+
+  // let holder = makeOffset(gnsBox,hThickness);
+
+  // cut the top part of the holder to allow the receiver to be inserted
+  let cutD = 10; 
+  let cutPortion = 0.18
+  let cutterTop = makeBaseBox(gnsWidth+cutD,gnsLength+cutD,gnsDepth+cutD)
+  .translate([0,0,gnsDepth*(1-cutPortion)])
+  holder = holder.cut(cutterTop);
+  holder = holder.cut(gnsBox)
+
+  let cutterSide = makeBaseBox(gnsWidth*1.2,gnsLength*0.85,gnsDepth*2)
+  cutterSide = cutterSide.fillet(5,(e)=>e.inDirection("X"))
+  cutterSide = cutterSide.translate(0,0,4)
+  holder = holder.cut(cutterSide)
+
+  let cutterBottom = makeBaseBox(gnsWidth*0.8,gnsLength,gnsDepth*2)
+  cutterBottom = cutterBottom.fillet(3,(e)=>e.inDirection("Y"))
+  cutterBottom = cutterBottom.translate(0,gnsLength/2,4)
+  holder = holder.cut(cutterBottom)
+
+  holder = holder.fillet(0.5,(e)=>e.inDirection("Y"))
+
+  let shapeArray = [
+    // {shape: gnsBox, color: "slategrey", opacity: 1.0},
+    {shape: holder, color: "blue", opacity: 1.0}
+  ]   
+
+  return shapeArray
+};
