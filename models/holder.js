@@ -6,12 +6,6 @@ const defaultParams = {
     fit:            0.5,  // tolerance to fit receiver in holder
     thickness:      2.0,  // thickness of holder around receiver
     portion:        0.85  // height of holder compared to height of receiver    
-    
-    length:   100,   
-    width:    50,    
-    height:   12,                     
-    thickness: 2,
-    portion:   0.85
     }
 
 const r = replicad
