@@ -5,18 +5,18 @@ const defaultParams = {
     gnsHeight:      11.4,
     fit:            0.5,  // tolerance to fit receiver in holder
     thickness:      2.0,  // thickness of holder around receiver
-    portion:        0.85  // height of holder compared to height of receiver    
+    portion:        0.85  // height of holder compared to height of receiver      
     }
 
 const r = replicad
 
 function main(
-   {  },   // functions used within the main program
+   {  },   // functions used in main, can be empty if r.function notation is used
    { gnsLength, gnsWidth, gnsHeight, fit, thickness, portion} )  // parameters to adjust the model
   {
     
       let length = gnsLength + fit;
-      let width  = gnsWidth + fit;
+      let width  = gnsWidth  + fit;
       let height = gnsHeight + fit;
       let radius = gnsHeight/2;
 
@@ -37,13 +37,11 @@ function main(
     let cutterBottom = r.makeBaseBox(length,width*0.8,height)
     .fillet(3,(e)=>e.inDirection("X"))
     .translate(length/2,0,2.0)
-
       
     let cutterLanyardL = r.makeCylinder(2,20,[-length/2-10,3.5,5],[1,0,0])
     let cutterLanyardR = r.makeCylinder(2,20,[-length/2-10,-3.5,5],[1,0,0])
     let cutterLanyard = r.makeCompound([cutterLanyardL,cutterLanyardR])
 
-    
     holder = holder.cut(receiverBody)
     holder = holder.cut(cutterTop)
     holder = holder.cut(cutterSide)
