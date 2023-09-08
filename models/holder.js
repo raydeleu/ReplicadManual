@@ -1,40 +1,57 @@
-const defaultParams = {             // setting the value of the parameters
+const defaultParams = {             
+    // dimensions of GNS3000 GPS receiver
+    gnsLength:     79.25,
+    gnsWidth:      45.25,
+    gnsHeight:      11.4,
+    fit:            0.5,  // tolerance to fit receiver in holder
+    thickness:      2.0,  // thickness of holder around receiver
+    portion:        0.85  // height of holder compared to height of receiver    
+    
     length:   100,   
     width:    50,    
     height:   12,                     
     thickness: 2,
     portion:   0.85
     }
-  
-    function main(
-   { makeBaseBox, Sketcher, makeCylinder,makeCompound },   // functions used within the main program
-   { length, width, height, thickness, portion} )  // parameters to adjust the model
+
+const r = replicad
+
+function main(
+   {  },   // functions used within the main program
+   { gnsLength, gnsWidth, gnsHeight, fit, thickness, portion} )  // parameters to adjust the model
   {
     
-    let receiverBody = makeBaseBox(length,width,height)
-    .fillet(5,(e)=>e.inDirection("X"));
-    let cutter = makeBaseBox(length+4*thickness, width+4*thickness, height)
+      let length = gnsLength + fit;
+      let width  = gnsWidth + fit;
+      let height = gnsHeight + fit;
+      let radius = gnsHeight/2;
+
+    // create shape of GNS3000 receiver  
+    let receiverBody = r.makeBaseBox(length,width,height)
+    .fillet(radius,(e)=>e.inDirection("X"));
+    
+    // create holder by adding thickness to the shape of the GNS receiver
+    let holder = r.makeBaseBox(length+2*thickness,width+2*thickness,height+2*thickness)
+    .fillet(radius+thickness,(e)=>e.inDirection("X"))
+    .translate(0,0,-thickness)
+      
+    // number of shapes to create cut-outs in the holder  
+    let cutterTop = r.makeBaseBox(length+4*thickness, width+4*thickness, height)
     .translate(0,0,portion*height)
-    let cutterSide= makeBaseBox(length*portion, width+4*thickness, height)
+    let cutterSide= r.makeBaseBox(length*portion, width+4*thickness, height)
     .translate(0,0,3)
-    let cutterBottom = makeBaseBox(length,width*0.8,height)
+    let cutterBottom = r.makeBaseBox(length,width*0.8,height)
     .fillet(3,(e)=>e.inDirection("X"))
     .translate(length/2,0,2.0)
 
-    let cutterLanyardL = makeCylinder(2,20,[-length/2-10,3.5,5],[1,0,0])
-    let cutterLanyardR = makeCylinder(2,20,[-length/2-10,-3.5,5],[1,0,0])
-    let cutterLanyard = makeCompound([cutterLanyardL,cutterLanyardR])
-    //let cutterLanyard1 = Translate([0,gnsWidth/2+3,gnsDepth/2],cutterLanyard,true);
-    //let cutterLanyard2 = Translate([0,gnsWidth/2-3,gnsDepth/2],cutterLanyard,false);
+      
+    let cutterLanyardL = r.makeCylinder(2,20,[-length/2-10,3.5,5],[1,0,0])
+    let cutterLanyardR = r.makeCylinder(2,20,[-length/2-10,-3.5,5],[1,0,0])
+    let cutterLanyard = r.makeCompound([cutterLanyardL,cutterLanyardR])
 
-
-
-    // let holder = makeOffset(receiverBody,thickness)
-    let holder = makeBaseBox(length+2*thickness,width+2*thickness,height+2*thickness)
-    .fillet(5+thickness,(e)=>e.inDirection("X"))
-    .translate(0,0,-thickness)
+    
     holder = holder.cut(receiverBody)
-    holder = holder.cut(cutter)
+    holder = holder.cut(cutterTop)
     holder = holder.cut(cutterSide)
     holder = holder.cut(cutterBottom)
     holder = holder.cut(cutterLanyard)
@@ -43,8 +60,8 @@ const defaultParams = {             // setting the value of the parameters
     holder = holder.fillet(0.5)
 
     let shapeArray = [
-        {shape: receiverBody, name:"reeiver", color:"red" },
-        {shape: cutter, name:"cutter", color: "green" , opacity: 0.5},
+        {shape: receiverBody, name:"receiver", color:"red" },
+        {shape: cutterTop, name:"cutterTop", color: "green" , opacity: 0.5},
         {shape: cutterSide, name:"cutterSide", color: "green", opacity:0.5},
         {shape: cutterBottom, name:"cutterBottom", color: "green", opacity:0.5},
         {shape: cutterLanyard, name:"cutterLanyard", color: "green", opacity:0.5},
