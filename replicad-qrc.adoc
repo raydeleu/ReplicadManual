@@ -71,7 +71,28 @@ If you want to display multiple shapes, the returned variable should be an array
 * the variable name of the shape, 
 * the name of the shape as a "string", 
 * the color of the shape in the Visualiser, using the X11 "color name", see https://en.wikipedia.org/wiki/X11_color_names#Color_name_chart
+
++ 
+Example colors are black, 
+grey,
+dimgrey,
+slategrey,
+lightslategrey,
+steelblue,
+lightsteelblue,
+red,
+green,
+blue,
+violet,
+silver, 
+skyblue,
+magenta,
+mediumpurple. 
+
 * the opacity, where opacity 1 is the default (visible) and 0 is fully transparant. 
+
+
+
 
 An example of an array is: 
 
