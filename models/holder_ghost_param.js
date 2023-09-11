@@ -11,10 +11,8 @@ const main = () => {
   
   let wholder = 20  ;    // width of lanyard holder
   let yholder = 10  ;    // amount that holder sticks out of body
-
   let rlanhol = 2   ;    // radius of lanyard hole
   let ycut   = 0.6  ; // portion of side length to be cut
-
   let rlandist = 7  ; // distance between two holes for lanyard, set to 0 for single hole  
 
   // add tolerances to the dimensions of object to be held
@@ -56,7 +54,7 @@ const main = () => {
   // to round the holder for the lanyard we combine two finders 
   // selecting first the edges in the z direction and the out of 
   // these only select the ones at the proper distance
-  shapeRounded = shapeRounded.fillet(8,(e)=>e.inDirection("Z").inPlane("XZ",-(((ly+2*th)/2)+yholder)))
+  shapeRounded = shapeRounded.fillet(0.8*wholder/2,(e)=>e.inDirection("Z").inPlane("XZ",-(((ly+2*th)/2)+yholder)))
  
   let lanyardCutterL = r.makeCylinder(rlanhol,th*4,[rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
   let lanyardCutterR = r.makeCylinder(rlanhol,th*4,[-rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
@@ -67,7 +65,6 @@ const main = () => {
   // as this overhang is difficult for the 3D printer,
   // then  round all remaining edges with a smaller radius
   shapeRounded = shapeRounded.cut(cutterTop).fillet(0.6)
-
 
   let shapeArray = 
   [ 
