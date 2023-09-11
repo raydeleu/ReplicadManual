@@ -33,6 +33,8 @@ The template to create and display a 3D part in Replicad looks like this.
 
 [source, javascript]
 ----
+const r = replicad
+
 const defaultParams = {                // setting the value of the parameters
   height:       100,
   baseWidth:     20,
@@ -52,7 +54,17 @@ return  {shape: [shape], highlight: [foundFeature]}
 }
 ----
 
-Alternatively you can use the arrow notation for the javascript function
+Note that the line 
+
+[source, javascript]
+----
+const r = replicad
+----
+
+can be used to circumvent the need to list all functions that are used in the code. Prepending each function with `r.` directly points the compiler to the complete Replicad source code. So for example, instead of listing the function `sketchRectangle` at the beginning of the declaration of `main`. 
+
+
+Alternatively to the file listing shown above, you can use the arrow notation for the javascript function
 
 [source, javascript]
 ----
