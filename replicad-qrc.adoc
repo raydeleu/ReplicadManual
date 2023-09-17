@@ -21,7 +21,7 @@ image::/images/interface_black.png[width=800]
 
 The Visualiser supports exporting to JSON, STL and STEP format.  
 
-The downside of the Visualiser is that the user has to edit a file using a text editor and then import this file into the Visualiser. In the so-called *Workbench*, available at https://studio.replicad.xyz/workbench. The Workbench includes a text editor pane on the left that can be used to write the code, while the visualiser window on the right directly shows the result of changes in the editor window. 
+The downside of the Visualiser is that the user has to edit a file using a text editor and then import this file into the Visualiser. In the so-called *Workbench*, available at https://studio.replicad.xyz/workbench a code editor is included. The code editor pane on the left can be used to write the code, while the visualiser window on the right directly shows the result of changes in the editor window. 
 
 image::/images/workbench.png[width=800]
 
