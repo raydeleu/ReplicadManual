@@ -32,7 +32,8 @@ const main = () => {
   .fillet(((lz-lt)/2),(e)=>e.inDirection("Y"))
   .translate([0,th,th])
 
-  // shape of holder
+  // shape of holder, selected only top edges for filleting
+  // so that the bottom is flat, which is better for 3D printing without supports
   let shape = r.makeBaseBox(lx+2*th,ly+2*th,lz+2*th)
   .fillet((lz+2*th-lt)/2,(e)=>e.inDirection("Y").inPlane("XY",lz+2*th))
 
