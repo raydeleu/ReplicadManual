@@ -431,10 +431,15 @@ m| find(shape,options), options {unique: true}                                  
 [cols="1,3",stripes=even]
 |===
 m| .inDirection([x,y,z]/"X"/"Y"/"Z")                     | find all edges that have the direction
+m| .atAngleWith(direction,angle)                        | atAngleWith("Z",20)
 m| .ofLength(number)                                    | find all edges with a particular length
+m| .containsPoint([0,-15,80])                           | find edges that go exactly through a point
+m| .atDistance(distance,point)                          | same as .containsPoint but allows some margin around the defined point 
+m| .inBox(corner1,corner2)                              | finds all edges that are (partly) within a box                                                        |
+m| .inList(elementList[])                               | ?? seems not to work ?? 
+m| .inPlane(inputPlane,origin)                          | inPlane("XY",30), find all edges that are exactly in the defined plane
 m| .ofCurveType(  todo?)                                | find all edges of a certain curve type
 m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
-m| .inPlane(PlaneName / Plane)                          | find all edges that are exactly in a defined plane
 m| .shouldKeep todo?                                    | tbd
 |===
 
