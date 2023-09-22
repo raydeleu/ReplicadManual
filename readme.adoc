@@ -23,8 +23,7 @@ This document contains a beginner's guide for users of the Replicad (https://rep
 
 Using the Replicad tools it is possible to build complicated mechanical parts and even free form geometry. Two examples are shown below. Throughout the guide some examples will be given how the commands discussed in each chapter can be applied to real modelling examples. The folder https://github.com/raydeleu/ReplicadManual/tree/main/models contains some examples on how the functions of Replicad can be applied to create models. 
 
-image::/images/fork.png[width=400]
-image::/images/plunge.png[width=400]
+image::/images/fork-plunge.png[width=1000]
 
 To understand how the library can be included in new applications please consult the replicad website at https://replicad.xyz/. A very nice example how the library can be used can be visited at https://blingmything.sgenoud.com/. The code to this application is also available on github at https://github.com/sgenoud/blingmything. 
 
