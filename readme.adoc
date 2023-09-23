@@ -31,7 +31,7 @@ To understand how the library can be included in new applications please consult
 
 
 == Tools to work with Replicad
-A model in Replicad is built using a javascript input file (see next Section). The best way for a beginner is to use the studio tools which come in two flavours namely
+A model in Replicad is built using a javascript input file (see Section <<File Template>>). The best way for a beginner is to use the studio tools which come in two flavours namely
 
 === Workbench
 This is a complete workbench https://studio.replicad.xyz/workbench that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. 
@@ -52,7 +52,8 @@ Replicad is a library that is based on another library library called opencascad
 
 A beginner can start with the pre-baked shapes to shorten the path to determine a shape. There are 2 dimensional pre-baked shapes like rectangles and circles, and 3 dimensional shapes like spheres or cylinders. 
 
-<<<
+
+
 
 
 <<<
@@ -522,6 +523,46 @@ m| .intersect(tool)                                                 | find the v
 m| compoundShapes(shapeArray[])                                     | this function is identical to makeCompound 
 m| makeCompound(shapeArray[])                                       | allows to combine an array of any type of shape into a single entity that can be displayed.  
 |===
+
+
+<<<
+== Installing Replicad locally
+
+When you want to use Replicad you can go to the website https://studio.replicad.xyz/workbench. Here you can edit and run your script. However, it depends on having an internet connection and on the external server running. If you prefer to run the application locally you have two options, namely installing the program directly as a web-application or installing it from the source on the github page. 
+
+=== Running Replicad Studio as a webapplication
+
+Running the Replicad studio as a web application is extremely easy. For this to work you need to use the Chrome web browser that is available at https://www.google.com/chrome/.  Open the website https://studio.replicad.xyz/workbench in Chrome browser and look for the icon in your browser to install the application as a socalled Progressive Web Application (PWA). 
+
+image::/images/install_webapp.png[]
+
+When you click this icon, a small application is installed on your computer. For MacOs the location is in your home directory in the folder `Applications\Chrome Apps\. If you want to manage the apps, go to the address `chrome://apps`. Here you see all applications that are installed in the Chrome browser. You can create a shortcut to the app and indicate whether the app should run inside the browser or in a separate window. The last option is enabled by default. If you want to remove the application you can use the same address. 
+
+image::/images/manage_pwa.png[]
+
+Google describes a Progressive Web App as follows: 
+
+> A Progressive Web App (PWA) is an app built for the web that provides an experience similar to a mobile app. PWAs are fast and offer many of the features available on mobile devices. For example, they can work offline and send notifications. 
+
+There is also a warning that not all applications might be fully functional without an internet connection. In case of Replicad it seems to work. 
+
+=== Install local server
+
+Replicad is an open source project that you can download completely from the github website https://github.com/sgenoud/replicad. The application is written in javascript, so it cannot be compiled to an executable directly. Instead you have to take the files and run it as if it were a website. One approach to achieve this is as follows: 
+
+1. Go to the website https://nodejs.org/en and download the version of `nodejs` that is valid for your operating system. 
+2. Install the nodejs platform on your computer. When the installation is complete you will see a dialog that both `nodejs` and `npm` are installed on your computer. `nodejs` is an open-source, cross-platform JavaScript runtime environment. `npm` is a package manager for `nodejs` javascript packages. The company is now owned by Github which in turn is owned by Microsoft. 
+3. Download the source code of Replicad from the github page. You can do this either using `git` (when you use the terminal window and have `git` installed you can issue the command `git clone git@github.com:sgenoud/replicad.git`) or by downloading the git repository in a large zip-file.  
+
+image::/images/download_repository.png[]
+
+4. Unpack the zip file somewhere in your home directory, creating a new folder. Within this folder, go to a folder that contains the code for the `studio`. Copy the folder called `studio` somewhere else in your home directory. 
+5. Open a terminal windows and issue the following commands: 
+
+``` sh
+npm install
+npm start
+```
 
 
 
