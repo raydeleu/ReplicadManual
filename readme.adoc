@@ -272,9 +272,9 @@ const shape1 = draw()
 === Methods for drawings
 As a drawing is a type of sketch (that is not yet assigned to a plane) the methods described earlier to create a sketch such as 
 
-* <<Lines>>
-* <<Arcs and ellipses>>
-* <<Free form curves>>  
+* <<Lines>> Lines 
+* <<Arcs and ellipses>> Arcs and ellipses
+* <<Free form curves>>  Free form curves
 
 can also be used to define a drawing. The draw() object also supports some additional methods: 
 
