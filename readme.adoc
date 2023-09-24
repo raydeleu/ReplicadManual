@@ -31,12 +31,14 @@ To understand how the library can be included in new applications please consult
 
 
 == Tools to work with Replicad
-A model in Replicad is built using a javascript input file (see Section <<File Template>>). The best way for a beginner is to use the studio tools which come in two flavours namely
+A model in Replicad is built using a javascript input file (see Section <<File Template>>). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
 
 === Workbench
-This is a complete workbench https://studio.replicad.xyz/workbench that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. 
+The workbench, available at https://studio.replicad.xyz/workbench , is a complete design environment that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. The code in the editor can be downloaded as a javascript file. Use the icon with a circle and arrow going down that can be found directly on top of the editor window. Of course you can also select the code in the editor and paste it into any other editor. 
 
 image::/images/workbench.png[width=800]
+
+An interesting feature of the workbench that is offered at the link shown above is that you can create a link to your model that includes the code. In that way you can share your model through an internet link that opens the workbench with your code in it. Others can then take your code and make modifications for their own purpose. Use the icon above the editor window that resembles a rectangle with an arrow going up. 
 
 === Visualizer
 For people that prefer to edit the input files on their own computer using their preferred code editor, a visualizer is offered at https://studio.replicad.xyz/visualiser that can be used to show the results of processing an input file. Just like the workbench the visualizer supports the export of the shapes. 
