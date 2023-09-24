@@ -670,9 +670,9 @@ image::/images/npm_start.png[]
 When you want to stop the application you can issue ```ctrl```-```c```in the terminal window or use the shortcut ```q```-key. At first it might seem that you browser window is still working, but as soon as you refresh the page you will receive the message that the website is no longer responding. 
 
 [CAUTION]
-===
+====
 There is a large difference in required file size between the two methods to run replicad locally. When you use the Progressive Web Application in Google Chrome, a small app of about 1.8 Mbyte is added to your file system. When you download the code of Replicad, the complete source code fits in an archive (zip-format) of 6.9 Mbyte. When you extract the directory `studio` this has a size of almost 30 Mbyte. After building the application using `Nodejs` and `npm` the directory has a size of 471 Mbyte!
-===
+====
 
 
 
