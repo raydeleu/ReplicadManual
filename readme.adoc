@@ -315,7 +315,7 @@ m| drawPointsInterpolation(points2D[],{approximationConfig:})  | Draw a bSpline 
 == Create 3D face/wire
 
 === Create wires in 3D 
-In comparison to sketches which create wires or faces in 2D, the following functions create a wire in 3D. These wires can be used for example to create a path for a sweep operation. 
+In comparison to sketches which create wires or faces in 2D, the following functions create a wire in 3D. These wires can be used for example to create a 3-dimensional path for a sweep operation. This operation might be needed to create a tube that is bend in a 3-dimensional shape, such as the frame of a chair. 
 
 [cols="1,3",stripes=even]
 |===
@@ -333,6 +333,7 @@ m| assembleWire([Edges])                                                        
 
 === Create faces in 3D
 
+You can not only create wires in 3D but also complete faces. The difference between a wire and a face is that a face consists of a sketch or 3D wire that encloses a surface. This surface can be flat but also bend in space. 
 
 [cols="1,3",stripes=even]
 |===
@@ -345,7 +346,7 @@ m| makePlaneFromFace()                      |
 m| makeSolid(faces[]/shell)                 | Create a solid from the volume that is defined by the array of faces or by a surface. 
 |=== 
 
-The following code example demonstrates how faces in 3 dimensions can be created using a quite complicated algorithm. In this example, the faces are assembled in such a way that they completely enclose a volume, without leaving a gap. Using the method `makeSolid` the volume enclosed by these faces can then be converted to a solid. In the image below this is demonstrated by cutting a sphere out of the newly created shape. Note that without this final step, the faces represent infinitely thin surfaces floating in space. This might be sufficient to create a 3D shape for visualization, but does not allow 3D printing the object. 
+The following code example demonstrates how faces in 3 dimensions can be created using a quite complicated algorithm. In this example, the faces consisting of triangular surfaces are assembled in such a way that they completely enclose a volume, without leaving a gap. Using the method `makeSolid` the volume enclosed by these faces can then be converted to a solid. In the image below this is demonstrated by cutting a sphere out of the newly created shape. Note that without this final step, the faces represent infinitely thin surfaces floating in space. This might be sufficient to create a 3D shape for visualization, but does not allow 3D printing the object. The next section will explain the concept of shapes (solids) in more detail. 
 
 image::/images/icosahedron2.png[]
 
