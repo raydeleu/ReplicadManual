@@ -513,6 +513,17 @@ m| makeOffset(shape,thickness)                                      | create a s
 m| addHolesInFace(face,holeWires[])                                 | create a hole in a shape using the wires that are indicated in the parameters to this function. 
 |===
 
+[NOTE]
+====
+Users of OpenCascade, the 3D kernel used by Replicad, have noticed that fillets may often cause the program to fail. This may result in a broken geometry (which will be reported as errors in other 3D applications such as slicers for 3D printers), or in the crash of the program. The best approach reported is: 
+
+* if possible, try to add the fillets already in the sketching stage. There is no fillet command for sketches, but you can define arcs instead of sharp corners;
+* try to add the fillets to a completed shape as late as possible;
+* when a fillet fails, try to reduce the fillet size. OpenCascade cannot handle situations where a fillet completely removes an adjacent face. If you want to design such a geometry, try to find a different modelling approach to get the same result. 
+* inspect the shape closely after filleting to determine if there are faces missing. This is a clean indicator for socalled non-manifold geometry, i.e. geometry that does not fully enclose a volume. 
+
+====
+
 
 == Find features
 
@@ -560,6 +571,14 @@ m| .ofCurveType(  todo?)                                | find all edges of a ce
 m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
 m| .shouldKeep todo?                                    | tbd
 |===
+
+[NOTE]
+====
+
+
+
+
+
 
 === Combine filters
 
