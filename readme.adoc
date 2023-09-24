@@ -54,8 +54,14 @@ Replicad is a library that is based on another library library called opencascad
 
 A beginner can start with the pre-baked shapes to shorten the path to determine a shape. There are 2 dimensional pre-baked shapes like rectangles and circles, and 3 dimensional shapes like spheres or cylinders. 
 
+[WARNING]
+====
+The user should be aware that Replicad is built upon the OpenCascade 3D modelling kernel which is available as open source and may be used without paying any license fee. However, this kernel has quite some limitations compared to kernels that are developed by large companies. 
 
+One of the most referenced shortcomings of OpenCascade is referred to as the "Topological Naming Problem" (or TNP). Whenever a model is modified so that the number of faces or edges change, the internal names of faces and edges are changed by the kernel. If your model relies on referencing the edges or faces by their old name, rebuilding the model will fail. Currently the developers of OpenCascade try to correct this issue by using a more complex identification method for faces and edges, but as this affects the complete kernel this change may take a long time. 
 
+Another shortcoming is related to filleting. This will be discussed in <<Modify shapes>>. 
+====
 
 
 <<<
