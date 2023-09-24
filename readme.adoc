@@ -766,6 +766,7 @@ There is a large difference in required file size between the two methods to run
 
 
 == OpenCascade 3D kernel
+
 CascadeStudio uses the OpenCascade 3D modelling CAD (computer aided design) kernel. This is the same kernel that is used in the FreeCad application. In many respects therefore the output of CascadeStudio is comparable to FreeCad. Note however that Replicad uses a port of the OpenCascade kernel to javascript, called opencascadejs (see https://github.com/donalffons/opencascade.js). The functions in this library are explained at https://ocjs.org/. There are Replicad functions that are close to the opencascade kernel but also more user friendly functions that shield the user from the complexity of this library. 
 
 The OpenCascade kernel was developed originally by a set of people that started as part of Matra Datavision. Their first CAD system called Euclid was already developed in 1980. This software has evolved an in the passing years the company changed hands several times, first to Areva, then EADS and since 2014 it is part of Capgemini.
