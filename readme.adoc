@@ -50,9 +50,20 @@ The process to draw a shape in Replicad looks like this:
 
 image::/images/processv2.png[]
 
-Replicad is a library that is based on another library library called opencascade.js (see https://github.com/donalffons/opencascade.js). The functions in this library are explained at https://ocjs.org/. There are Replicad functions that are close to the opencascade kernel but also more user friendly functions that shield the user from the complexity of this library. The normal flow to define a shape is to start with a 2-dimensional sketch of the shape, then use a function like extrude or revolve to define a 3 dimensional shape. This 3 dimensional shape can then be modified, for example by rounding edges. In its simplest form this modification is applied to all edges at once. A more advanced approach is to select individual edges or faces to apply the modification. When the shape is complete it can be transformed, for example by translating, rotating et cetera. Finally a shape can be combined with another shape. Combinations can mean fusing the shapes together, subtracting one shape from the other or finding the intersection between two shapes. 
+The normal flow to define a shape is to start with a 2-dimensional sketch of the shape, then use a function like extrude or revolve to define a 3 dimensional shape. This 3 dimensional shape can then be modified, for example by rounding edges. In its simplest form this modification is applied to all edges at once. A more advanced approach is to select individual edges or faces to apply the modification. When the shape is complete it can be transformed, for example by translating, rotating et cetera. Finally a shape can be combined with another shape. Combinations can mean fusing the shapes together, subtracting one shape from the other or finding the intersection between two shapes. 
 
 A beginner can start with the pre-baked shapes to shorten the path to determine a shape. There are 2 dimensional pre-baked shapes like rectangles and circles, and 3 dimensional shapes like spheres or cylinders. 
+
+All the steps described above will explained separately in the next sections. For users that have used a CAD (computer aided design) program earlier, the terminology will sound very familiar. Tools like 
+
+* Siemens SolidEdge (https://solidedge.siemens.com/en/solutions/users/hobbyists-and-makers/), 
+* OnShape (https://onshape.com)
+* Autodesk Fusion 360 (https://www.autodesk.com/products/fusion-360/personal)
+* FreeCad (https://www.freecad.org/) 
+
+use a similar approach. Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. 
+
+Replicad is a library that is based on another library library called opencascade.js (see https://github.com/donalffons/opencascade.js). The functions in this library are explained at https://ocjs.org/. There are Replicad functions that are close to the opencascade kernel but also more user friendly functions that shield the user from the complexity of this library. 
 
 [WARNING]
 ====
