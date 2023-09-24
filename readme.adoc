@@ -122,7 +122,8 @@ All the steps described above will explained separately in the next sections. Fo
 use a similar approach. 
 
 ---
-. _User interface of OnShape with a sketch highlighted in the modelling history_  
+._User interface of OnShape with a sketch highlighted in the modelling history_  
+[]
 image::/images/onshape_sketch.png[]
 ---
 
