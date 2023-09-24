@@ -592,7 +592,6 @@ Users of OpenCascade, the 3D kernel used by Replicad, have noticed that fillets 
 * try to add the fillets to a completed shape as late as possible;
 * when a fillet fails, try to reduce the fillet size. OpenCascade cannot handle situations where a fillet completely removes an adjacent face. If you want to design such a geometry, try to find a different modelling approach to get the same result. 
 * inspect the shape closely after filleting to determine if there are faces missing. This is a clean indicator for socalled non-manifold geometry, i.e. geometry that does not fully enclose a volume. 
-
 ====
 
 
@@ -617,7 +616,7 @@ m| .inBox(corner1,corner2)                                                      
 m| .inList(elementList[])                                                       |
 m| .inPlane(inputPlane,origin)                                                  | inPlane("XY",30)
 m| .parallelTo(plane/face/standardplane)                                        |
-m| find(shape,options), options {unique: true}                                                          | returns all the elements that fit the filters
+m| find(shape,options), options {unique: true}                                  | returns all the elements that fit the filters
 |===
 
 
@@ -645,10 +644,8 @@ m| .shouldKeep todo?                                    | tbd
 
 [NOTE]
 ====
-
-
-
-
+When you reference faces or edges with their index, using the `.inList` method, you may experience the issue of the Topological Naming Problem. If the change to the design parameters results in a changing number of edges or faces, the fillet will no longer be applied to the correct edges. So use this method with care, if you only allow minor changes to the design such as using a different tolerance between two parts. 
+====
 
 
 === Combine filters
