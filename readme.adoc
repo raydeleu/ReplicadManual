@@ -79,30 +79,32 @@ The advantage of a BRep kernel is that in addition to the simple boolean operati
 image::/images/replicad_fillets.png[]
 ---
 
-
-
-
-
-
 == Tools to work with Replicad
 A model in Replicad is built using a javascript input file (see Section <<File Template>>). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
 
 === Workbench
 The workbench, available at https://studio.replicad.xyz/workbench , is a complete design environment that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. The code in the editor can be downloaded as a javascript file. Use the icon with a circle and arrow going down that can be found directly on top of the editor window. Of course you can also select the code in the editor and paste it into any other editor. 
-
+---
+._User interface of the Replicad workbench_
 image::/images/workbench.png[width=800]
-
+---
 An interesting feature of the workbench that is offered at the link shown above is that you can create a link to your model that includes the code. In that way you can share your model through an internet link that opens the workbench with your code in it. Others can then take your code and make modifications for their own purpose. Use the icon above the editor window that resembles a rectangle with an arrow going up. 
 
 === Visualizer
 For people that prefer to edit the input files on their own computer using their preferred code editor, a visualizer is offered at https://studio.replicad.xyz/visualiser that can be used to show the results of processing an input file. Just like the workbench the visualizer supports the export of the shapes. 
 
+---
+. _User interface of the Visualizer_ 
 image::/images/interface_black.png[width=800]
+---
 
 == Process 
 The process to draw a shape in Replicad looks like this: 
 
+---
+. _Different ways to create 3D shapes in Replicad_ 
 image::/images/processv2.png[]
+--- 
 
 The normal flow to define a shape is to start with a 2-dimensional sketch of the shape, then use a function like extrude or revolve to define a 3 dimensional shape. This 3 dimensional shape can then be modified, for example by rounding edges. In its simplest form this modification is applied to all edges at once. A more advanced approach is to select individual edges or faces to apply the modification. When the shape is complete it can be transformed, for example by translating, rotating et cetera. Finally a shape can be combined with another shape. Combinations can mean fusing the shapes together, subtracting one shape from the other or finding the intersection between two shapes. 
 
@@ -115,7 +117,16 @@ All the steps described above will explained separately in the next sections. Fo
 * Autodesk Fusion 360 (https://www.autodesk.com/products/fusion-360/personal)
 * FreeCad (https://www.freecad.org/) 
 
-use a similar approach. Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. 
+use a similar approach. 
+
+---
+. _User interface of OnShape with a sketch highlighted in the modelling history_  
+image::/images/onshape_sketch.png[]
+---
+
+
+
+Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. 
 
 
 
