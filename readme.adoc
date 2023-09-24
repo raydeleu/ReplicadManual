@@ -84,10 +84,12 @@ A model in Replicad is built using a javascript input file (see Section <<File T
 
 === Workbench
 The workbench, available at https://studio.replicad.xyz/workbench , is a complete design environment that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. The code in the editor can be downloaded as a javascript file. Use the icon with a circle and arrow going down that can be found directly on top of the editor window. Of course you can also select the code in the editor and paste it into any other editor. 
+
 ---
-._User interface of the Replicad workbench_
+._User interface of the Replicad workbench_ []
 image::/images/workbench.png[width=800]
 ---
+
 An interesting feature of the workbench that is offered at the link shown above is that you can create a link to your model that includes the code. In that way you can share your model through an internet link that opens the workbench with your code in it. Others can then take your code and make modifications for their own purpose. Use the icon above the editor window that resembles a rectangle with an arrow going up. 
 
 === Visualizer
@@ -95,6 +97,7 @@ For people that prefer to edit the input files on their own computer using their
 
 ---
 . _User interface of the Visualizer_ 
+[]
 image::/images/interface_black.png[width=800]
 ---
 
