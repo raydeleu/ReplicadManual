@@ -347,7 +347,7 @@ m| makeSolid(faces[]/shell)                 | Create a solid from the volume tha
 
 The following code example demonstrates how faces in 3 dimensions can be created using a quite complicated algorithm. In this example, the faces are assembled in such a way that they completely enclose a volume, without leaving a gap. Using the method `makeSolid` the volume enclosed by these faces can then be converted to a solid. In the image below this is demonstrated by cutting a sphere out of the newly created shape. Note that without this final step, the faces represent infinitely thin surfaces floating in space. This might be sufficient to create a 3D shape for visualization, but does not allow 3D printing the object. 
 
-image::/images/icosahedron.png[]
+image::/images/icosahedron2.png[]
 
 ``` javascript
 function projectOnSphere(radius, vertex) {
