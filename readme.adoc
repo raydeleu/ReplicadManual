@@ -743,6 +743,11 @@ Google describes a Progressive Web App as follows:
 
 There is also a warning that not all applications might be fully functional without an internet connection. In case of Replicad it seems to work. 
 
+[NOTE]
+====
+In the version of September 2023 there are some issues noticeable when working for a longer period without internet connection. The editor window of the workbench no longer functions (on Windows OS) and the visualizer no longer reacts automatically upon changes of the source file. Restarting the visualizer is a workaround. 
+====
+
 === Install local server
 
 Replicad is an open source project that you can download completely from the github website https://github.com/sgenoud/replicad. The application is written in javascript, so it cannot be compiled to an executable directly. Instead you have to take the files and run it as if it were a website. One approach to achieve this is as follows: 
