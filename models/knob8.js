@@ -28,13 +28,14 @@ let sweepRail = draw()
 .done()
 .sketchOnPlane("YZ")
 
-// create a rounded profile to shape finger of knob  
-function sweepProfile(plane,origin)
-{
 // variable used to define the rounded profile of r=32mm on top of knob  
 // the knob to cut is 2*16 mm wide, so cutter to 18mm
 // r=32, so height is SQRT(SQR(32)-SQR(16))	
 let segmentHeight = 32 - Math.sqrt((32*32)-(16*16))
+
+// create a rounded profile to shape finger of knob  
+function sweepProfile(plane,origin)
+{
 let section = new Sketcher(plane,origin)
 .movePointerTo([segmentHeight,-20])
 .lineTo([segmentHeight,-16])
@@ -105,8 +106,7 @@ sideView  = sideView.fillet(2,(e)=>e.inDirection("Z"));
 // display the resulting shapes
 let shapeArray = [
 {shape: sideView, name: "sideView"},
-{shape: profileCut, name:"profileCut"},
-{shape: frontCut,name:"frontCut"}
+{shape: profileCut, name:"profileCut"}
 ]; 
 
 return shapeArray
