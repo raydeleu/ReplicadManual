@@ -651,7 +651,7 @@ m| .atDistance(distance,point)                          | same as .containsPoint
 m| .inBox(corner1,corner2)                              | finds all edges that are (partly) within a box
 m| .inList(elementList[])                               | ?? seems not to work ?? 
 m| .inPlane(inputPlane,origin)                          | inPlane("XY",30), find all edges that are exactly in the defined plane
-m| .ofCurveType(  todo?)                                | find all edges of a certain curve type
+m| .ofCurveType(       )                                | find all edges of a certain curve type. "LINE", "BSPLINE_CURVE", "CIRCLE"
 m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
 m| .shouldKeep todo?                                    | tbd
 |===
