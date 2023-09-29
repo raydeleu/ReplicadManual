@@ -10,9 +10,6 @@ Sketcher},
 {},    
 ) => {
 
-
-let segmentHeight = 32 - Math.sqrt((32*32)-(16*16))
-
 // create sketch of sideview of finger of the knob  
 let sideView = draw()
 .movePointerTo([-60,0])
