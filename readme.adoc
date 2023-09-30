@@ -581,16 +581,19 @@ m| makeSphere(radius)                                           |create a sphere
 m| makeVertex([point])                                          |create a vertex/point
 |===
 
-As shown in <<mm2023-parts>> it is possible to create quite complicated parts by just combining simple shapes such as boxes, spheres and cylinders. The shape used in this image is an exercise called Model Mania organized by the company that created the Solidworks CAD program. There are only some fillets missing which were obviously too complicated for the OpenCascade modelling kernel. 
-
 ---
-._Combining shapes to create more complex shapes
-[mm2023-parts]
+._Combining shapes to create more complex shapes_ 
+[#img-mm2023-parts]
 image::/images/mm2023-parts.png[]
 ---
 
+As shown in <<img-mm2023-parts>> it is possible to create quite complicated parts by just combining simple shapes such as boxes, spheres and cylinders. The shape used in this image is an exercise called Model Mania organized by the company that created the Solidworks CAD program. There are only some fillets missing which were obviously too complicated for the OpenCascade modelling kernel. The shapes are combined using the boolean operations decribed in <<Combining shapes>>. Some of the edges of the basic shapes were rounded. How this can be achieved is explained in <<Modifying shapes>>. The result is shown in the image below.  
 
-
+---
+._Result of combining the shapes_ 
+[#img-mm2023-complete]
+image::/images/mm2023-complete.png[]
+---
 
 
 
