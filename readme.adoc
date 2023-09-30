@@ -1,4 +1,3 @@
-
 :docdate:
 :experimental: 
 :xrefstyle: short
@@ -15,14 +14,13 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-
-
 = Replicad Quick Reference 
 
 This document contains a beginner's guide for users of the Replicad (https://replicad.xyz/) libary and tools. Its purpose is mainly to demonstrate how models can be build using the tools, the so-called "studio", that are offered alongside the library. At the Replicad website some documentation is offered as well as links to the detailed documentation of the API (Application Progamming Interface) of the library (see https://replicad.xyz/docs/api/). Nevertheless it can be quite daunting to collect all information for people that are just interested in modelling and are less experienced in reading computer code or building applications. 
 
 Using the Replicad tools it is possible to build complicated mechanical parts and even free form geometry. Two examples are shown below. Throughout the guide some examples will be given how the commands discussed in each chapter can be applied to real modelling examples. The folder https://github.com/raydeleu/ReplicadManual/tree/main/models contains some examples on how the functions of Replicad can be applied to create models. 
 
+._Shapes created with Replicad, both technical and freeform is possible_
 image::/images/fork-plunge.png[width=1000]
 
 For additional help you can visit https://github.com/sgenoud/replicad and in particular the discussions area. There are sections labelled "Q&A" and "modelling help" where you can post your question. The programmer of Replicad is active in responding questions from users and you can also expect some help from fellow users. 
@@ -80,7 +78,7 @@ image::/images/replicad_fillets.png[]
 ---
 
 == Tools to work with Replicad
-A model in Replicad is built using a javascript input file (see <<File Template>> ). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
+A model in Replicad is built using a javascript input file (see <<File template>> ). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
 
 === Workbench
 The workbench, available at https://studio.replicad.xyz/workbench , is a complete design environment that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. The code in the editor can be downloaded as a javascript file. Use the icon with a circle and arrow going down that can be found directly on top of the editor window. Of course you can also select the code in the editor and paste it into any other editor. 
@@ -127,8 +125,6 @@ use a similar approach.
 image::/images/onshape_sketch.png[]
 ---
 
-
-
 Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. Go to <<Pre-baked shapes>> to see examples how these can be used to quickly model a part by transforming (see <<Transform shapes>> and combining the parts (see <<Combine shapes>>).  
 
 
@@ -144,7 +140,7 @@ Another shortcoming is related to filleting. This will be discussed in <<Modify 
 
 <<<
 
-[#File template] 
+[#File_template] 
 == File template
 
 The template to create and display a 3D part in Replicad looks like this.  
