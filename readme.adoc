@@ -129,7 +129,7 @@ image::/images/onshape_sketch.png[]
 
 
 
-Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. Go to the section <<Pre-baked shapes>> to see examples how these can be used to quickly model a part.  
+Users coming from OpenSCAD (https://www.openscard.org) will immediately recognize the coding approach but might be tempted to start with the prebaked 3D shapes first, as this makes modelling in OpenSCAD so fast. Go to the section <<Pre-baked shapes>> to see examples how these can be used to quickly model a part by transforming (see <<Transform shapes>> and combining the parts (see <<Combining shapes>>).  
 
 
 
