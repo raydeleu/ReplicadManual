@@ -616,7 +616,7 @@ Users of OpenCascade, the 3D kernel used by Replicad, have noticed that fillets 
 * if possible, try to add the fillets already in the sketching stage. There is no fillet command for sketches, but you can define arcs instead of sharp corners;
 * try to add the fillets to a completed shape as late as possible;
 * when a fillet fails, try to reduce the fillet size. OpenCascade cannot handle situations where a fillet completely removes an adjacent face. If you want to design such a geometry, try to find a different modelling approach to get the same result. 
-* inspect the shape closely after filleting to determine if there are faces missing. This is a clean indicator for socalled non-manifold geometry, i.e. geometry that does not fully enclose a volume. 
+* inspect the shape closely after filleting to determine if there are faces missing. This is a clear indicator for socalled non-manifold geometry, i.e. geometry that does not fully enclose a volume. 
 ====
 
 
