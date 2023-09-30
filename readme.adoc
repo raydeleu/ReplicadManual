@@ -80,7 +80,7 @@ image::/images/replicad_fillets.png[]
 ---
 
 == Tools to work with Replicad
-A model in Replicad is built using a javascript input file (see Section <<File Template>>). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
+A model in Replicad is built using a javascript input file (see <<File Template>> ). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
 
 === Workbench
 The workbench, available at https://studio.replicad.xyz/workbench , is a complete design environment that includes a code editor with a pane to visualize the result of the input file. The result can be exported to STL and STEP formats to allow further processing, for example 3D printing. The code in the editor can be downloaded as a javascript file. Use the icon with a circle and arrow going down that can be found directly on top of the editor window. Of course you can also select the code in the editor and paste it into any other editor. 
@@ -143,7 +143,9 @@ Another shortcoming is related to filleting. This will be discussed in <<Modify 
 
 
 <<<
+
 == File template
+
 The template to create and display a 3D part in Replicad looks like this.  
 
 [source, javascript]
