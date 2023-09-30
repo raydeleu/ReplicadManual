@@ -144,6 +144,7 @@ Another shortcoming is related to filleting. This will be discussed in <<Modify 
 
 <<<
 
+[#File template] 
 == File template
 
 The template to create and display a 3D part in Replicad looks like this.  
