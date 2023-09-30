@@ -7,7 +7,7 @@ const r = replicad
 
 function main()
 {
-let filletRadius = 1;
+let filletRadius = 2;
 
 let mainCylinder = r.makeCylinder(50/2,30,[0,0,0],[0,0,1])
 .translate(0,0,-30/2)
@@ -42,14 +42,14 @@ holder = holder.fuse(holderRound).cut(holderHollow).cut(holderHole)
 holder = holder.cut(holderCounterL).cut(holderCounterR)
 clamp = clamp.fuse(clampRound)
 clamp = clamp.cut(clampHole).cut(clampCounterL).cut(clampCounterR)
-mainCylinder = mainCylinder.fuse(holder).fuse(clamp).cut(mainBore)
-.cut(gapHole)
+mainCylinder = mainCylinder.fuse(holder)
+mainCylinder = mainCylinder.fuse(clamp)
+mainCylinder = mainCylinder.cut(mainBore)
+mainCylinder = mainCylinder.fillet(0.9,(e)=>e.inBox([-17,-30,-15],[-22,30,15]))
+mainCylinder = mainCylinder.cut(gapHole)
+mainCylinder = mainCylinder.fillet(2,(e)=>e.inBox([17,-30,-20],[22,30,20]))
 
-// mainCylinder = mainCylinder.fillet(2,(e)=>e.inBox([35,60,20],[-5,0,-20]))
 // mainCylinder = mainCylinder.fillet(filletRadius,(e)=>e.inDirection("Z"))
-
-
-
 
 let shapes= [
 {shape: mainCylinder, name:"mainCylinder"},
