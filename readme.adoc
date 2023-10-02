@@ -315,6 +315,13 @@ m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, re
 === Fillets and chamfers in 2D  
 A special way to create ars in your sketch is the rounding or fillet in sharp corners of your sketch. The method to achieve this is called `customCorner(radius)`, which uses the radius of the rounding as an argument. The method should be placed between the two methods used to define the sharp corner. The following code snippet shows an example how to create a rounded shape. Note that in this case, using a rounding radius that is exactly half the height of the shape fails. If you want to achieve a semi-circle at each end you have to use the arc methods described in the previous section. 
 
+As the method has to be placed in between two methods that describe a sharp corner, the method can not be used as the last statement before closing or ending the sketch. In the example below this is solved to shift the startpoint for the definition of the rectangle from the first corner in the bottom left to somewhere along the first line (drawing counterclockwise). Another point worth noting is that when rounding sharp edges, as is done in the example below, the result might be different from what you expect. 
+
+---
+._Adding 2D fillets to a sketch_ 
+image:: /images/fillet2D.png[]
+---
+
 ``` javascript
 const { draw } = replicad;
 
@@ -327,18 +334,47 @@ const main = () => {
     .vLine(11)
     .customCorner(5.45)
     .hLine(-50)
-    .customCorner(5.45)
-    .vLine(-11)
-    .customCorner(5.45)
+    .customCorner(3)
+    .line(5,-11)
+    .customCorner(5)
     .close();
 
 return [
     { shape: s1, color: "blue", name: "Straight lines" }
 ]
-}
+} 
 ```
 
-The method `.customCorner(radius)` also supports creating chamfers. To achieve this you have to add a second argument to the method: `customCorner(radius, mode: "chamfer")`. 
+The method `.customCorner(radius)` also supports creating chamfers. To achieve this you have to add a second argument to the method: `customCorner(radius, "chamfer")`. The default value of this argument is `"fillet"`, so it does not have to be added explicitly. The dimension of the chamfer describes the length of the straight line perpendicular to the lines that define the corner. In case of sharp corner it is difficult to predict where this corner will land and what will be the overall dimension of the resulting shape. 
+
+---
+._Adding 2D chamfers to a sketch_ 
+image:: /images/chamfer2D.png[]
+---
+
+
+const { draw } = replicad;
+
+const main = () => {
+  // just lines
+  const s1 = 
+  draw([20,0])
+    .hLine(30)
+    .customCorner(5, "chamfer")
+    .vLine(11)
+    .customCorner(5.45)
+    .hLine(-50)
+    .customCorner(3,"chamfer")
+    .line(5,-11)
+    .customCorner(5, "chamfer")
+    .close();
+
+return [
+    { shape: s1, color: "blue", name: "Straight lines" }
+]
+} 
+
+
 
 
 
