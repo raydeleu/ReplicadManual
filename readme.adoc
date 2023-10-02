@@ -14,6 +14,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+// ============================ TITLE =====================================
 = Replicad Quick Reference 
 
 This document contains a beginner's guide for users of the Replicad (https://replicad.xyz/) libary and tools. Its purpose is mainly to demonstrate how models can be build using the tools, the so-called "studio", that are offered alongside the library. If you want to use this document to generate a separate manual, uncomment the line `:toc:` in the header of this document. As in github the table of contents does not work to quickly jump to the required section, you can better use the outline facility of github. Click the bullet list icon in the header of this document (see header bar, next to the `edit` icon).   
@@ -30,6 +31,9 @@ image::/images/fork-plunge.png[width=1000]
 For additional help you can visit https://github.com/sgenoud/replicad and in particular the discussions area. There are sections labelled "Q&A" and "modelling help" where you can post your question. The programmer of Replicad is active in responding questions from users and you can also expect some help from fellow users. 
 
 To understand how the library can be included in new applications please consult the replicad website at https://replicad.xyz/. A very nice example how the library can be used can be visited at https://blingmything.sgenoud.com/. The code to this application is also available on github at https://github.com/sgenoud/blingmything. 
+
+
+// ========================================= WHAT IS REPLICAD? ==============================
 
 == What is Replicad?
 Replicad is a software library that allows the user to enter a kind of script to create a 3D model. This model can then be exported in several formats,  allowing the user to create nice images (renders) or to send the shape to a 3D printer.
@@ -80,6 +84,8 @@ The advantage of a BRep kernel is that in addition to the simple boolean operati
 []
 image::/images/replicad_fillets.png[]
 ---
+
+// ======================================== TOOLS TO WORK WITH REPLICAD ==================================
 
 == Tools to work with Replicad
 A model in Replicad is built using a javascript input file (see <<File template>> ). The best way for a beginner is to use the studio tools which come in two flavours namely the workbench and a visualizer. 
@@ -146,6 +152,8 @@ Another shortcoming is related to filleting. This will be discussed in <<Modify 
 
 
 <<<
+
+// ================================ FILE TEMPLATE ================================
 
 [#File_template] 
 == File template
@@ -243,7 +251,7 @@ let shapeArray = [
 
 
 
-
+// ============================================== SKETCH =======================
 
 == Sketch
 To start a sketch, use the `new Sketcher` command. Note the keyword `new` that is required to create a new object of the type `Sketcher`.  
