@@ -190,10 +190,21 @@ Note that the line
 const r = replicad
 ----
 
-can be used to circumvent the need to list all functions that are used in the code. Prepending each function with `r.` directly points the compiler to the complete Replicad source code. So for example, instead of listing the function `sketchRectangle` at the beginning of the declaration of `main` you can use `r.sketchRectangle`. 
+can be used to circumvent the need to list all functions that are used in the code. Prepending each function with `r.` directly points the compiler to the complete Replicad source code. So for example, instead of listing the function `sketchRectangle` at the beginning of the declaration of `main` you can use `r.sketchRectangle`. Yet another approach is to list all the functions but add this add the beginning of your code using the notation: 
 
+``` javascript
+const { draw, ... other functions ... } = replicad;
 
-Alternatively to the file listing shown above, you can use the arrow notation for the javascript function
+function main() 
+{
+    // code to describe the shape
+return shape 
+} 
+``` 
+
+Using this notation there is no need to remember which of the arguments in the brackets of `function main({functions},{designparams})` contains what. You can simply use `main()`. 
+
+Alternatively to the file listing shown above, you can use the arrow notation for the javascript function. This notation can be combined with the notations shown above to shortcut the definition of functions from the Replicad library. 
 
 [source, javascript]
 ----
