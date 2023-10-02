@@ -312,8 +312,8 @@ m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, ab
 m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
 |===
 
-=== Fillets in 2D  
-A special way to create arcs in your sketch is the rounding or fillet in sharp corners of your sketch. The method to achieve this is called `customCorner(radius)`, which uses the radius of the rounding as an argument. The method should be placed between the two methods used to define the sharp corner. The following code snippet shows an example how to create a rounded shape. Note that in this case, using a rounding radius that is exactly half the height of the shape fails. If you want to achieve a semi-circle at each end you have to use the arc methods described in the previous section. 
+=== Fillets and chamfers in 2D  
+A special way to create ars in your sketch is the rounding or fillet in sharp corners of your sketch. The method to achieve this is called `customCorner(radius)`, which uses the radius of the rounding as an argument. The method should be placed between the two methods used to define the sharp corner. The following code snippet shows an example how to create a rounded shape. Note that in this case, using a rounding radius that is exactly half the height of the shape fails. If you want to achieve a semi-circle at each end you have to use the arc methods described in the previous section. 
 
 ``` javascript
 const { draw } = replicad;
@@ -337,6 +337,11 @@ return [
 ]
 }
 ```
+
+The method `.customCorner(radius)` also supports creating chamfers. To achieve this you have to add a second argument to the method: `customCorner(radius, mode: "chamfer")`. 
+
+
+
 === Free form curves
 
 image::/images/curves.png[width=650]
