@@ -273,7 +273,7 @@ Use the following ".methods" to describe the sketch:
 
 image::/images/lines.png[]
 
-Lines can be sketched using the line functions. Be aware that points are generally defined as a tuple or array, i.e. enclosed in square brackets. This array either contains the absolute distance in the x and y direction from the origin, or the distance and angle in case of polar coordinates. Relative distances to the x- and y-axis are defined as two separate values dx and dy. 
+Straight lines can be sketched using the line functions. Be aware that points are generally defined as a tuple or array, i.e. enclosed in square brackets. This array either contains the absolute distance in the x and y direction from the origin, or the distance and angle in case of polar coordinates. Relative distances to the x- and y-axis are defined as two separate values dx and dy. 
 
 [cols="1,3",stripes=even]
 |===
@@ -312,6 +312,31 @@ m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, ab
 m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
 |===
 
+=== Fillets in 2D  
+A special way to create arcs in your sketch is the rounding or fillet in sharp corners of your sketch. The method to achieve this is called `customCorner(radius)`, which uses the radius of the rounding as an argument. The method should be placed between the two methods used to define the sharp corner. The following code snippet shows an example how to create a rounded shape. Note that in this case, using a rounding radius that is exactly half the height of the shape fails. If you want to achieve a semi-circle at each end you have to use the arc methods described in the previous section. 
+
+``` javascript
+const { draw } = replicad;
+
+const main = () => {
+  // just lines
+  const s1 = 
+  draw([20,0])
+    .hLine(30)
+    .customCorner(5.45)
+    .vLine(11)
+    .customCorner(5.45)
+    .hLine(-50)
+    .customCorner(5.45)
+    .vLine(-11)
+    .customCorner(5.45)
+    .close();
+
+return [
+    { shape: s1, color: "blue", name: "Straight lines" }
+]
+}
+```
 === Free form curves
 
 image::/images/curves.png[width=650]
@@ -325,6 +350,67 @@ m| .smoothSplineTo([x,y],splineconfig)                  | smooth spline to end, 
 m| .smoothSpline(dx,dy,splineconfig)                    | smooth spline to end, absolute coordinates 
 m|                                                      m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
 |===
+
+=== Comparing different approaches 
+
+
+
+``` javascript
+
+const { draw } = replicad;
+
+const main = () => {
+  // just lines
+  const s1 = draw()
+    .hLine(20)
+    .line(10, 5)
+    .vLine(3)
+    .lineTo([8, 100])
+    .hLine(-8)
+    .close();
+
+  // Using bezier curves
+  const s2 = draw([0, 100])
+    .hLine(8)
+    .lineTo([30, 8])
+    .smoothSpline(-10, -8, { endTangent: [-1, 0], startFactor: 2 })
+    .lineTo([0, 0])
+    .close();
+
+  // Straight lines and fillets
+  const s3 = draw()
+    .hLine(20)
+    .customCorner(10)
+    .line(10, 5)
+    .customCorner(3)
+    .vLine(3)
+    .customCorner(3)
+    .lineTo([8, 100])
+    .hLine(-8)
+    .close();
+
+  // Arcs
+  const s4 = draw()
+    .hLine(20)
+    .tangentArc(10, 10)
+    .lineTo([8, 100])
+    .hLine(-8)
+    .close();
+
+  return [
+    { shape: s1, color: "blue", name: "Straight lines" },
+    { shape: s4, color: "orange", name: "Arcs" },
+    { shape: s2, color: "green", name: "Bézier" },
+    { shape: s3, color: "red", name: "Rounded corners" },
+  ];
+};
+
+``` 
+
+
+
+
+
 
 <<<
 == Pre-baked sketches
