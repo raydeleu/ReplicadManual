@@ -319,7 +319,7 @@ As the method has to be placed in between two methods that describe a sharp corn
 
 ---
 ._Adding 2D fillets to a sketch_ 
-image::/images/fillet2D.png[]
+image::/images/fillet2D.png[width=400]
 ---
 
 ``` javascript
@@ -349,7 +349,7 @@ The method `.customCorner(radius)` also supports creating chamfers. To achieve t
 
 ---
 ._Adding 2D chamfers to a sketch_ 
-image::/images/chamfer2d.png[]
+image::/images/chamfer2d.png[width=400]
 ---
 
 ``` javascript
