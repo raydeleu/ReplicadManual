@@ -349,7 +349,7 @@ The method `.customCorner(radius)` also supports creating chamfers. To achieve t
 
 ---
 ._Adding 2D chamfers to a sketch_ 
-image:: /images/chamfer2D.png[]
+image:: /images/chamfer2d.png[]
 ---
 
 
