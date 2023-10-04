@@ -1,0 +1,5 @@
+How to define fillets, derive functions to make the creation of these type of sketches easier. 
+
+
+https://opentextbc.ca/autocad2d/chapter/fillets/
+
