@@ -533,9 +533,7 @@ m| .toSVGPaths()                            | format the drawing as a list of SV
 m| .toSVGViewBox                            | return the SVG viewbox that corresponds to this drawing
 |=== 
 
-The boolean operations `cut`, `fuse` and `intersect` provide options to shortcut the creation of complicated drawings without the need for complex geometric calculations. 
-
-
+The boolean operations `cut`, `fuse` and `intersect` provide options to shortcut the creation of complicated drawings without the need for complex geometric calculations. This will be shown in the next section. 
 
 === Pre-baked drawings
 Similarly as for the sketches, some pre-baked drawings are available to speed-up the creation of standard shapes. As the draw() object also allows boolean operations the creation of more complex shapes can be achieved by combining a number of standard shapes. 
@@ -551,6 +549,37 @@ m| drawText("text",{ startX = 0, startY = 0, fontSize = 16, fontFamily = "defaul
 m| drawParametricFunction(function, {options}) | Draw a parametric function with variable t. With the option it is possible to adjust the number of intermediate points that are used { pointsCount = 400, start = 0, stop = 1 } and the type of approximation of the curve. 
 m| drawPointsInterpolation(points2D[],{approximationConfig:})  | Draw a bSpline through the array of points 
 |===
+
+Using boolean functions and the pre-baked drawings of a circle and rectangle, creating a shape like an axle with a keyway is very simple. Notice in de code below that a drawing needs to be placed on a plane before any other method can be applied to it. 
+
+``` javascript
+const { draw, drawCircle, drawRectangle} = replicad;
+
+const main = () => {
+let axleRadius = 11
+let keySlotHeight = 6
+let keySlotWidth  = 2.50  
+
+let axleHole = drawCircle(axleRadius)
+let axleHole2 = drawCircle(axleRadius).translate(3*axleRadius,0)
+let keySlot  = drawRectangle(2*keySlotWidth,keySlotHeight)
+.translate(-axleRadius,0)
+let keySlot2  = drawRectangle(2*keySlotWidth,keySlotHeight)
+.translate(-axleRadius,0).translate(3*axleRadius,0)
+let axleShape = axleHole.cut(keySlot).sketchOnPlane("XZ")
+let axleShape2 = axleHole2.fuse(keySlot2).sketchOnPlane("XZ",20)
+let axle = axleShape.extrude(25)
+let axle2 = axleShape2.extrude(25)
+
+  return [axle,axle2];
+};
+```
+
+
+---
+._Creating an axle with a keyway using 2D boolean functions on drawings
+image::/images/keyway.png[]
+--- 
 
 
 
