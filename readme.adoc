@@ -577,7 +577,7 @@ let axle2 = axleShape2.extrude(25)
 
 
 ---
-._Creating an axle with a keyway using 2D boolean functions on drawings
+._Creating an axle with a keyway using 2D boolean functions on drawings_
 image::/images/keyway.png[]
 --- 
 
@@ -878,7 +878,20 @@ m| not                                                  | select all other edges
              const frontWindow = new EdgeFinder()
             .ofCurveType("CIRCLE")
             .not((f) => f.inPlane("XZ"));  
+----
+
+[source, javascript]
+----        
+let axleShape2 = axleHole2.fuse(keySlot2).sketchOnPlane("XZ",20)
+let axle2 = axleShape2.extrude(25)
+            .fillet(2,(e)=>e.either([
+                          (e)=>e.inPlane("XZ",45),
+                          (e)=>e.inPlane("XZ",20)]) )
+return [axle2];
+----
+
 ----            
+
 
 
 == Transform shapes
