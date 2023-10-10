@@ -880,6 +880,8 @@ m| not                                                  | select all other edges
             .not((f) => f.inPlane("XZ"));  
 ----
 
+Below is an example how finders can be combined in the definition of a fillet. 
+
 [source, javascript]
 ----        
 let axleShape2 = axleHole2.fuse(keySlot2).sketchOnPlane("XZ",20)
@@ -890,7 +892,6 @@ let axle2 = axleShape2.extrude(25)
 return [axle2];
 ----
 
-----            
 
 
 
