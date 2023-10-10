@@ -523,14 +523,19 @@ m| .mirror([center/dir],[origin],mode? )    | mode? "center" or "plane"
 m| .translate(xDist,yDist)                  | 
 m| .rotate(angle,[center])                  |
 m| .stretch(ratio,direction,origin)         | 
-m| .cut(cuttingDrawing)                     |                        
-m| .fuse(other)                             |
+m| .cut(cuttingDrawing)                     | create a 2D boolean where the drawing listed as an argument to this method is subtracted from the drawing that this method is acting on.     
+m| .intersect(drawing)                      |   
+m| .fuse(other)                             | create a 2D boolean where the drawing listed as an argument is fused to the drawing that this method is acting on
 m| .sketchOnFace(face,scaleMode)            | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
 m| .sketchOnPlane                           | 
 m| .toSVG(margin)                           | format the drawing as an SVG image
 m| .toSVGPaths()                            | format the drawing as a list of SVG paths
 m| .toSVGViewBox                            | return the SVG viewbox that corresponds to this drawing
 |=== 
+
+The boolean operations `cut`, `fuse` and `intersect` provide options to shortcut the creation of complicated drawings without the need for complex geometric calculations. 
+
+
 
 === Pre-baked drawings
 Similarly as for the sketches, some pre-baked drawings are available to speed-up the creation of standard shapes. As the draw() object also allows boolean operations the creation of more complex shapes can be achieved by combining a number of standard shapes. 
