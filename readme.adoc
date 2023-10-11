@@ -17,7 +17,7 @@ endif::[]
 // ============================ TITLE =====================================
 = Replicad Quick Reference 
 
-This document contains a beginner's guide for users of the Replicad (https://replicad.xyz/) libary and tools. Its purpose is mainly to demonstrate how models can be build using the tools, the so-called "studio", that are offered alongside the library. If you want to use this document to generate a separate manual, uncomment the line `:toc:` in the header of this document. As in github the table of contents does not work to quickly jump to the required section, you can better use the outline facility of github. Click the bullet list icon in the header of this document (see header bar, next to the `edit` icon).   
+This document contains a beginner's guide for users of the Replicad (https://replicad.xyz/) libary and tools. Its purpose is mainly to demonstrate how models can be build using the tools, the so-called "studio", that are offered alongside the library. If you want to use this document to generate a separate manual, uncomment the line `:toc:` in the header of this document. As in github the table of contents does not work to quickly jump to the required section, you can better use the outline facility of github. Click the bullet list icon in the header of this document (see header bar, image:/images/menu_icon.png[] ).   
 
 At the Replicad website some documentation is offered as well as links to the detailed documentation of the API (Application Progamming Interface) of the library (see https://replicad.xyz/docs/api/). Nevertheless it can be quite daunting to collect all information for people that are just interested in modelling and are less experienced in reading computer code or building applications. 
 
