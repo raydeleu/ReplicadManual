@@ -323,6 +323,27 @@ m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, ab
 m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
 |===
 
+These functions create only partial arcs. To create a circle you need to define two arcs as the start and endpoint may not be identical.The following code shows how to draft a circle. Note that the same can be achieved with the function `sketchCircle` or `drawCircle` (see next sections). 
+
+``` javascript
+const {draw, Sketcher} = replicad
+
+function main()
+{
+    let circle = new Sketcher("XY")
+    .halfEllipseTo([0,20],10)   // first half of circle, only one radius needed, long axis is defined by coordinates
+    .ellipseTo([0,0],10,10)     // second half, if r_min and r_max are equal this defines a circle
+    .close()
+    .extrude(5)
+
+    return circle
+}
+``` 
+
+
+
+
+
 === Fillets and chamfers in 2D  
 A special way to create ars in your sketch is the rounding or fillet in sharp corners of your sketch. The method to achieve this is called `customCorner(radius)`, which uses the radius of the rounding as an argument. The method should be placed between the two methods used to define the sharp corner. The following code snippet shows an example how to create a rounded shape. Note that in this case, using a rounding radius that is exactly half the height of the shape fails. If you want to achieve a semi-circle at each end you have to use the arc methods described in the previous section. 
 
