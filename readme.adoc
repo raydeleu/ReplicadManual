@@ -340,8 +340,41 @@ function main()
 }
 ``` 
 
+``` javascript
+const {draw, Sketcher} = replicad
 
+function main()
+{
+    let circle = new Sketcher("XY")
+    .ellipseTo([10,10],10,10)
+    .close()
+    .extrude(3)
 
+    let circle2 = new Sketcher("XY")
+    .movePointerTo([10,10])
+    .ellipseTo([0,0],10,10)
+    .close()
+    .extrude(2)
+    .translate([10,0,0])
+
+    let circle3 = new Sketcher("XY")
+    .ellipseTo([0,20],10,10)
+    .ellipseTo([10,10],10,10)
+    .lineTo([0,10])
+    .close()
+    .extrude(5)
+    .translate(-10,0,0)
+
+    let circle4 = new Sketcher("XY")
+    .ellipse(10,10,10,10,270,[0,0,1],false)
+    .lineTo([0,10])
+    .close()
+    .extrude(1)
+    .translate(0,-30,0)
+
+    return [circle,circle2,circle3,circle4]
+}
+```
 
 
 === Fillets and chamfers in 2D  
