@@ -347,6 +347,7 @@ m| .tangentArc(dx,dy)                       | arc tangent to current line to end
 m| .ellipseTo([x,y],r_hor,r_vert)           | ellipse from current to end, absolute coordinates, radii to hor and vert
 m| .ellipse(dx,dy,r_hor,r_vert)             | ellipse from current to end, relative coordinates, radii to hor and vert
 m| .ellipse(dx,dy,r_h,r_v,a_start,a_end,true)| extra parameters ellipse: startangle, endangle, counterclockwise? 
+m| .ellipse(dx,dy,r_h,r_v,deg rotation, axis[], counter? | extra parameters ellipse, rotation around axis defined as [x,y,z] array 
 m| .halfEllipseTo([x,y],r_min)              | half ellipse with r_min as sag, absolute coordinates    
 m| .halfEllipse(dx,dy,r_min)                | half ellipse with r_min as sag, relative coordinates
 |===
@@ -368,41 +369,61 @@ function main()
 }
 ``` 
 
-The following code shows some examples of the methods to sketch arcs.  
+The following code shows some examples of the methods to sketch arcs. Some general remarks on the creation of arcs: 
+
+* The arcs are always created in a clockwise direction. Only the `ellipse` method supports the counter-clockwise direction, but this results in a non-logic behaviour related to the other parameters that are passed to the function. For example, if you draw an arc 270 degrees clockwise, the result is a three quarter circle, if you draw the arc using the same parameters but anti-clockwise, the result is only a quarter of a circle. 
+
+The definition of so-called sagitta arcs is equally difficult. Again it helps to start defining the sketch in a clockwise direction. When moving in a clockwise direction, the bulge or sag of the arc is to the left of the straight line between the two outer points of the arc when the value is positive. If you want the bulge to be on the other side, you have to define a negative value for this parameter. As shown in the small icon above, the dimension of the sag defines the distance between the straight line from the startpoint to the endpoint and the outside of the arc. So to represent a circle
+
+---
+._Examples of arcs, created with code below_ 
+image::/image/arc-examples.png[]
+---
 
 ``` javascript
 const {draw, Sketcher} = replicad
 
 function main()
 {
+    let r  = 10  // radius of arcs
+    let xr = 10 // x-coordinate
+    let yr = 10 // y-coordinate
+
     let circle = new Sketcher("XY")
-    .ellipseTo([10,10],10,10)
+    .ellipseTo([xr,yr],r,r)
     .close()
     .extrude(3)
 
     let circle2 = new Sketcher("XY")
-    .movePointerTo([10,10])
-    .ellipseTo([0,0],10,10)
+    .movePointerTo([xr,yr])
+    .ellipseTo([0,0],r,r)
     .close()
     .extrude(2)
     .translate([10,0,0])
 
     let circle3 = new Sketcher("XY")
-    .ellipseTo([0,20],10,10)
-    .ellipseTo([10,10],10,10)
-    .lineTo([0,10])
+    .ellipseTo([0,2*yr],r,r)
+    .ellipseTo([xr,yr],r,r)
+    .lineTo([0,yr])
     .close()
     .extrude(5)
     .translate(-10,0,0)
 
     let circle4 = new Sketcher("XY")
-    .ellipse(10,10,10,10,270,[0,0,1],false)
-    .lineTo([0,10])
+    .ellipse(xr,yr,r,r,270,[0,0,1],false)
+    .lineTo([0,r])
     .close()
     .extrude(1)
     .translate(0,-30,0)
 
-    return [circle,circle2,circle3,circle4]
+    let arc1 = draw()
+    .sagittaArc(-xr,yr,r)
+    .sagittaArc(xr,yr,-(10-Math.sqrt((r/2*r/2)+(r/2*r/2))))
+    .close()
+    .sketchOnPlane("XY")
+    arc1 = arc1.extrude(3).translate([40,0,0])
+
+    return [circle,circle2,circle3,circle4,arc1]
 }
 ```
 
