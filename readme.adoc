@@ -208,7 +208,6 @@ Alternatively to the file listing shown above, you can use the arrow notation fo
 
 [source, javascript]
 ----
-
 const defaultParams = {                // setting the value of the parameters
   height:       100,
   baseWidth:     20,
@@ -512,7 +511,16 @@ m| .smoothSpline(dx,dy,splineconfig)                    | smooth spline to end, 
 m|                                                      m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
 |===
 
-A Bezier curve is a type of curve that is defined by a set of control points. It was developed by French engineer Pierre Bezier for use in the design of Renault cars in the 1960s. The important feature of a Bezier curve is that the control points influence the shape of the curve, but the curve does not necessarily pass through these points. 
+A Bezier curve is a type of curve that is defined by a set of control points. It was developed by French engineer Pierre Bezier for use in the design of Renault cars in the 1960s. The important feature of a Bezier curve is that the control points influence the shape of the curve, but the curve does not necessarily pass through these points. In case of a quadratic Bezier curve there is only one control point between the startpoint and endpoint of the curve which defines the direction of the curve at both ends. Using a cubic Bezier curve it is possible to adjust the slope of the curve at both ends. The control points may be considered as a kind of magnet, pulling the curve towards it. The further the control points are placed, the stronger the curve will deviate from a straight line between the begin and endpoints. The `.bezierCurveTo` method allows a large array of control points to define the shape of the curve, but adjusting these endpoints is difficult without being able to judge the effect of these points. 
+
+The `.smoothSpline` method defines a curve that passes through each point. The shape of the curve can be adjusted using the spline configuration. An example of the application of this function is shown in <<smoothspline>>. 
+
+---
+._Example of the application of the smoothSpline method_
+[#smoothspline]
+image::/images/smoothsplinehook.png[800]
+---
+
 
 
 === Comparing different approaches 
