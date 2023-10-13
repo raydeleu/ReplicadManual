@@ -653,7 +653,7 @@ The `.intersect()` method can be used to create shapes based on the intersection
 
 ---
 ._Creating a curved slot using an intersection and union of drawings_
-image::/images/sector_intersection.png[width = 800]
+image::/images/sector_intersection1.png[width = 800]
 --- 
 
 <<<
