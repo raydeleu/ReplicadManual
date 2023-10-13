@@ -276,8 +276,36 @@ let sketch = new Sketcher("XZ",-5)
 .closeWithMirror()          // closes the sketch with mirror on axis from start to end
 
 ----
+
+The definition of a sketch refers to a plane in 3D space where the sketch is drawn. Most often this will be either the "XY" plane (top view), the "XZ" plane (front view) or the "XY" plane (side view). It is also possible to define an offset to these planes, as was done in the code sample above.  
+
+An alternative and often preferred method to create a sketch is to use the function `draw()` to create a drawing. 
+A drawing can be understood as an adapted version of a sketch. A sketch starts with identifying the sketching plane first and then defining a wire. As the plane is defined up front, the sketch is in fact a 3D shape from its origin. In contrast a drawing is considered a pure 2D shape that can be placed on a plane after its creation. Compared to a sketch a drawing has the following advantages: 
+
+* drawings can be translated, rotated (in 2D space) and scaled;
+* drawings can be used in 2D boolean operations;
+* drawings can be exported directly in 2D formats;
+* drawings can be placed on other shapes, not only planes
+
+The drawing can be defined with the `draw()` function. As this function already includes the creation of a new object the `new` keyword is not needed. 
+
+[source, javascript]
+----
+const shape1 = draw()
+    .lineTo([20,0])
+    .line(0,5)
+    .hLine(10)
+    .vLine(5)
+    .polarLineTo([22,45])
+    .polarLine(10,150)
+    .halfEllipse(-10, -15, 5)
+    .smoothSpline(2, -5)
+    .close() 
+----    
+
 <<<
-Use the following ".methods" to describe the sketch: 
+
+There are a number of ".methods" to define a sketch that can be used either on a `new Sketcher()` object or on a `draw()` object. These will be explained in the following paragraphs. 
 
 
 === Lines
@@ -339,6 +367,8 @@ function main()
     return circle
 }
 ``` 
+
+The following code shows some examples of the methods to sketch arcs.  
 
 ``` javascript
 const {draw, Sketcher} = replicad
@@ -510,16 +540,12 @@ const main = () => {
     { shape: s3, color: "red", name: "Rounded corners" },
   ];
 };
-
-``` 
-
-
-
-
-
+```
 
 <<<
-== Pre-baked sketches
+
+=== Pre-baked sketches and drawings
+The methods described in the previous chapter contain the building blocks that can be used to create any sketch or drawing. To simplify the creation of standard shapes like rectangles, circles and ellipses, some standard functions are available in Replicad. The function encapsulates the process to create a sketch or drawing, so only using the function with the required parameters is sufficient to create a sketch. Note that the `draw()` functions still have to be placed on a plane before they can be used to create 3D shapes. 
 
 image::/images/baked-sketch.png[width=650]
 
@@ -535,40 +561,24 @@ m| sketchFaceOffset(shape,thickness)                | create a sketch by definin
 m| sketchParametricFunction(function,{planeconfig},namedParameters?,approximation?| create a sketch of a parametric function
 |===
 
-<<< 
-== Create a drawing
-A drawing can be understood as an adapted version of a sketch. A sketch starts with identifying the sketching plane first and then defining a wire. As the plane is defined up front, the sketch is in fact a 3D shape from its origin. In contrast a drawing is considered a pure 2D shape that can be placed on a plane after its creation. Compared to a sketch a drawing has the following advantages: 
+Similarly as for the sketches, some pre-baked drawings are available to speed-up the creation of standard shapes. As the draw() object also allows boolean operations the creation of more complex shapes can be achieved by combining a number of standard shapes. 
 
-* drawings can be translated, rotated (in 2D space) and scaled;
-* drawings can be used in 2D boolean operations;
-* drawings can be exported directly in 2D formats;
-* drawings can be placed on other shapes, not only planes
-
-The drawing can be defined with the `draw()` function. As this function already includes the creation of a new object the `new` keyword is not needed. 
-
-[source, javascript]
-----
-const shape1 = draw()
-    .lineTo([20,0])
-    .line(0,5)
-    .hLine(10)
-    .vLine(5)
-    .polarLineTo([22,45])
-    .polarLine(10,150)
-    .halfEllipse(-10, -15, 5)
-    .smoothSpline(2, -5)
-    .close() 
-----    
+[cols="1,3",stripes=even]
+|===
+m| drawRoundedRectangle(length, width, radius) | Draw a rounded rectangle centered at [0,0] 
+m| drawSingleCircle(radius)                 | Creates the `Drawing` of a circle as one single curve. The circle is centered on [0, 0]
+m| drawCircle(radius)                       | 
+m| drawSingleEllipse(majRadius,minRadius)   | Creates the `Drawing` of an ellipse as one single curve. The ellipse is centered on [0, 0], with axes aligned with the coordinates.
+m| drawPolysides(radius, sidesCount,sagitta = 0) | Creates the `Drawing` of an polygon in a defined plane. The sides of the polygon can be arcs of circle with a defined sagitta. The radius defines the out radius of the polygon without sagitta. 
+m| drawText("text",{ startX = 0, startY = 0, fontSize = 16, fontFamily = "default" }| Draw a 2D text. The options can be used to adjust location, fontsize and font. 
+m| drawParametricFunction(function, {options}) | Draw a parametric function with variable t. With the option it is possible to adjust the number of intermediate points that are used { pointsCount = 400, start = 0, stop = 1 } and the type of approximation of the curve. 
+m| drawPointsInterpolation(points2D[],{approximationConfig:})  | Draw a bSpline through the array of points 
+|===
 
 
 === Methods for drawings
-As a drawing is a type of sketch (that is not yet assigned to a plane) the methods described earlier to create a sketch such as 
 
-* <<Lines>> Lines 
-* <<Arcs and ellipses>> Arcs and ellipses
-* <<Free form curves>>  Free form curves
-
-can also be used to define a drawing. The draw() object also supports some additional methods: 
+In the introduction to the chapter on sketches and drawings it was explained that drawings support some additional methods compared to sketches. These methods are listed in the following table. 
 
 [cols="1,3",stripes=even]
 |===
@@ -587,22 +597,7 @@ m| .toSVGPaths()                            | format the drawing as a list of SV
 m| .toSVGViewBox                            | return the SVG viewbox that corresponds to this drawing
 |=== 
 
-The boolean operations `cut`, `fuse` and `intersect` provide options to shortcut the creation of complicated drawings without the need for complex geometric calculations. This will be shown in the next section. 
-
-=== Pre-baked drawings
-Similarly as for the sketches, some pre-baked drawings are available to speed-up the creation of standard shapes. As the draw() object also allows boolean operations the creation of more complex shapes can be achieved by combining a number of standard shapes. 
-
-[cols="1,3",stripes=even]
-|===
-m| drawRoundedRectangle(length, width, radius) | Draw a rounded rectangle centered at [0,0] 
-m| drawSingleCircle(radius)                 | Creates the `Drawing` of a circle as one single curve. The circle is centered on [0, 0]
-m| drawCircle(radius)                       | 
-m| drawSingleEllipse(majRadius,minRadius)   | Creates the `Drawing` of an ellipse as one single curve. The ellipse is centered on [0, 0], with axes aligned with the coordinates.
-m| drawPolysides(radius, sidesCount,sagitta = 0) | Creates the `Drawing` of an polygon in a defined plane. The sides of the polygon can be arcs of circle with a defined sagitta. The radius defines the out radius of the polygon without sagitta. 
-m| drawText("text",{ startX = 0, startY = 0, fontSize = 16, fontFamily = "default" }| Draw a 2D text. The options can be used to adjust location, fontsize and font. 
-m| drawParametricFunction(function, {options}) | Draw a parametric function with variable t. With the option it is possible to adjust the number of intermediate points that are used { pointsCount = 400, start = 0, stop = 1 } and the type of approximation of the curve. 
-m| drawPointsInterpolation(points2D[],{approximationConfig:})  | Draw a bSpline through the array of points 
-|===
+The boolean operations `cut`, `fuse` and `intersect` provide options to shortcut the creation of complicated drawings without the need for complex geometric calculations. 
 
 Using boolean functions and the pre-baked drawings of a circle and rectangle, creating a shape like an axle with a keyway is very simple. Notice in de code below that a drawing needs to be placed on a plane before any other method can be applied to it. 
 
