@@ -500,6 +500,8 @@ return [
 
 image::/images/curves.png[width=650]
 
+Free form curves can be created with the methods listed below. 
+
 [cols="1,3",stripes=even]
 |===
 m| .bezierCurveTo([x,y],points[])                       | Bezier curve to end along points[]
@@ -509,6 +511,9 @@ m| .smoothSplineTo([x,y],splineconfig)                  | smooth spline to end, 
 m| .smoothSpline(dx,dy,splineconfig)                    | smooth spline to end, absolute coordinates 
 m|                                                      m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
 |===
+
+A Bezier curve is a type of curve that is defined by a set of control points. It was developed by French engineer Pierre Bezier for use in the design of Renault cars in the 1960s. The important feature of a Bezier curve is that the control points influence the shape of the curve, but the curve does not necessarily pass through these points. 
+
 
 === Comparing different approaches 
 
