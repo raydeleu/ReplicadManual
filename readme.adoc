@@ -377,7 +377,7 @@ The definition of so-called sagitta arcs is equally difficult. Again it helps to
 
 ---
 ._Examples of arcs, created with code below_ 
-image::/image/arc-examples.png[]
+image::/images/arc-examples.png[]
 ---
 
 ``` javascript
