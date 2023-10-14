@@ -625,16 +625,16 @@ In the introduction to the chapter on sketches and drawings it was explained tha
 
 [cols="1,3",stripes=even]
 |===
-m| .clone()                                 | 
+m| .clone()                                 | create a copy of the shape 
 m| .mirror([center/dir],[origin],mode? )    | mode? "center" or "plane"  
-m| .translate(xDist,yDist)                  | 
-m| .rotate(angle,[center])                  |
-m| .stretch(ratio,direction,origin)         | 
+m| .translate(xDist,yDist)                  | translate the shape 
+m| .rotate(angle,[center])                  | rotate the shape
+m| .stretch(ratio,direction,origin)         | scale the shape in a single direction
 m| .cut(cuttingDrawing)                     | create a 2D boolean where the drawing listed as an argument to this method is subtracted from the drawing that this method is acting on.     
-m| .intersect(drawing)                      |   
+m| .intersect(drawing)                      | create a 2D intersection between two drawings   
 m| .fuse(other)                             | create a 2D boolean where the drawing listed as an argument is fused to the drawing that this method is acting on
 m| .sketchOnFace(face,scaleMode)            | The scale mode is "original" for global coordinates, "bounds" for following UV of the receiving face or "native" for the default UV parameters of opencascade 
-m| .sketchOnPlane                           | 
+m| .sketchOnPlane                           | place the drawing on a plane 
 m| .toSVG(margin)                           | format the drawing as an SVG image
 m| .toSVGPaths()                            | format the drawing as a list of SVG paths
 m| .toSVGViewBox                            | return the SVG viewbox that corresponds to this drawing
