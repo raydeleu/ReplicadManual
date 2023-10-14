@@ -526,7 +526,7 @@ It is not always necessary to use the configuration at the begin and end point o
 ---
 ._Using the smoothSpline between two arcs without config_
 [#mouse]
-image::/images/mouse.png
+image::/images/mouse.png[]
 ---
 
 
