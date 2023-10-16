@@ -521,7 +521,7 @@ The `.smoothSpline` method defines a curve that passes through each point. The s
 image::/images/smoothsplinehook.png[800]
 ---
 
-It is not always necessary to use the configuration at the begin and end point of a smoothSpline. In the example in <<mouse>> the `.smoothSpline` method is used between two arcs. Perhaps it is just luck, but here no additional configuration was necessary. 
+It is not always necessary to use the configuration at the begin and end point of a smoothSpline. In the example in <<mouse>> the `.smoothSpline` method is used between two arcs. The `smoothSpline` adapts to the tangent of the previous line segment. Without any previous line segment it uses a tangent of 0 degrees, i.e. in the x-direction (assuming a drawing area aligned with x,y coordinates). The smoothSpline does not adjust the endTangent to the next segment, so without any specification the endTangent is 0 degrees, along the x-axis. In <<mouse>> this yields the intended result without any additional configuration. 
 
 ---
 ._Using the smoothSpline between two arcs without config_
