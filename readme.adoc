@@ -681,7 +681,7 @@ image::/images/sector_intersection1.png[width = 800]
 
 The following code snippet shows the use of the 2D offset function. Offset only works on a closed curve. The curve is offset with radius r, positive values create an offset outward of the curve, negative values inward. When offsetting outward, the curve is automatically rounded with the radius r. In the code example a rounded rectangle is created by drawing a very thin rectangle, then applying an offset of 5 mm, resulting in a shape with a height of 10 mm and corners rounded with a radius of 5 mm. Then an additional shape is created with an offset of 2 mm. Finally the original shape is subtracted from the offset shape to create a thin walled shape.  
 
-[code, javascript]
+[source, javascript]
 ----
 const {draw} = replicad
 
