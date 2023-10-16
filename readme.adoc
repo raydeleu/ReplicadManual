@@ -626,6 +626,7 @@ In the introduction to the chapter on sketches and drawings it was explained tha
 [cols="1,3",stripes=even]
 |===
 m| .clone()                                 | create a copy of the shape 
+m| .offset(r)                               | create a 2D offset with radius r, shape is rounded with radius, negative inwards
 m| .mirror([center/dir],[origin],mode? )    | mode? "center" or "plane"  
 m| .translate(xDist,yDist)                  | translate the shape 
 m| .rotate(angle,[center])                  | rotate the shape
@@ -677,6 +678,40 @@ The `.intersect()` method can be used to create shapes based on the intersection
 ._Creating a curved slot using an intersection and union of drawings_
 image::/images/sector_intersection1.png[width = 800]
 --- 
+
+The following code snippet shows the use of the 2D offset function. Offset only works on a closed curve. The curve is offset with radius r, positive values create an offset outward of the curve, negative values inward. When offsetting outward, the curve is automatically rounded with the radius r. In the code example a rounded rectangle is created by drawing a very thin rectangle, then applying an offset of 5 mm, resulting in a shape with a height of 10 mm and corners rounded with a radius of 5 mm. Then an additional shape is created with an offset of 2 mm. Finally the original shape is subtracted from the offset shape to create a thin walled shape.  
+
+[code, javascript]
+----
+const {draw} = replicad
+
+function main()
+{
+// frontview of receiver is just a rectangle with height 0.1 mm
+let frontView = draw()
+.movePointerTo([-20,7])
+.hLine(40)
+.vLine(0.1)
+.hLine(-40)
+.close()
+
+let contourBody = frontView.offset(5) // shape is offset with r=5
+let contourHolder = contourBody.offset(2) // holder is offset with r=2
+// not that drawings have to placed on plane before extruding
+let gpsFront = contourBody.sketchOnPlane("YZ")
+let holderFront = contourHolder.sketchOnPlane("YZ")
+let gpsReceiver = gpsFront.extrude(70)
+let gpsHolder = holderFront.extrude(72).cut(gpsReceiver)
+
+return [gpsReceiver,gpsHolder]
+}
+---- 
+
+
+
+
+
+
 
 <<<
 == Create 3D face/wire
