@@ -708,7 +708,7 @@ return [gpsReceiver,gpsHolder]
 ---- 
 
 ---
-._Using a thin walled shape with an offset_ 
+._Creating a thin walled shape with an offset_ 
 image::/images/offset2D.png[width=500]
 ---
 
