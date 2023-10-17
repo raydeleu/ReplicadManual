@@ -529,6 +529,50 @@ It is not always necessary to use the configuration at the begin and end point o
 image::/images/mouse.png[]
 ---
 
+The code below illustrates how a `smoothSpline` curve is either tangent to the x-axis or follows the tangent of the previous line segment. It also demonstrates that with a factor of 2.63 the resulting curve is very close to a perfect arc.  
+
+[source, javascript]
+----
+const {draw} = replicad
+
+function main()
+{
+let spline = draw()
+.smoothSplineTo([20,0],
+{startTangent:50, startFactor: 1.8, 
+endTangent:-50, endFactor: 1.8}).done()
+
+let  spline2 = draw()
+.smoothSplineTo([10,5])
+.smoothSplineTo([20,0]).done()
+
+let spline3 = draw()
+.lineTo([0,0.1])
+.smoothSplineTo([10,5])
+.smoothSplineTo([20,0.4])
+.lineTo([20,0]).done()
+
+let spline4 = draw()
+.smoothSplineTo([0,10],
+{startTangent:180, startFactor: 2.63, 
+endTangent:0, endFactor: 2.63})
+.done().translate(10.0)
+
+let arc = draw()
+.threePointsArcTo([0,10],[-5,5])
+.done().translate(10,0)
+
+return [{shape: spline, color: "red"},
+{shape: spline2, color: "blue"},
+{shape: spline3, color: "green"},
+{shape: spline4, color: "black"},
+{shape: arc, color: "purple"}]
+}
+----
+
+
+
+
 
 === Comparing different approaches 
 
