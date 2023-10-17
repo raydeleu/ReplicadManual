@@ -513,6 +513,11 @@ m|                                                      m| splineconfig = {start
 
 A Bezier curve is a type of curve that is defined by a set of control points. It was developed by French engineer Pierre Bezier for use in the design of Renault cars in the 1960s. The important feature of a Bezier curve is that the control points influence the shape of the curve, but the curve does not necessarily pass through these points. In case of a quadratic Bezier curve there is only one control point between the startpoint and endpoint of the curve which defines the direction of the curve at both ends. Using a cubic Bezier curve it is possible to adjust the slope of the curve at both ends. The control points may be considered as a kind of magnet, pulling the curve towards it. The further the control points are placed, the stronger the curve will deviate from a straight line between the begin and endpoints. The `.bezierCurveTo` method allows a large array of control points to define the shape of the curve, but adjusting these endpoints is difficult without being able to judge the effect of these points. 
 
+--- 
+._Illustration of different Bezier curves_
+image::bezier_curves.png[width=700]
+---
+
 The `.smoothSpline` method defines a curve that passes through each point. The shape of the curve can be adjusted using the spline configuration. An example of the application of this function is shown in <<smoothspline>>. The startTangent and endTangent define the angle of the curve at its starting and end point. The factor defines how far the curve is drawn into the direction of the tangent. The larger the factor, the longer the curve wants to proceed in the direction of the specified tangent. 
 
 ---
@@ -530,6 +535,11 @@ image::/images/mouse.png[]
 ---
 
 The code below illustrates how a `smoothSpline` curve is either tangent to the x-axis or follows the tangent of the previous line segment. It also demonstrates that with a factor of 2.63 the resulting curve is very close to a perfect arc.  
+
+---
+._Comparison of smoothSpline curves_
+image::smoothspline.png[width=800]
+---
 
 [source, javascript]
 ----
