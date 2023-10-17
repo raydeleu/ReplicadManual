@@ -515,7 +515,7 @@ A Bezier curve is a type of curve that is defined by a set of control points. It
 
 --- 
 ._Illustration of different Bezier curves_
-image::bezier_curves.png[width=700]
+image::/images/bezier_curves.png[width=700]
 ---
 
 The `.smoothSpline` method defines a curve that passes through each point. The shape of the curve can be adjusted using the spline configuration. An example of the application of this function is shown in <<smoothspline>>. The startTangent and endTangent define the angle of the curve at its starting and end point. The factor defines how far the curve is drawn into the direction of the tangent. The larger the factor, the longer the curve wants to proceed in the direction of the specified tangent. 
@@ -538,7 +538,7 @@ The code below illustrates how a `smoothSpline` curve is either tangent to the x
 
 ---
 ._Comparison of smoothSpline curves_
-image::smoothspline.png[width=800]
+image::/images/smoothspline.png[width=800]
 ---
 
 [source, javascript]
