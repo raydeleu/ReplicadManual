@@ -948,7 +948,7 @@ Faces can be selected using a `FaceFinder` object or using the so-called arrow n
 // create a variable as a new object to which a selection-method is applied
 let foundFaces = new FaceFinder().inPlane("XZ",35)
 // use this variable as an input to create a shell 
-let hollowShape = solidShape.shell(thickness, foundFaces,{tolerance:number})
+let hollowShape = solidShape.shell(thickness, (f)=>foundFaces,{tolerance:number})
 
 // use the arrow notation to select a face directly as parameter to a method to change a shape 
 let hollowShape = solidShape.shell(thickness, (f) => f.inPlane("YZ",-20),{tolerance:number})
