@@ -982,7 +982,7 @@ m| .ofLength(number)                                    | find all edges with a 
 m| .containsPoint([0,-15,80])                           | find edges that go exactly through a point
 m| .atDistance(distance,point)                          | same as .containsPoint but allows some margin around the defined point 
 m| .inBox(corner1,corner2)                              | finds all edges that are (partly) within a box
-m| .inList(elementList[])                               | ?? seems not to work ?? 
+m| .inList(elementList[])                               | see issue https://github.com/sgenoud/replicad/issues/13, does not work yet
 m| .inPlane(inputPlane,origin)                          | inPlane("XY",30), find all edges that are exactly in the defined plane
 m| .ofCurveType(       )                                | find all edges of a certain curve type. "LINE", "BSPLINE_CURVE", "CIRCLE"
 m| .parallelTo(plane / StandardPlane e.g. "XY")         | find all edges parallel to a stanadard plane
@@ -991,7 +991,9 @@ m| .shouldKeep todo?                                    | tbd
 
 [NOTE]
 ====
-When you reference faces or edges with their index, using the `.inList` method, you may experience the issue of the Topological Naming Problem. If the change to the design parameters results in a changing number of edges or faces, the fillet will no longer be applied to the correct edges. So use this method with care, if you only allow minor changes to the design such as using a different tolerance between two parts. 
+When you reference faces or edges with their index, using the `.inList` method, you may experience the issue of the Topological Naming Problem. If the change to the design parameters results in a changing number of edges or faces, the fillet will no longer be applied to the correct edges. So use this method with care, if you only allow minor changes to the design such as using a different tolerance between two parts. Note that this selector currently does not work as expected, see issue https://github.com/sgenoud/replicad/issues/13. 
+
+
 ====
 
 
