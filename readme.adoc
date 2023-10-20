@@ -608,8 +608,8 @@ m| drawSingleCircle(radius)                 | Creates the `Drawing` of a circle 
 m| drawCircle(radius)                       | 
 m| drawSingleEllipse(majRadius,minRadius)   | Creates the `Drawing` of an ellipse as one single curve. The ellipse is centered on [0, 0], with axes aligned with the coordinates.
 m| drawPolysides(radius, sidesCount,sagitta = 0) | Creates the `Drawing` of an polygon in a defined plane. The sides of the polygon can be arcs of circle with a defined sagitta. The radius defines the out radius of the polygon without sagitta. 
-m| drawText("text",{ startX = 0, startY = 0, fontSize = 16, fontFamily = "default" }| Draw a 2D text. The options can be used to adjust location, fontsize and font. 
-m| drawParametricFunction(function, {options}) | Draw a parametric function with variable t. With the option it is possible to adjust the number of intermediate points that are used { pointsCount = 400, start = 0, stop = 1 } and the type of approximation of the curve. 
+m| drawText("text",{ startX: 0, startY: 0, fontSize: 16, fontFamily: "default" }| Draw a 2D text. The options can be used to adjust location, fontsize and font. 
+m| drawParametricFunction(function, {options}) | Draw a parametric function with variable t. With the option it is possible to adjust the number of intermediate points that are used { pointsCount : 400, start : 0, stop : 1 } and the type of approximation of the curve. 
 m| drawPointsInterpolation(points2D[],{approximationConfig:})  | Draw a bSpline through the array of points 
 |===
 
