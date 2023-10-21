@@ -286,7 +286,7 @@ A drawing can be understood as an adapted version of a sketch. A sketch starts w
 * drawings can be exported directly in 2D formats;
 * drawings can be placed on other shapes, not only planes
 
-The drawing can be defined with the `draw()` function. As this function already includes the creation of a new object the `new` keyword is not needed. 
+The drawing can be defined with the `draw()` function. As this function already includes the creation of a new object the `new` keyword is not needed. The starting point of the drawing can be defined by adding a 2D point as a parameter to the `draw()`, for example `draw([5,5])`.   
 
 [source, javascript]
 ----
