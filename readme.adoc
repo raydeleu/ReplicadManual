@@ -302,6 +302,28 @@ const shape1 = draw()
     .close() 
 ----    
 
+After its creating, a drawing has to be placed on a plane, using the method `.sketchOnPlane`. Through this method, a drawing can also be translated and rotated in 3D space. You can achieve this by translating and pivoting the plane on which the drawing is placed. For example, using the following code: 
+
+[source, javascript]
+----
+  const bottomPlane = makePlane().pivot(20, "Y").translateZ(80);
+  const bottomCircle = drawCircle(9).sketchOnPlane(bottomPlane);
+----
+
+first a Plane is defined, which is first pivoted by 20 degrees along the Y-axis and then translated up 80 mm on the Z-axis. Note that you can not translate or rotate the sketch after it is placed on a plane. The full set of commands to create and position planes is : 
+
+[cols="1,3",stripes=even]
+|===
+m| makePlane                      | create a basic plane, default is on the XY plane
+m| .pivot(degrees, axis)          | rotate the plane x degrees around the given axis
+m| .translate                     | translate the plane 
+m| .translateZ                    | translate the plane along the Z-axis
+m| .translateY                    | translate the plane along the Y-axis
+m| .translateX                    | translate the plane along the X-axis
+|===
+
+
+
 <<<
 
 There are a number of ".methods" to define a sketch that can be used either on a `new Sketcher()` object or on a `draw()` object. These will be explained in the following paragraphs. 
