@@ -314,7 +314,8 @@ first a Plane is defined, which is first pivoted by 20 degrees along the Y-axis 
 
 [cols="1,3",stripes=even]
 |===
-m| makePlane                      | create a basic plane, default is on the XY plane
+m| .sketchOnPlane(plane,offset)   | place the drawing on a given plane 
+m| makePlane()                    | create a basic plane, default is on the XY plane
 m| .pivot(degrees, axis)          | rotate the plane x degrees around the given axis
 m| .translate                     | translate the plane 
 m| .translateZ                    | translate the plane along the Z-axis
@@ -322,7 +323,7 @@ m| .translateY                    | translate the plane along the Y-axis
 m| .translateX                    | translate the plane along the X-axis
 |===
 
-
+A standard plane is identified "XY", "XZ", "YZ", but using the function `makePlane()` you can also define a new plane with its own name. 
 
 <<<
 
