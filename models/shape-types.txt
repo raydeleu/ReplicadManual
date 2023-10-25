@@ -1,0 +1,32 @@
+OpenCascade used the following hierarchy in the definition of shapes. For each shape it is shown which type of shape is created by extruding the original shape. 
+
+
+| shape 	| description 								| extruded shape  | 
+|-----------|-------------------------------------------|-----------------|  
+|vertex 	| point in 3D space 						|	edge     	  |
+|edge   	| connection between two vertices 	      	|	face   		  |
+|wire 		| sequence of edges connected by vertices	|   shell		  |
+|face		| part of a surface, bounded by closed wires| solid		      |
+|shell		| set of faces connected by edges			| compound of solids|
+|solid 	 	| part of 3D space bounded by shells		| 				  |
+|compsolid	| set of solids, connected by their faces   |				  |
+|compound 	| set of any shapes listed above  			|				  |
+
+In RepliCad the terminology and behaviour are different from that in OpenCascade, although it uses the OpenCascade shape types in the background. 
+
+
+
+| shape 	| description 								| extruded shape  | 
+|-----------|-------------------------------------------|-----------------|  
+|vertex 	| can be created with makeVertex  			|	n/a				|	|innershape | result of draw() or new Sketcher 			|
+|edge   	| connection between two vertices 	      	|	face   		  |
+|wire 		| sequence of edges connected by vertices	|   not possible	|
+|face		| a closed sketch or drawing behaves as face| 	solid		|
+|shell		| created as offset from defined face		|   n/a			|
+|solid 	 	| part of 3D space bounded by shells		| 				|
+|compsolid	| set of solids, connected by their faces   |				|
+|compound 	| set of any shapes listed above  			|				|
+
+
+
+  
