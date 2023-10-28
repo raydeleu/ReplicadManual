@@ -1239,6 +1239,39 @@ After the design the part is often exported to a 3D printer or CNC machine in a 
 
 If you want to know more on manufacturing techniques, many resources can be found on the internet. At https://www.making.unsw.edu.au/learn/ there are some short tutorials on different manufacturing techniques to produce your own part. 
 
+== New functions
+
+=== Define points based on directions and distances
+
+[source, javascript]
+----
+function Polar(currentPoint,distance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + distance * Math.cos(angleRad);
+    newPoint[1]  = currentPoint[1] + distance * Math.sin(angleRad);
+    return newPoint
+}
+
+function PolarX(currentPoint,xdistance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + xdistance;
+    newPoint[1]  = currentPoint[1] + xdistance * Math.tan(angleRad);
+    return newPoint
+}
+
+function PolarY(currentPoint,ydistance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + ydistance/Math.tan(angleRad);
+    newPoint[1]  = currentPoint[1] + ydistance;
+    return newPoint
+}
+----
 
 
 
