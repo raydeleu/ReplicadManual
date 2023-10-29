@@ -1273,6 +1273,32 @@ function PolarY(currentPoint,ydistance,angleDegToX)
 }
 ----
 
+=== Circles joined with tangent lines
+
+[source, javascript]
+----
+function dropView(radius1, radius2, distance)
+{
+    let sinus_angle = (radius1 - radius2) / distance
+    let angle = Math.asin(sinus_angle);
+
+    // points of outer contour of the lever
+    let p1 = [radius1 * Math.sin(angle), radius1 * Math.cos(angle)];
+    let p2 = [distance + radius2 * Math.sin(angle), radius2 * Math.cos(angle)];
+    let p3 = [distance + radius2, 0];
+    let p4 = [distance + radius2 * Math.sin(angle), - radius2 * Math.cos(angle)];
+    let p5 = [radius1 * Math.sin(angle), - radius1 * Math.cos(angle)];
+    let p6 = [- radius1, 0 ];
+
+    let dropDrawing = draw(p1)
+                    .lineTo(p2)
+                    .threePointsArcTo(p4,p3)
+                    .lineTo(p5)
+                    .threePointsArcTo(p1,p6)
+                    .close();
+    
+    return dropDrawing}
+----
 
 
 
