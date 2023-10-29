@@ -1198,13 +1198,13 @@ npm install
 npm start
 ```
 
-The first command only works if you have placed the folder with the source code directly in your home directory. Else you have to issue the `cd` command with the complete path to the folder location. The next command, `npm install` starts the building and installing process for the application. It uses the file `package.json` in the folder where the command is issued to determine which actions should be performed. Installing the application can take quite some while. Just wait patiently until the process is completed. Then issue the next command `npm start`. This command starts the webserver with the application that you just created. You can open a browser window with the address http://localhost:5555/ . (If you want to go to the workbench directly, enter the address `http://localhost:5555/workbench`). You can also use the shortcut from the terminal window by pressing the ```o```-key. 
+The first command only works if you have placed the folder with the source code directly in your home directory. Else you have to issue the `cd` command with the complete path to the folder location. The next command, `npm install` starts the building and installing process for the application. It uses the file `package.json` in the folder where the command is issued to determine which actions should be performed. Installing the application can take quite some while. Just wait patiently until the process is completed. Then issue the next command `npm start`. This command starts the webserver with the application that you just created. You can open a browser window with the address http://localhost:5555/ . (If you want to go to the workbench directly, enter the address `http://localhost:5555/workbench`). You can also use the shortcut from the terminal window by pressing the `o`-key. 
 
 You have to keep your terminal window open. 
 
 image::/images/npm_start.png[]
 
-When you want to stop the application you can issue ```ctrl```-```c```in the terminal window or use the shortcut ```q```-key. At first it might seem that you browser window is still working, but as soon as you refresh the page you will receive the message that the website is no longer responding. 
+When you want to stop the application you can issue ```ctrl```-```c``` in the terminal window or use the shortcut ```q```-key. At first it might seem that you browser window is still working, but as soon as you refresh the page you will receive the message that the website is no longer responding. 
 
 [CAUTION]
 ====
@@ -1274,6 +1274,14 @@ function PolarY(currentPoint,ydistance,angleDegToX)
 ----
 
 === Circles joined with tangent lines
+
+This function can be used to draw to circle-arcs connected with tangent lines, as an outline for a lever or a droplet. The circle with `radius1` is centered on the origin, the second arc is centered along the x-axis at a distance called `distance`. 
+
+---
+._Creating a drop shape for a lever_
+image::/images/drop.png[]
+--- 
+
 
 [source, javascript]
 ----
