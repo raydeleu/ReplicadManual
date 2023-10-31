@@ -532,6 +532,7 @@ m| .cubicBezierCurveTo([x,y],p_ctrl_start,p_ctrl_end)   | Cubic bezier curve wit
 m| .smoothSplineTo([x,y],splineconfig)                  | smooth spline to end, absolute coordinates 
 m| .smoothSpline(dx,dy,splineconfig)                    | smooth spline to end, absolute coordinates 
 m|                                                      m| splineconfig = {startTangent:angle,endTangent:angle / "symmetric"}
+m| drawPointsInterpolation(array[[pt1],[pt2]..[ptn]])   | create a drawing of a curve that is an interpolation of all points in the array| 
 |===
 
 A Bezier curve is a type of curve that is defined by a set of control points. It was developed by French engineer Pierre Bezier for use in the design of Renault cars in the 1960s. The important feature of a Bezier curve is that the control points influence the shape of the curve, but the curve does not necessarily pass through these points. In case of a quadratic Bezier curve there is only one control point between the startpoint and endpoint of the curve which defines the direction of the curve at both ends. Using a cubic Bezier curve it is possible to adjust the slope of the curve at both ends. The control points may be considered as a kind of magnet, pulling the curve towards it. The further the control points are placed, the stronger the curve will deviate from a straight line between the begin and endpoints. The `.bezierCurveTo` method allows a large array of control points to define the shape of the curve, but adjusting these endpoints is difficult without being able to judge the effect of these points. 
@@ -602,6 +603,18 @@ return [{shape: spline, color: "red"},
 {shape: arc, color: "purple"}]
 }
 ----
+
+The function `drawPointsInterpolation(array of points)` is a drawing function that draws a curve through all points listed in the array of 2D points. The code sample below shows an example how this function can be used to create the shape of an airfoil by creating an array that lists 2D points along the contour of the airfoil. Note that the curve starts and ends at the sharp trailing edge of the airfoil. The last point of the array has to be identical to the first point to create a closed curve for extrapolation. Closing the curve in another way is difficult this drawing is created with a function, not a method that can be followed by any of the other drawing methods listed above.   
+
+[source, javascript]
+----
+let chord = 100 
+let span  = 100
+let airfoilPointsLarge = airfoilPoints.map(function([x,y]){return [x*chord,y*chord]}) 
+let airfoil = drawPointsInterpolation(airfoilPointsLarge).sketchOnPlane("XZ");
+let wing = airfoil.extrude(span)
+----
+
 
 <<<
 
