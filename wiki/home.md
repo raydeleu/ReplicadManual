@@ -8,7 +8,7 @@ This wiki contains a manual how to use the Replicad library to create 3D parts f
 
 [[3. Sketch]]
 
-[[4. Create 3D face wire]]
+[[4. Create 3D wires and faces]]
 
 [[5. Create solid shapes]]
 
