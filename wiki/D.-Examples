@@ -1,0 +1,911 @@
+## D.1 Three arm bracket
+
+This is the shape from Solidworks Model Mania 2020. I had to make some adjustments to the model to make it work. The largest difference is that the cutout in each arm does end 1 mm before reaching the cylindrical part in the middle. 
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/101065c2-4504-4bcc-a2fd-a462ac15cdf8)
+
+The model files can be found here: 
+https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2020-Phase1-drawing.png
+https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2020-Phase2-drawing.png
+
+As usual the fillets posed the biggest challenge. I solved this by rounding the cutout first before subtracting it from the main shape. Furthermore I cut the holes after filleting the shape to avoid the need to select the edges explicitly. 
+
+The code below contains some failed fillet experiments. The red shape shows the part that I used to create the cutouts in each arm. The green box shows a selection box that I tried to select only a few edges. Strangely enough this failed, whereas filleting the whole shape and then cutting the holes that should not be rounded succeeded. Note that I still had to restrict the rounding within a box (using the `e.InBox` method to avoid rounding the bottom of the shape. 
+
+``` javascript
+// Three arm as created for Model Mania 2020
+// https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2020-Phase1-drawing.png
+// https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2020-Phase2-drawing.png
+// free interpretation as not all fillets were possible in Replicad
+// and cutout up to central cylinder posed a problem
+
+function main({Sketcher, 
+sketchCircle,Lever,
+makeCylinder,
+makeBaseBox},{})
+{
+
+let r1  = 11;
+let r2  = 6;
+let d   = 35;
+let t   = 3;
+let h   = 22;
+let fl  = 30;
+let bb = 16/2; 
+let sb = 4.5/2;
+let cb = 8/2; 
+
+// function to create a lever consisting of two circles connected with tangent lines 
+// 
+// radius1 = radius of circle that is located around the origin
+// radius2 = radius of circle that is located at distance D along x-axis
+// distance = distance between the two circles
+// leverheight = distance over which lever is extruded in z-direction
+// 
+// note that this function creates a closed shape. If you want holes you have to create two cylinders at 
+// the correct position, extrude these a bit more than the leverheight and subtract these from the shape.  
+
+function Lever(radius1, radius2, distance, leverHeight)
+{
+    let sinus_angle = (radius1 - radius2) / distance
+    let angle = Math.asin(sinus_angle);
+
+    // points of outer contour of the lever
+    let p1 = [radius1 * Math.sin(angle), radius1 * Math.cos(angle)];
+    let p2 = [distance + radius2 * Math.sin(angle), radius2 * Math.cos(angle)];
+    let p3 = [distance + radius2, 0];
+    let p4 = [distance + radius2 * Math.sin(angle), - radius2 * Math.cos(angle)];
+    let p5 = [radius1 * Math.sin(angle), - radius1 * Math.cos(angle)];
+    let p6 = [- radius1, 0 ];
+
+    let sketchLever = new Sketcher("XY").movePointerTo(p1)
+                    .lineTo(p2)
+                    .threePointsArcTo(p4,p3)
+                    .lineTo(p5)
+                    .threePointsArcTo(p1,p6)
+                    .close();
+              
+    let leverBody = sketchLever.extrude(leverHeight);
+       
+    return leverBody
+}
+
+
+// function to create lever with holes with standard wallthickness around the holes
+// radii refer to outer radii, the holes will be radius - wallThickness
+// uses the function lever to create the basic shape 
+
+function leverHoles(radius1,radius2,distance,leverHeight,wallThickness)
+{ 
+    let leverBody = Lever(radius1,radius2,distance,leverHeight);
+
+    let orig_hole  = sketchCircle(radius1-wallThickness).extrude(leverHeight + 10);
+    let dist_hole =  sketchCircle(radius2-wallThickness).extrude(leverHeight + 10).translate([distance,0,0]);
+    let lever   = leverBody.cut(orig_hole)
+    lever       = lever.cut(dist_hole);
+    return lever
+}
+
+// function to cut part out of lever to make it lighter
+// generally the size of the radii is equal to the size of the holes in the lever
+
+
+function cutLever(r1,r2,d,h,ts,th)
+{
+    let cLever = Lever(r1-ts,r2,d,h).translate([0,0,th]);
+    cLever=cLever.cut(makeCylinder(r1+ts,h+2*th,[0,0,0],[0,0,1]));
+    cLever=cLever.cut(makeCylinder(r2+ts,h+2*th,[d,0,0],[0,0,1]));
+    return cLever
+}
+
+// create three arms, fuse them together and round the edges in z-direction
+
+let arm1 = Lever(r1,r2,d,h);
+let arm2 = Lever(r1,r2,d,h).rotate(120,[0,0,0],[0,0,1])
+let arm3 = Lever(r1,r2,d,h).rotate(240,[0,0,0],[0,0,1])
+let threeArm = arm1.fuse(arm2);
+threeArm = threeArm.fuse(arm3).fillet(fl,(e)=>e.inDirection("Z"));
+
+// cut the three arms so that they slope with 22 degrees towards the end
+
+let side = new Sketcher("XZ").movePointerTo([41,6])
+.lineTo([50,6]).lineTo([50,30]).lineTo([0,30])
+.lineTo([0,22]).lineTo([11,22]).lineTo([11,6+(30*Math.sin(22*Math.PI/180))])
+.close()
+
+let sideCutter = side.revolve()
+// NOTE: sideCutter is rotated to avoid edge over first arm!!!
+sideCutter = sideCutter.rotate(60,[0,0,0],[0,0,1]);
+threeArm = threeArm.cut(sideCutter,false,false)
+
+// fillet the top edges, leaving out the central axle
+threeArm = threeArm.fillet(1,(e)=>e.inBox([50,50,2],[-50,-50,20]));
+
+// Phase 2: make arms lighter, note that fillet is applied in this stage already
+let cutLever1 = cutLever(bb+1,cb,d,h,3,4).fillet(1);
+let cutLever2 = cutLever(bb+1,cb,d,h,3,4).rotate(120,[0,0,0],[0,0,1]).fillet(1);
+let cutLever3 = cutLever(bb+1,cb,d,h,3,4).rotate(240,[0,0,0],[0,0,1]).fillet(1);
+threeArm = threeArm.cut(cutLever1);
+threeArm = threeArm.cut(cutLever2);
+threeArm = threeArm.cut(cutLever3);
+
+let selBox = makeBaseBox(5,20,12).translate([22.5,0,9])
+// experiments to round edges
+//threeArm = threeArm.fillet(0.4,(e)=>e.inBox([20,10,3],[25,0,15]));
+//threeArm = threeArm.fillet(0.7,(e)=>e.inDirection("Z"));
+//threeArm = threeArm.fillet(0.7,(e)=>e.inPlane("XY"));
+threeArm = threeArm.fillet(1,(e)=>e.inBox([50,50,2],[-50,-50,21]))
+
+let smallBore1 = makeCylinder(sb,h,[0,0,0],[0,0,1]).translate([35,0,-5]).rotate(120,[0,0,0],[0,0,1])
+let smallBore2 = makeCylinder(sb,h,[0,0,0],[0,0,1]).translate([35,0,-5]).rotate(240,[0,0,0],[0,0,1])
+let smallBore3 = makeCylinder(sb,h,[0,0,0],[0,0,1]).translate([35,0,-5]).rotate(360,[0,0,0],[0,0,1])
+threeArm = threeArm.cut(smallBore1)
+threeArm = threeArm.cut(smallBore2)
+threeArm = threeArm.cut(smallBore3)
+
+let counterBore1 = makeCylinder(cb,h,[0,0,0],[0,0,1]).translate([35,0,4])
+let counterBore2 = makeCylinder(cb,h,[0,0,0],[0,0,1]).translate([35,0,4]).rotate(120,[0,0,0],[0,0,1])
+let counterBore3 = makeCylinder(cb,h,[0,0,0],[0,0,1]).translate([35,0,4]).rotate(240,[0,0,0],[0,0,1])
+threeArm = threeArm.cut(counterBore1)
+threeArm = threeArm.cut(counterBore2)
+threeArm = threeArm.cut(counterBore3)
+
+// create holes for axles
+let bigBore = sketchCircle(8).extrude(40).translate([0,0,-10]);
+threeArm = threeArm.cut(bigBore);
+
+let shapeArray =[{shape: threeArm, color: "steelblue"}
+//,{shape: sideCutter, color:"grey", opacity:0.5}
+,{shape: cutLever1, color:"red", opacity:0.5}
+,{shape: selBox, color:"green", opacity:0.5}
+]
+
+return shapeArray;
+
+}
+
+```
+
+## D.2 Angled bracket
+
+I created the angled bracket defined for the SolidWorks Model Mania 2001 challenge. It was indeed a challenge to model this with Replicad. I started out with combining shapes like cylinders and boxes,  but finally returned to an approach with drawings (sketches). As Solidworks supports constrained-based modelling the dimensions provided in the drawing https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2001-Phase-1.jpg are not suited to create a drawing. Therefore I created three functions that allow to define points using angles and distances, either the polar distance or one of the X or Y distances. Using this function I defined points around the contour of each drawing. 
+
+The following drawing created in SolveSpace illustrates the drawing that I needed to recreate in Replicad. The part is called "flange" in the code below.
+
+![mm20012-side](https://github.com/sgenoud/replicad/assets/38007983/b3f4abfa-0c16-4d79-9f92-3499b5bccfb0)
+
+I did not solve the following issues: 
+
+* The rib, shown in the drawing below, is defined by a height of 26 mm, following the curve of the flange and then a curve with radius 55 mm to join towards the base of the shape. I used the `tangentArc` for this curve, but this does not allow to define a radius. I eyeballed the length of the straight segment between the two curves and used this to define the point where the `tangentArc` starts. I plan to define some functions to take the tedious math out of these problems. 
+
+![mm20012-rib](https://github.com/sgenoud/replicad/assets/38007983/e4e2dbca-fde3-4219-9190-df573f4df005)
+
+* After many attempts I was not able to create the fillets between the base block, the flange and the rib. The site https://github.com/alexneufeld/FreeCAD_modelmania/tree/main/2001 shows that it should be possible with FreeCad (based on OpenCascade), so I must be doing something wrong. 
+
+Here is my end-result: 
+
+![mm2001-rc-v2](https://github.com/sgenoud/replicad/assets/38007983/ae7ee1ea-ca23-4fae-85a1-ccd0cdf84baf)
+
+And here is the code: 
+
+```javascript
+const {draw,makeCylinder,makeBaseBox} = replicad
+
+// Number of functions to make drawing easier
+function Polar(currentPoint,distance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + distance * Math.cos(angleRad);
+    newPoint[1]  = currentPoint[1] + distance * Math.sin(angleRad);
+    return newPoint
+}
+
+function PolarX(currentPoint,xdistance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + xdistance;
+    newPoint[1]  = currentPoint[1] + xdistance * Math.tan(angleRad);
+    return newPoint
+}
+
+function PolarY(currentPoint,ydistance,angleDegToX)
+{
+    let newPoint = [];
+    let angleRad = angleDegToX * Math.PI/180;
+    newPoint[0]  = currentPoint[0] + ydistance/Math.tan(angleRad);
+    newPoint[1]  = currentPoint[1] + ydistance;
+    return newPoint
+}
+
+function main()
+{
+// Model Mania 2001 part 1
+
+// break part apart into several components
+
+// cylinder
+let startPoint = [-146,0,64];
+let cylinderAngleDeg = 45
+let cylinderAngle = cylinderAngleDeg*Math.PI/180;
+let cylinderDirection = [Math.cos(cylinderAngle),0,Math.sin(cylinderAngle)]
+let cylinderHeight = 32; 
+let cylinderOuterRadius = 52/2;
+let cylinderInnerRadius = 32/2
+
+let cylinderOuter = makeCylinder(cylinderOuterRadius,
+cylinderHeight+1,startPoint,cylinderDirection) 
+// add millimeter to intrude into the flange
+let cylinderInner = makeCylinder(cylinderInnerRadius,
+cylinderHeight*2,startPoint,cylinderDirection)
+cylinderOuter = cylinderOuter.cut(cylinderInner.clone())
+// clone the inner cylinder as we want to re-use it to cut the flange
+
+// base
+let baseHeight = 20;
+let baseWidth = 96;
+let baseLength = 64;
+let baseBlock = makeBaseBox(baseHeight,baseWidth,baseLength)
+.translate([-baseHeight/2,0,0])
+
+// flange
+let flangeWidth = 64;
+let flangeRoundingTop = 64/2;
+let flangeThickness = 12;
+let flangeRounding = 15;
+let flangeLength = 146
+let pStart = [startPoint[0],startPoint[2]] // 2D representation
+
+let p1 = Polar(pStart,cylinderHeight,cylinderAngleDeg)   // middle of cylinder
+let p2 = Polar(p1,flangeRoundingTop,cylinderAngleDeg+90) // clockwise around
+let p3 = Polar(p2,flangeThickness,cylinderAngleDeg)
+let p4 = PolarY(p3,-p3[1]+baseLength,cylinderAngleDeg-90)   // note that Dy is negative! 
+let p5 = [-10,baseLength]
+let p6 = [-10,baseLength-flangeThickness]
+let p7 = PolarY(p1,-p1[1]+(baseLength-flangeThickness),cylinderAngleDeg-90)
+
+let flange = draw(p1)
+.lineTo(p2)
+.lineTo(p3)
+.lineTo(p4)
+.customCorner(flangeRounding)
+.lineTo(p5)
+.lineTo(p6)
+.lineTo(p7)
+.customCorner(flangeRounding+flangeThickness)
+.close()
+.sketchOnPlane("XZ")
+.extrude(flangeWidth)
+.translate([0,flangeWidth/2,0])
+.fillet(31.99,(e)=>e.atAngleWith("X",45).ofLength(flangeThickness))
+
+// rib 
+let ribHeight = 26;
+let ribRounding = 55;
+
+let r1 = Polar(pStart,cylinderHeight-ribHeight,45)
+let r2 = PolarY(r1,-r1[1]+(64-12-26),-45)
+let r8 = Polar(r1,ribHeight,45)
+let r3 = [r2[0]+25,r2[1]]
+let r4 = [-20,0]
+let r5 = [-10,0]
+let r6 = [-10,52]
+let r7 = PolarY(r8,+52-r8[1],-45)
+
+let rib = draw(r1)
+.lineTo(r2)
+.customCorner(53)
+.lineTo(r3)
+.tangentArcTo(r4)  // not possible to enter a ribRounding, depends on r3[1]
+.lineTo(r5)
+.lineTo(r6)
+.lineTo(r7)
+.customCorner(27)
+.lineTo(r8)
+.close()
+.sketchOnPlane("XZ")
+.extrude(12)
+.translate([0,6,0])
+
+// M6 outer 11,20mm depth 6mm dia 6.8 mm
+let holeSpacing = 60;
+let holeMarginSide = 18;
+let holeRadius = 6/2;
+let holeOuterRadius = 10/2;
+let holeMarginFront = 32;
+
+let holeCutter = makeCylinder(holeRadius,baseHeight*4,[0,-holeSpacing/2,holeMarginFront],[-1,0,0])
+let holeCutter2 = holeCutter.clone().translate([0,holeSpacing,0])
+baseBlock = baseBlock.cut(holeCutter).cut(holeCutter2) 
+
+let counterCutter = makeCylinder(holeOuterRadius,baseHeight*4,[-14,-holeSpacing/2,holeMarginFront],[-1,0,0])
+let counterCutter2 = counterCutter.clone().translate([0,holeSpacing,0])
+baseBlock = baseBlock.cut(counterCutter).cut(counterCutter2) 
+
+baseBlock = baseBlock.fuse(flange).fuse(rib).fuse(cylinderOuter)
+baseBlock = baseBlock.cut(cylinderInner)
+.fillet(2,(e)=>e.inDirection("X"))
+//.fillet(2,(e)=>e.inDirection("Y"))
+.fillet(2,(e)=>e.atAngleWith("X",45))
+//.fillet(1,(e)=>e.inBox([0,-10,50],[-40,10,60]))
+.rotate(90,[0,0,0],[0,1,0])
+
+return [{shape:baseBlock, color: "steelblue"}]
+}
+```
+
+## D.3 Plunge watering can
+
+<img width="539" alt="plunge-v6" src="https://user-images.githubusercontent.com/38007983/174858404-ee5f39ba-4d5c-4db0-8d36-e536db95e295.png">
+
+I created this "Plunge" water carafe for plants designed by Robert Bronwasser (see https://www.robertbronwasser.com/project/spring/) in Replicad. It is not an exact copy but demonstrates the capabilities and partly also the limitations of the library. The model consists of three main parts which I called the "body", the "filler" and the "spout". The cone-like body is created as a body of revolution. The filler is built as a loft between three wires, where the middle wire coincides with the top of the body. The spout is a small cylinder at an angle. The shapes are combined in a boolean fuse operation and then filleted. I tried to create a hollow shape by identifying the filler opening and the spout opening, but I could not get that to work. So in the end I created a shell by removing only the opening of the spout. The filler was then opened using a "cutter". 
+
+The code and some remarks regarding kernel errors are shown below"
+
+
+```` javascript
+ // Model of the Plunge watering carafe designed by Robert Bronwasser
+
+function main({
+                Sketcher,
+                sketchCircle,
+                sketchFaceOffset,
+                makeCylinder,
+                sketchRectangle,
+                FaceFinder,
+            })
+{
+
+// side profile of the bottom of the carafe
+let p0 = [0,0]
+let p1 = [20,0]
+let p2 = [30,5]
+let p3 = [30,8]
+let p4 = [8,100]   // radius of the top at 100 mm is 8 mm
+let p5 = [0,100]
+
+let sideview = new Sketcher("XZ")
+.lineTo(p1)
+.lineTo(p2)
+.lineTo(p3)
+.lineTo(p4)
+.lineTo(p5)
+.close()
+
+// sketch is created on XZ plane, revolve is per default around z-axis
+let body = sideview.revolve()
+
+// create cross sections of the filler for the carafe
+//          used a workaround to rotate and translate the sketch to the required position
+let fillHole = sketchCircle(12).face().rotate(-20,[0,0,0],[0,1,0]).translate([-35,0,135])
+fillHole = sketchFaceOffset(fillHole,0);
+let topBody = sketchCircle(8).face().translate([0,0,100]);   // radius 8 at 100 mm 
+topBody = sketchFaceOffset(topBody,0); 
+let fillBottom = sketchCircle(9).face().rotate(20,[0,0,0],[0,1,0]).translate([0,0,80]); 
+fillBottom = sketchFaceOffset(fillBottom,0); 
+
+// filler shape is created as a loft between the three wires
+let filler    = fillHole.loftWith([topBody,fillBottom],{ruled: false});
+
+// create spout, a cylinder with radius 5, length "lengthSpout"
+let angleSpout = 45
+let lengthSpout = 70
+let spout = makeCylinder(5,lengthSpout,[0,0,0],[0,0,1]).rotate(angleSpout,[0,0,0],[0,1,0]).translate([0,0,100])
+
+// // union the main body with the filler and fillet the junction with radius 30
+let plunge = body.fuse(filler);
+plunge = plunge.fillet(30,(e)=>e.inPlane("XY",100)) 
+
+// union the shape with the sprout and fillet the junction with radius 10
+plunge = plunge.fuse(spout).fillet(10,(e)=>e.inBox([20,20,100],[-20,-20,120]));
+
+// Create a shell 
+let pointFiller = [-35,0,135]
+let spoutOpening = []
+spoutOpening[0] = Math.cos(angleSpout*Math.PI/180)*lengthSpout
+spoutOpening[1] = 0
+spoutOpening[2] = 100 + Math.sin(angleSpout*Math.PI/180)*lengthSpout
+
+const orifices = new FaceFinder().either([
+    (f) => f.containsPoint(pointFiller),
+    (f) => f.containsPoint(spoutOpening)]);
+
+// plunge = plunge.shell(-0.5,(f)=>f.inBox([20,20,130],[[-20,-20,155]])); // Kernel Error
+// plunge = plunge.shell(-0.5,(f)=>f.containsPoint(pointFiller)); // works!
+// plunge = plunge.shell(-0.5,orifices); // Kernel Error
+plunge = plunge.shell(-1,(f)=>f.containsPoint(spoutOpening)); // works!
+
+// create cutter boxes 
+//      approach to open up another face by subtracting a box from the shape
+let cutterFiller = sketchRectangle(40,30).extrude(20).rotate(-20,[0,0,0],[0,1,0]).translate([-30,0,135])
+// let cutterSpout = sketchRectangle(40,30).extrude(20).rotate(10,[0,0,0],[0,1,0]).translate([48,0,145])
+
+plunge = plunge.cut(cutterFiller)
+// plunge = plunge.cut(cutterSpout)  // resulted in Kernel error without the shell command
+
+// let plungeInner = makeOffset(plunge,-1)  // resulted in Kernel error
+// let hollowPlunge = plunge.cut(plungeInner)  // not possible as makeOffset failed
+
+let shapeArray = [
+{shape: plunge, name: "plunge", color:"steelblue"}, 
+// {shape: fillHole, color:"black"},   // note that after the loft these sketches are deleted? 
+// {shape: topBody, color:"black"},
+// {shape: fillBottom, color: "black"},
+// {shape: filler, color: "yellow"},
+// {shape: sprout, color: "blue"},
+// {shape: cutterFiller},
+// {shape:cutterSpout},
+// {shape: test}
+]
+
+return shapeArray
+}
+
+````
+
+
+<img width="337" alt="plunge_parts_2,png" src="https://user-images.githubusercontent.com/38007983/175698315-75023470-fa37-4d2c-853d-b06dadee22d1.png">
+
+Using the new option to display a part with opacity I created this image that illustrates some parts that were used to construct the final shape. This option can be very useful to understand how parts are overlapping and why a boolean operation between the shapes could fail. The code above was adapted like this: 
+
+```` javascript 
+let shapeArray = [
+//{shape: plunge, name: "plunge", color:"steelblue", opacity: 0.5}, 
+// {shape: fillHole, color:"black"},   // note that after the loft these sketches are deleted? 
+// {shape: topBody, color:"black"},
+// {shape: fillBottom, color: "black"},
+{shape: body, color: "orange",opacity:0.5},
+{shape: filler, color: "red"},
+{shape: spout, color: "blue"},
+{shape: cutterFiller, color: "green", opacity: 0.5},
+// {shape:cutterSpout},
+// {shape: test}
+]
+````
+## D.4 Slotted lever
+
+This slotted lever was created using the design from Solidworks Model Mania, https://blogs.solidworks.com/tech/wp-content/uploads/sites/4/Model-Mania-2008-Phase-1.jpg.  
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/d1bb8b31-f6dd-4b1d-9bfd-d51d0de9765f)
+
+I used an intersection of drawings to create the circular slot. The slot is based on an intersection between to circles and a circle-segment. The keyway for the main axle, called `axleHoleShape` is created by fusing two drawings. The shape is missing some fillets as OpenCascade was not able to create these without error. The code still contains two lines for fillets. By uncommenting one of the lines you can check the result, adding both fillets at the same time results in a kernel error.  
+
+``` javascript
+const { draw, drawCircle, drawRectangle} = replicad;
+
+const main = () => {
+
+// dimensions of slotted lever
+let axleHoleRadius = 22/2;
+let axleRadius = 35/2;
+let keySlotHeight = 6;
+let keySlotWidth  = 2.50;  
+let axleWidth = 30;
+let dist = 100;
+let slotOuterRadius = 12
+let slotAngle = 30/180*Math.PI
+let dh = axleRadius - slotOuterRadius
+let minAngle = Math.asin(-dh/dist);
+let maxAngle = minAngle + slotAngle;
+let startPoint = [Math.cos(minAngle)*(dist+slotOuterRadius),Math.sin(minAngle)*(dist+slotOuterRadius)]
+let endPoint = [Math.cos(maxAngle)*(dist+slotOuterRadius),Math.sin(maxAngle)*(dist+slotOuterRadius)]
+let startPointCircle = [Math.cos(minAngle)*(dist),Math.sin(minAngle)*(dist)]
+let endPointCircle = [Math.cos(maxAngle)*(dist),Math.sin(maxAngle)*(dist)]
+
+let axle = drawCircle(axleRadius)
+.sketchOnPlane("XZ").extrude(axleWidth);
+
+let plate = draw()
+.movePointerTo([0,-axleRadius+6])
+.lineTo([0,-axleRadius])
+.lineTo([100,-axleRadius])
+.lineTo([90,-axleRadius+6])
+.lineTo([38,-axleRadius+6])
+.tangentArc(-5,30)
+.tangentArc(50,28)
+.polarLineTo([100,33.5])
+.ellipseTo([0,axleRadius],175,175)
+.lineTo([0,axleRadius-6])
+.ellipseTo([0,-axleRadius+6],11,11)
+.close().sketchOnPlane("XZ",3).extrude(14)
+
+let slotOuter = drawCircle(dist+slotOuterRadius)
+let slotInner = drawCircle(dist-slotOuterRadius)
+let segment = draw().lineTo(startPoint).line(0,50).lineTo(endPoint).close()
+let slotRing = slotOuter.cut(slotInner)  
+let slotSegment = slotRing.intersect(segment)
+let slotRoundStart = drawCircle(slotOuterRadius).translate(startPointCircle)
+let slotRoundEnd = drawCircle(slotOuterRadius).translate(endPointCircle)
+slotSegment = slotSegment.fuse(slotRoundStart)
+slotSegment = slotSegment.fuse(slotRoundEnd)
+let slotSegmentInner = slotSegment.offset(-6)
+let slotSegmentOuter = slotSegment.cut(slotSegmentInner).sketchOnPlane("XZ",2).extrude(16)
+
+let axleHole = drawCircle(axleHoleRadius)
+let keySlot  = drawRectangle(2*keySlotWidth,keySlotHeight)
+.translate(-axleHoleRadius,0)
+let axleHoleShape = axleHole.fuse(keySlot).sketchOnPlane("XZ",-10)
+let axleCutter = axleHoleShape.extrude(30+20)
+axle = axle.cut(axleCutter)
+
+axle = axle.fuse(slotSegmentOuter)
+axle = axle.fuse(plate).fillet(0.8,(e)=>e.inPlane("XZ",2))
+axle = axle.fillet(0.8,(e)=>e.inPlane("XZ",2+16))
+//axle = axle.fillet(1,e=>e.containsPoint([0,-17,17.5]))
+//axle = axle.fillet(1,e=>e.containsPoint([0,3,17.5]))
+
+return [
+//{shape: axleCutter, color: "silver", opacity: 0.6},
+{shape: axle, color: "steelblue"}
+];
+};
+```
+
+
+
+## D.5 Holder for GPS receiver
+
+After almost losing my GNS  receiver, I decided to design a simple holder to hang the receiver on a lanyard. 
+
+<img width="690" alt="image" src="https://github.com/sgenoud/replicad/assets/38007983/011d9314-ed00-4d82-a30d-57a29113cd21">
+
+The code is: 
+
+``` javascript
+
+const defaultParams = {             
+    // dimensions of GNS3000 GPS receiver
+    gnsLength:     79.25,
+    gnsWidth:      45.25,
+    gnsHeight:      11.4,
+    fit:            1.0,  // tolerance to fit receiver in holder
+    thickness:      2.0,  // thickness of holder around receiver
+    portionTop:     0.8, // height of holder compared to height of receiver, max 0.87    
+    portionSide:    0.85,  // percentage of side cutout compared to length
+    assimSide:      0    // asymmetry of side cutout (and increase in length)
+    }
+
+const r = replicad
+
+function main(
+   {  },   // functions used in main, can be empty if r.function notation is used
+   { gnsLength, gnsWidth, gnsHeight, fit, 
+   thickness, portionTop, portionSide,assimSide} )  // parameters to adjust the model
+
+  { 
+      let length = gnsLength + fit + assimSide;
+      let width  = gnsWidth + fit;
+      let height = gnsHeight + fit;
+      let radius = gnsHeight/2;
+
+    // create shape of GNS3000 receiver  
+    let receiverBody = r.makeBaseBox(length,width,height)
+    .fillet(radius,(e)=>e.inDirection("X"));
+    
+    // create holder by adding thickness to the shape of the GNS receiver
+    let holder = r.makeBaseBox(length+2*thickness,width+2*thickness,height+2*thickness)
+    .fillet(radius+thickness,(e)=>e.inDirection("X"))
+    .translate(0,0,-thickness)
+      
+    // number of shapes to create cut-outs in the holder  
+    let cutterTop = r.makeBaseBox(length+4*thickness, width+4*thickness, height)
+    .translate(0,0,portionTop*height)
+    let cutterSide= r.makeBaseBox(length*portionSide, width+4*thickness, height)
+    .translate(assimSide,0,4)
+    let cutterBottom = r.makeBaseBox(length,width*0.8,height)
+    .fillet(3,(e)=>e.inDirection("X"))
+    .translate(length/2,0,2.0)
+
+    // create two holes for a lanyard
+    let cylLength = thickness*10  // length of drill for lanyard holes
+    let cylRad    = 2             // radius of drill for lanyard holes 
+    let holeDist = 7             // distance between lanyard holes
+    holeDist = holeDist/2        // half distance for symmetrical holes
+    let cutterLanyardL = r.makeCylinder(cylRad,cylLength,[-length/2-cylLength/2,holeDist,5],[1,0,0])
+    let cutterLanyardR = r.makeCylinder(cylRad,cylLength,[-length/2-cylLength/2,-holeDist,5],[1,0,0])
+    let cutterLanyard = r.makeCompound([cutterLanyardL,cutterLanyardR])
+
+    
+    holder = holder.cut(receiverBody)
+    holder = holder.cut(cutterTop)
+    holder = holder.cut(cutterSide)
+    holder = holder.cut(cutterBottom)
+    holder = holder.cut(cutterLanyard)
+    holder = holder.fillet(2.5,(e)=>e.inBox([length/2-5,50,3],[-length/2+5,-50,3+height]).inDirection("Y"))
+    holder = holder.fillet(0.5)
+    holder = holder.translate(0,0,thickness)
+
+    let shapeArray = [
+        {shape: receiverBody, name:"receiver", color:"grey" },
+        {shape: cutterTop, name:"cutterTop", color: "green" , opacity: 0.5},
+        {shape: cutterSide, name:"cutterSide", color: "green", opacity:0.5},
+        {shape: cutterBottom, name:"cutterBottom", color: "green", opacity:0.5},
+        {shape: cutterLanyard, name:"cutterLanyard", color: "green", opacity:0.5},
+        {shape: holder, name:"holder", opacity: 1.0},
+    ]   
+
+    return  shapeArray
+   }
+
+```
+
+I tried the model earlier in CascadeStudio as I am a little bit more familiar with that environment. 
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/dafaa572-68c3-493c-bed1-9732fcbb10dc)
+
+As I struggled with creating nice rounded edges on the top of the holder, I took the opportunity to remodel the part in Replicad. Although initially I had more success, selecting edges in Replicad was also difficult. I used the  ```inBox``` edge selection together with the ```inDirection``` statement for the edges on the side. At the end I rounded all edges with a small radius. 
+However, I wonder how in Replicad a selection of just the outer edge would work. See the example in CascadeStudio  below: 
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/71e7d709-83dd-4041-b1bb-1e8f20f53928)
+
+The new WorkBench supports the display of edge identifiers, but the ```inList``` does not seem to work for rounding edges. I still have to experiment whether the ```containsPoint``` would work. 
+
+<img width="540" alt="image" src="https://github.com/sgenoud/replicad/assets/38007983/899e9b08-81fe-4a9d-adc8-62614d46b426">
+
+Here is a second model for a holder for the GPS receiver. The first model required some force to click the receiver into the holder. In this second version the idea is that the receiver can slide into the holder from the top. I removed the top part from the holder so that the holder can be printed on a 3D printer without any supports. Furthermore having an unobstructed topside might aid the reception of the GPS signal. 
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/6df8aca1-b8a1-4207-a4ec-d2f9721462c5)
+
+The code is listed below. Note that I experimented with several `Edgefinders` to create fillets. I used `inDirection`, `inPlane`, `containsPoint`, which all seem to work fine. The option `containsPoint` only works if the location of a point on the edge is known very accurately. Just using the coordinates displayed in the workbench upon highlighting a specific edge does not always work. The better approach is to pick a point that can be derived directly from the dimensions entered by the user. 
+
+``` javascript
+
+
+const r = replicad
+
+const main = () => {
+
+  let lx = 45.25    // width of gns receiver
+  let ly = 79.25;   // length of gns receiver
+  let lz = 11.4;    // thickness of gns receiver
+  let lt = 0.5 ;    // tolerance for fit around the receiver    
+  let th = 2   ;    // thickness of holder around the receiver
+  
+  let wholder = 20  ;    // width of lanyard holder
+  let yholder = 10  ;    // amount that holder sticks out of body
+  let rlanhol = 2   ;    // radius of lanyard hole
+  let ycut   = 0.6  ; // portion of side length to be cut
+  let rlandist = 7  ; // distance between two holes for lanyard, set to 0 for single hole  
+
+  // add tolerances to the dimensions of object to be held
+  lx = lx + lt; 
+  ly = ly + lt;
+  lz = lz + lt; 
+
+  // shape of GNS receiver
+  let receiver = r.makeBaseBox(lx,ly,lz)
+  .fillet(((lz-lt)/2),(e)=>e.inDirection("Y"))
+  .translate([0,0,th])
+
+  // shape of object to be held, length increased to cut upper part
+  let hollow = r.makeBaseBox(lx,ly+2*th,lz)
+  .fillet(((lz-lt)/2),(e)=>e.inDirection("Y"))
+  .translate([0,th,th])
+
+  // shape of holder
+  let shape = r.makeBaseBox(lx+2*th,ly+2*th,lz+2*th)
+  .fillet((lz+2*th-lt)/2,(e)=>e.inDirection("Y"))
+
+  let lanyardholder = r.makeBaseBox(wholder,ly+(2*th),th).translate([0,yholder,0])
+  shape = shape.fuse(lanyardholder)
+  
+  // define two objects to cut away parts of the holder
+  let cutter = r.makeBaseBox(lx*1.2,ly*ycut,lz*2).translate([0,0,2*th])
+  cutter = cutter.fillet(5,(e)=>e.inDirection("X"))
+  let cutterTop = r.makeBaseBox(lx*1.2,ly*1.2,lz).translate([0,0,(lz+2*th)*0.87])
+
+  // create hollow holder with cutout on side
+  let shape1 = shape.cut(hollow)
+  let shapeUnrounded = shape1.cut(cutter)
+
+  // now round the outer edge of the cutout
+  // do this first as in this state you can select a complete loop with one point
+  let shapeRounded = shapeUnrounded
+  .fillet(1.0,(e)=>e.containsPoint([0, ly*ycut/2 , lz+2*th]))
+
+  // to round the holder for the lanyard we combine two finders 
+  // selecting first the edges in the z direction and the out of 
+  // these only select the ones at the proper distance
+  shapeRounded = shapeRounded.fillet(0.8*wholder/2,(e)=>e.inDirection("Z").inPlane("XZ",-(((ly+2*th)/2)+yholder)))
+ 
+  let lanyardCutterL = r.makeCylinder(rlanhol,th*4,[rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
+  let lanyardCutterR = r.makeCylinder(rlanhol,th*4,[-rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
+  shapeRounded = shapeRounded.cut(lanyardCutterL)
+  shapeRounded = shapeRounded.cut(lanyardCutterR)
+
+  // now cut the top part of the holder 
+  // as this overhang is difficult for the 3D printer,
+  // then  round all remaining edges with a smaller radius
+  shapeRounded = shapeRounded.cut(cutterTop).fillet(0.6)
+
+  let shapeArray = 
+  [ 
+  {shape: receiver, name: "receiver", color: "dimgrey", opacity: 0.8},   
+  {shape: shapeRounded, name: "holder", color: "steelblue", opacity: 1.0},
+  ]
+    
+return shapeArray
+  }
+```
+
+As I wanted to create a honeycomb pattern in my model for a GPS holder, I tried different approaches: 
+* using a modifier in PrusaSlicer
+* using the blingmything app
+* using the library presented above
+
+The modifier approach worked fine but did not allow me to achieve a nice symmetrical pattern. Furthermore it allowed only limited control over the geometry of the pattern. The pattern just replicates what would otherwise be the fill pattern for the 3D print. 
+The app at blingmything creates a nice symmetrical pattern and also allows to adjust the dimensions of the pattern. But it works on complete faces. The library presented above has the same drawback. 
+As I was not able to figure out how I could modify the library, I went the hard way:  
+
+![image](https://github.com/sgenoud/replicad/assets/38007983/f3d35f28-4895-4c06-89d2-8d1e7220c5f7)
+
+This model is created by using a hexagonal column to create a hole, each time intersecting this column with a retangular volume before subtracing it from the shape. The result is as I wanted, but it takes some time to calculate. Using the method of the library the result appears much faster, so there is probably a way to combine the shapes first and then subtracting it in a single operation. 
+
+The code to the shape above is: 
+
+``` javascript
+// Experiment to create a holder for GPS Receiver
+// added code to create honeycomb pattern 
+// within a rectangular shape
+
+const r = replicad
+
+const main = () => {
+
+  // Dimensions of the GPS receiver
+  let lx = 45.25;      // width of gns receiver
+  let ly = 79.25;      // length of gns receiver
+  let lz = 11.4;       // thickness of gns receiver
+  let lt = 0.5 ;       // tolerance for fit around the receiver    
+  
+  let th = 2   ;       // thickness of holder around the receiver
+  let wholder = 20  ;    // width of lanyard holder
+  let yholder = 10  ;    // amount that holder sticks out of body
+
+  let rlanhol = 2   ;    // radius of lanyard hole
+  let ycut    = 0.6  ; // portion of side length to be cut
+
+  let rlandist = 0  ; // distance between two holes for lanyard, set to 0 for single hole  
+  
+  // code to create a hexagon face 
+  function Hexagon(size)
+  { 
+    let sketchHexagon 
+    for(let i = 0 ; i <= 5 ; i += 1)
+    {
+        const angle = i * 2 * Math.PI / 6
+        const xvalue = size * Math.cos(angle);
+        const yvalue = size * Math.sin(angle);
+        const point = [xvalue,yvalue];
+
+        if (i === 0){
+            sketchHexagon = new r.Sketcher("XY",-1).movePointerTo(point)
+        }
+        else {
+            sketchHexagon.lineTo(point)
+        }    
+    }
+    return sketchHexagon.close()
+    }
+
+    // code to create a hexagonal column, adding height to hexagon face
+    function hexColumn(size,height)
+    {
+      return Hexagon(size).extrude(height);
+    }
+
+  // add tolerances to the dimensions of object to be held
+  lx = lx + lt; 
+  ly = ly + lt;
+  lz = lz + lt; 
+
+  // shape of GNS receiver
+  let receiver = r.makeBaseBox(lx,ly,lz)
+  .fillet(((lz-lt)/2),(e)=>e.inDirection("Y"))
+  .translate([0,0,th])
+
+  // shape of object to be held, length increased to cut upper part
+  let hollow = r.makeBaseBox(lx,ly+2*th,lz)
+  .fillet(((lz-lt)/2),(e)=>e.inDirection("Y"))
+  .translate([0,th,th])
+
+  // shape of holder, selected only top edges for filleting
+  // so that the bottom is flat, which is better for 3D printing without supports
+  let shape = r.makeBaseBox(lx+2*th,ly+2*th,lz+2*th)
+  .fillet((lz+2*th-lt)/2,(e)=>e.inDirection("Y").inPlane("XY",lz+2*th))
+
+  // create a lip on the holder to attach it to a lanyard
+  let lanyardholder = r.makeBaseBox(wholder,ly+(2*th),th).translate([0,yholder,0])
+  shape = shape.fuse(lanyardholder)
+  
+  // define two objects to cut away parts of the holder
+  let cutter = r.makeBaseBox(lx*1.2,ly*ycut,lz*2).translate([0,0,2*th])
+  cutter = cutter.fillet(5,(e)=>e.inDirection("X"))
+  let cutterTop = r.makeBaseBox(lx*1.2,ly*1.2,lz).translate([0,0,(lz+2*th)*0.87])
+
+  // create hollow holder with cutout on side
+  let shape1 = shape.cut(hollow)
+  let shapeUnrounded = shape1.cut(cutter)
+
+  // now round the outer edge of the cutout
+  // do this first as in this state you can select a complete loop with one point
+  let shapeRounded = shapeUnrounded
+  .fillet(1.0,(e)=>e.containsPoint([0, ly*ycut/2 , lz+2*th]))
+
+  // to round the lip for the lanyard we combine two finders 
+  // selecting first the edges in the z direction,  out of 
+  // these only select the ones at the proper distance
+  shapeRounded = shapeRounded.fillet(8,(e)=>e.inDirection("Z").inPlane("XZ",-(((ly+2*th)/2)+yholder)))
+ 
+  // punch two holes in the lip, with distance rlanhol 0 it becomes one hole
+  let lanyardCutterL = r.makeCylinder(rlanhol,th*4,[rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
+  let lanyardCutterR = r.makeCylinder(rlanhol,th*4,[-rlandist/2,ly/2+yholder/2+th,-2*th],[0,0,1])
+  shapeRounded = shapeRounded.cut(lanyardCutterL)
+  shapeRounded = shapeRounded.cut(lanyardCutterR)
+
+  // now cut the top part of the holder 
+  // as a closed shape is difficult for the 3D printer,
+  // then  round all remaining edges with a smaller radius
+  // used a chamfer(0.4) instead of fillet(0.6)
+  shapeRounded = shapeRounded.cut(cutterTop).fillet(0.6)
+
+  // dimensions of honeycomb grid 
+  let hc_width  = 35;
+  let hc_length = 65;
+  let hc_depth  = 10;  
+  // note that hexagons are defined at plane XY, -1
+
+  // number of rows and columns from center of rectangle 
+  let rowNumber = 5;
+  let colNumber = 2;
+  // cellsize and wallthickness of honeycomb 
+  let wallThickness = 1;
+  let cellSize = 5;
+    
+  let deg30 = Math.PI / 6
+  let delta_x = (1+Math.sin(deg30)) * cellSize + wallThickness*Math.cos(deg30)
+  let delta_y = 0.5*wallThickness + Math.cos(deg30)*cellSize
+
+ 
+  let point = [];
+  let cutColumn;
+  
+  for(let rowCount = 1 ; rowCount <= rowNumber; rowCount += 1)
+    {
+      for (let colCount = 1 ;  colCount <= colNumber ; colCount += 1)
+          {
+          // two cells are defined and then replicated in each quadrant 
+          // around the center of the grid, so 8 holes are defined each time 
+          // This way the grid is always nicely symmetrical. 
+          point[1] = [(colCount-1) * 2 * delta_x,(rowCount-1) * delta_y * 2 ,0];
+          point[2] = [-(colCount-1) * 2 * delta_x,(rowCount-1) * delta_y * 2 ,0];
+          point[3]= [(colCount-1) * 2 * delta_x,-(rowCount-1) * delta_y * 2 ,0];
+          point[4] = [-(colCount-1) * 2 * delta_x,-(rowCount-1) * delta_y * 2 ,0];
+          point[5] = [(((colCount-1)*2)+1) * delta_x, (rowCount-1)*delta_y*2+delta_y,0];  
+          point[6] = [(((colCount-1)*2)+1) * -delta_x, (rowCount-1)*delta_y*2+delta_y,0];
+          point[7] = [(((colCount-1)*2)+1) * delta_x, -(rowCount-1)*delta_y*2+delta_y,0];
+          point[8] = [(((colCount-1)*2)+1) * -delta_x, -(rowCount-1)*delta_y*2+delta_y,0];
+          for (let j=1; j<=8; j+=1)
+            { 
+              cutColumn = hexColumn(cellSize,5*th).translate(point[j]);
+              // the defined column is intersected with a box to limit the grid 
+              // within a rectangular shape
+              cutColumn = cutColumn.intersect(r.makeBaseBox(hc_width,hc_length,hc_depth)) 
+              shapeRounded = shapeRounded.cut(cutColumn);
+            }
+          }
+    }
+  
+  let shapeArray = 
+  [ 
+  {shape: receiver, name: "receiver", color: "dimgrey", opacity: 0.8},   
+  {shape: shapeRounded, name: "holder", color: "steelblue", opacity: 1.0}
+  ]
+    
+return shapeArray
+  
+}
+
+```
+
