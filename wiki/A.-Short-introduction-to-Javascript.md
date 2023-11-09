@@ -13,8 +13,8 @@ https://www.w3schools.com/js/default.asp
 ## Comments 
 Comments in the code are used to add clarifications or to block execution of a particular part of the code. There are two types of comments, namely line comments identified with `//` and block (multiline) comments that are enclosed in `/*` and `*/`. 
 
-[source, javascript]
-----
+ 
+``` javascript 
 // This is a single line comment
 let speed_ms  = 20 ; // speed in meters per second
 let speed_kmh = speed_ms * 60 * 60 / 1000;  
@@ -22,27 +22,27 @@ let speed_kmh = speed_ms * 60 * 60 / 1000;
 /* The code above can be
   used to calculate the speed in km/hr from 
   a speed in meters per second */ 
-----  
+```  
 
 ## Variables
 Javascript variables may be considered to be containers for data values. A variable can be declared with the keyword `var`, `let` or `const`. The keyword `var` was used before 2015 and is most widely supported. The more modern version is to use `let` for variables with a restricted scope - so for example if they are declared inside a function they are only available within that function - and the keyword `const` to define a variable that will never be reassigned. For example, the conversion factor between feet and meters can be declared as a `const` as this will never change, whereas the length of a car should be defined using `let`.  
 
-[source, javascript]
-----
+ 
+``` javascript
 let rateHour = 30 ;
 let hoursWeek = 36 ;
 let rateWeek   = rateHour * hoursWeek
 console.log(rateWeek)
 console.log(typeof rateWeek)
-----
+```
 
 Once the variable is declared it can be used without the keyword. Note that opposed to many other programming languages it is not necessary to determine the type of variable up front. The declaration of the type of the variable is performed implicit by assigning a value. The `typeof` function can be used to determine the type of a variable. 
 
-=== Arrays
+## Arrays
 An array is a special type of variable that consists of a list of values that can be identified by a name and an index value. 
 
-[source, javascript]
-----
+ 
+``` javascript
 let fruit = [];
 fruit[0] = "Cherry"
 fruit[1] = "Apple"
@@ -51,17 +51,17 @@ fruit[3] = "Banana"
 // or use the short form 
 
 const fruit = new Array("Cherry", "Apple", "Banana");
-----
+```
 
 The content of the variable can be anything, so also another array. The following array defines points that can be used in CascadeStudio. Each point is a small array containing the x,y,z coordinate of each point. 
 
-[source, javascript]
-----
+ 
+``` javascript
 const points = [];
 points[0]= [0,0,0];
 points[1]= [0,5,0];
 points[2]= [5,5,0];
-----
+```
 
 
 ## Operations
@@ -83,25 +83,23 @@ Javascript uses the standard precedence for these operators (see order in table 
 More complicated mathematical operators can be called by using the Math library. This library contains many functions such as sqrt(), pow(), exp(), log(), sin(), cos(), tan(), asin(), acos(), atan(), abs(), floor(), ceil() and many more. The functions are called using the library name first and then appending the function call, so for example `Math.sqrt()`. It also contains constants such as pi (Math.PI) and Euler's number e (Math.E). 
 
 Like the c programming language Javascript recognizes the "modify in place" notation for operations where an operator is applied to a variable and the result is stored in the original variable. So for example 
-
-[source, javascript]
-----
+ 
+``` javascript
 let n = 2;
 n = n + 5;
 n = n * 2;
 i = i+1
-----
+```
 
 can also be written as: 
-
-[source, javascript]
-----
+ 
+``` javascript
 let n = 2;
 n += 5; 	// now n = 7 (same as n = n + 5)
 n *= 2; 	// now n = 14 (same as n = n * 2)
 alert( n ); 	// 14
 i++
-----
+```
 
 Comparisons use the same notation as other programming languages: 
 
@@ -113,13 +111,12 @@ Comparisons use the same notation as other programming languages:
 | Not equal 			                | 	`a != b	`
 | quality without type conversion  | 	'a === b'
 
-
 Note that the equality is tested with a==b, a single equal sign is used for an assignment of a value to a variable. 
 
 [#loops]
-=== Loops and conditional statements
+## Loops and conditional statements
 
-==== Loops
+### Loops
 Javascript supports different types of loops and iterations. 
 
 | Type of loop              | Purpose
@@ -134,8 +131,8 @@ Javascript allows very complex loop statements using additional features such as
 
 The for loop is used like this: 
 
-[source, javascript]
-----
+ 
+``` javascript
 // for (let i=0 ; i<=n ; i++){   }
 // if you want another increment use something like i+= 4 instead of i++ 
 
@@ -143,31 +140,28 @@ for (let h = 1; h <= 720; h++)
 {
     calculatedGherkin.LineTo( [ equationGherkin(h/4) , h/4])
 }
-----
+```
 
 Javascript also offers a `.map` method to quickly iterate over all elements of an array. The parameter of the `.map` is the name of a function that is to be applied to each item of the array. The following example also shows a shorthand version to define a function in a single line (see also <<#function_section>>). 
 
-[source,javascript]
-----
+``` javascript
 let numbers = [4, 9, 16, 25];
 let Square = item => item**2
 let x = numbers.map(Math.sqrt)
 let z = numbers.map(Square)
 console.log(x)  // [2,3,4,5]
 console.log(z)  // [16,81,256,625]
----- 
+``` 
 
 The `.map` method looks very similar to the `.forEach` method. The difference however is that the `.forEach` method changes the array and performs a function once for every element of an array, even of this element has no value. 
 
-[source,javascript]
-----
+``` javascript
 numbers.forEach(myFunction);
-----
+```
 
 A more complete example of the forEach method is: 
 
-[source,javascript]
-----
+``` javascript
 const words = ['hello', 'bird', 'table', 'football', 'pipe', 'code'];
 const capWords = words.forEach(capitalize);
  
@@ -177,11 +171,10 @@ function capitalize(word, index, arr) {
 console.log(words);
 // Expected output:
 // ["Hello", "Bird", "Table", "Football", "Pipe", "Code"]
-----
+```
 or with values
 
-[source,javascript]
-----
+``` javascript
 function func() {
         
         // Original array
@@ -195,27 +188,27 @@ function func() {
         document.write(copy);
     }
     func();
-----
+```
 
 ### Conditional statements
 The basic shape of the conditional statement is: 
 
-[source, javascript]
-----
+ 
+``` javascript
 if (condition) {
   	statements when condition is true;
 } else {
   	statement when condition is not true;
 }
-----
+```
 
 It is also possible to test different conditions using the `else if (condition)` until the final `else` statement. 
 Conditions can be combined using OR, AND and NOT combinations. These are written as `||` (OR), `&&` (AND) and `!` (NOT, result = !value). 
 
 Another type of conditional statement is the `switch` statement: 
 
-[source, javascript]
-----
+ 
+``` javascript
 switch (expression) {
   case label_1:
     statements_1
@@ -228,7 +221,7 @@ switch (expression) {
     statements_def
     [break;]
 }
----- 
+``` 
 
 The switch statement is more useful to react on user input. For CascadeStudio this statement will not be used often as the interaction with the user is limited. 
 
@@ -236,8 +229,8 @@ The switch statement is more useful to react on user input. For CascadeStudio th
 ## Functions
 A function is a way to perform some operations on inputs and return the result. This is most useful when the operations are complex so that the function can abstract these operations and reduce the effort to write code. 
 
-[source, javascript]
-----
+ 
+``` javascript
 function FahrenheitToCelsius(degFahrenheit) {
   return (5/9) * (degFahrenheit-32);
 }
@@ -246,14 +239,14 @@ let degF = 68.0;
 let degC = FahrenheitToCelsius(degF);
 let conversionText = String(degF) + " degrees Fahrenheit is " + String(degC) + " degrees Celsius";
 console.log(conversionText);
-----
+```
 
 Variables that are declared inside a function are only visible inside the function. Therefore the function can be regarded as a kind of magic box, where you feed in some variables and some behaviour or values are received as output. The calculation that proceeds inside the function need not be visible to the user. 
 
 A shorthand version to declare a function is the socalled arrow function expression. 
 
-[source, javascript]
-----
+ 
+``` javascript
 let Square = item => item**2
 let F2C = f => (5/9) * (f-32)  // shorthand for function FahrenheitToCelsius
 
@@ -261,7 +254,7 @@ let Strange = (x, y) => {
    let delta = 1;
    return delta + x*y;
 }
-----
+```
 
 
 ## Modules
@@ -274,18 +267,16 @@ If you want to use the online version of Replicad it is not possible to load mod
 === Objects
 Javascript can use objects to define data and methods that can be applied to these data. This can look like: 
 
-[source,javascript]
----
+``` javascript
 let car = {type:"Tesla", power:"Electricity", color: white, length:5.1 };
----
+```
 
 The result of this assignment is that: 
 
-[source,javascript]
----
+``` javascript
 car.type = Tesla
 car.length = 5.1
----
+```
 
 We can also assign methods to objects. Methods are functions that describe the behaviour of an object. So for example a method for a car could be start(), charge(), stop(). 
 
