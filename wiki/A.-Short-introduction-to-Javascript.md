@@ -1,4 +1,4 @@
-=== A.1 How to learn to program? 
+## A.1 How to learn to program? 
 
 For this manual it is assumed that the reader has at least some programming experience. If not, then there are plenty of tutorials available on-line to get some experience in programming. It is difficult to give some advice on which programming language should be the first choice when learning to program. The Python programming language is probably a good starting point for many people as this is a relatively simple language that can be used for both small scripts - even as a small calculator inside a console window - and large programs. Python is also used extensively as a scripting language for other software packages. For example for people that are interested in 3D modelling two other interesting programs are Freecad (https://www.freecadweb.org/) and Blender (https://www.blender.org/). Both programs can be extended using Python scripts. When working on MacOS, Python is already pre-installed. Opening a console window and typing "python" or "python3" is sufficient to get a socalled interactive session to run Python scripts. When working on Windows or Linux it is probably necessary to install Python. Go to https://www.python.org/ to find your options for each operating system. 
 
@@ -10,7 +10,7 @@ https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Java
 https://www.w3schools.com/js/default.asp
 
 
-=== Comments 
+## Comments 
 Comments in the code are used to add clarifications or to block execution of a particular part of the code. There are two types of comments, namely line comments identified with `//` and block (multiline) comments that are enclosed in `/*` and `*/`. 
 
 [source, javascript]
@@ -24,7 +24,7 @@ let speed_kmh = speed_ms * 60 * 60 / 1000;
   a speed in meters per second */ 
 ----  
 
-=== Variables
+## Variables
 Javascript variables may be considered to be containers for data values. A variable can be declared with the keyword `var`, `let` or `const`. The keyword `var` was used before 2015 and is most widely supported. The more modern version is to use `let` for variables with a restricted scope - so for example if they are declared inside a function they are only available within that function - and the keyword `const` to define a variable that will never be reassigned. For example, the conversion factor between feet and meters can be declared as a `const` as this will never change, whereas the length of a car should be defined using `let`.  
 
 [source, javascript]
@@ -64,7 +64,7 @@ points[2]= [5,5,0];
 ----
 
 
-=== Operations
+## Operations
 The following basic math operations are supported:
 
 
@@ -197,7 +197,7 @@ function func() {
     func();
 ----
 
-==== Conditional statements
+### Conditional statements
 The basic shape of the conditional statement is: 
 
 [source, javascript]
@@ -233,7 +233,7 @@ switch (expression) {
 The switch statement is more useful to react on user input. For CascadeStudio this statement will not be used often as the interaction with the user is limited. 
 
 [#function_section]
-=== Functions
+## Functions
 A function is a way to perform some operations on inputs and return the result. This is most useful when the operations are complex so that the function can abstract these operations and reduce the effort to write code. 
 
 [source, javascript]
@@ -264,7 +264,7 @@ let Strange = (x, y) => {
 ----
 
 
-=== Modules
+## Modules
 A module is a way to divide your code into large chunks that can be reused. The concept is comparable to that of a library that can be loaded into your code and keeps your scripts small and comprehensive. The concept of modules is relatively new in javascript and became necessary after the size and complexity of the scripts grew. Not all browser implementations of javascript support the same functionality. 
 
 The default way to use modules is to declare these in your HTML file. Functions that are defined in modules have to be imported into your main script to be able to use these. At the same time the function has to be exported from the module. A somewhat simpler way to work with modules in Replicad is to attach your own code to an existing library or module. 
