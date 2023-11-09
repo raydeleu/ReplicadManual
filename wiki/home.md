@@ -20,6 +20,8 @@ This wiki contains a manual how to use the Replicad library to create 3D parts f
 
 [[9. Automate modelling with functions]]
 
+[[10. Import and export]]
+
 [[A. Short introduction to Javascript]]
 
 [[B. Installing Replicad locally]]
