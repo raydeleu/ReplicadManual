@@ -67,16 +67,16 @@ points[2]= [5,5,0];
 === Operations
 The following basic math operations are supported:
 
-[cols= "1,1,1"]
-|===
+
+
 |*Operator*     | *Symbol* 	| *Order*  
-|Addition 	| + 		|  3
-|Subtraction 	| - 		|  3
-|Multiplication | *		|  2
-|Division 	| / 		|  2	
-|Remainder 	| %		|  2
-|Exponentiation | **		|  1
-|===
+|---------------|-----------|----------
+|Addition 	    | + 		    |  3
+|Subtraction 	  | - 		    |  3
+|Multiplication | *		      |  2
+|Division 	    | / 		    |  2	
+|Remainder 	    | %		      |  2
+|Exponentiation | **		    |  1
 
 Javascript uses the standard precedence for these operators (see order in table above). When in doubt use brackets to influence which parts of the equations should be evaluated first. 
 
@@ -105,14 +105,14 @@ i++
 
 Comparisons use the same notation as other programming languages: 
 
-[cols = "1,1"]
-|===
-| Greater/less than		|	`a > b, a < b  `
-| Greater/less than or equals 	|	`a >= b, a <= b `
-| Equals			| 	 `a == b ` 
-| Not equal 			| 	`a != b	`
-| quality without type conversion| 	'a === b'
-|===
+| Comparison                      | Code
+| --------------------------------|----------------------------------------------------|
+| Greater/less than		            |	`a > b, a < b  `
+| Greater/less than or equals 	  |	`a >= b, a <= b `
+| Equals			                    | 	 `a == b ` 
+| Not equal 			                | 	`a != b	`
+| quality without type conversion  | 	'a === b'
+
 
 Note that the equality is tested with a==b, a single equal sign is used for an assignment of a value to a variable. 
 
@@ -122,14 +122,13 @@ Note that the equality is tested with a==b, a single equal sign is used for an a
 ==== Loops
 Javascript supports different types of loops and iterations. 
 
-[cols = "1,1"]
-|===
-| for statement			| iteration over a range of numbers
-| for...in statement		| iteration over all elements in an list or array
-| for...of statement		| iteration over value elements only
-| do...while statement		| iteration until a condition becomes false
-| while statement		| iteration as long as a condition is true
-|===
+| Type of loop              | Purpose
+| --------------------------|----------------------------------------------------|
+| for statement			        | iteration over a range of numbers
+| for...in statement		    | iteration over all elements in an list or array
+| for...of statement		    | iteration over value elements only
+| do...while statement		  | iteration until a condition becomes false
+| while statement		        | iteration as long as a condition is true
 
 Javascript allows very complex loop statements using additional features such as labeled statements, a `break` statement to break out of a loop or labeled loop, and a  `continue` statement to continue a labeled loop. Most of these features will not be needed in CascadeStudio as the input should be very predictable. In almost all cases the for loop will be sufficient. 
 
