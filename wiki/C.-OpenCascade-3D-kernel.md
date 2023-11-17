@@ -22,3 +22,15 @@ Sometimes it is argued that a proper 3D kernel has infinite accuracy as the shap
 After the design the part is often exported to a 3D printer or CNC machine in a socalled STL (stereolithography) model. In the STL format the shape is again represented by small faces. The granularity or resolution of these faces can often be indicated during the export. The smaller the resolution, the longer an export will take and the larger the resulting file will be. If the resolution of the produced file is visible in the end-product is determined both by the resolution of the data used to control the machine that is producing the part (or the mold for a part) and by the manufacturing process. For example, if a CNC (computer numerical control) mill is used to produce a part, the inner radii are often determined by the diameter of the tool that is used to mill the product. The radius will be very smooth as it is produced by a revolving tool (the socalled end-mill). 
 
 If you want to know more on manufacturing techniques, many resources can be found on the internet. At https://www.making.unsw.edu.au/learn/ there are some short tutorials on different manufacturing techniques to produce your own part. 
+
+
+
+
+https://www.youtube.com/watch?v=ie7UCyg_b4Q
+exact representations
+  constructive solid geometry (CSG)
+  boundary representation (bRep)
+inexact representation
+  facetting or polygonal
+  voxel
+
