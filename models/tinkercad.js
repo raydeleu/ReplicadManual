@@ -1,3 +1,6 @@
+// Demonstration of creating standard shapes
+// as available in AutoCad TinkerCad. 
+
 const {draw,drawRectangle,drawCircle,drawText,
 drawRoundedRectangle,
 drawPolysides,
@@ -74,22 +77,31 @@ const icosahedronFaces = (radius) => {
     return makeSolid(faces);
   }
 
+// Actual creation of shapes starts here:   
 let stdCylinder = makeCylinder(bDim/2,hDim,[-45,0],[0,0,1]);
 let stdBox = makeBaseBox(bDim,bDim,hDim).translate([-30,0,0]);
 let stdSphere = makeSphere(bDim/2).translate([-15,0,bDim/2]);
+
 let stdRoof = draw().hLine(bDim).line(-bDim/2,hDim).close()
 .sketchOnPlane("XZ").extrude(bDim).translate([-bDim/2,bDim/2,0])
+
+// the hexagon can also be created with the drawPolysides(length,numCorners) function  
 let stdHex = draw().hLine(bDim/2).polarLine(bDim/2,60)
 .polarLine(bDim/2,120).polarLine(bDim/2,180).polarLine(bDim/2,240)
 .polarLine(bDim/2,300).close().sketchOnPlane("XY").extrude(hDim)
 .translate([1.25*bDim,bDim*Math.cos(60)/2,0])
+
 let stdCone = draw().hLine(bDim/2).line(-bDim/2,hDim).close()
 .sketchOnPlane("XZ").revolve().translate([-45, -bDim*1.5,0])
+
+// piramid is created as a loft  
 let piramidBase=drawRectangle(bDim,bDim).sketchOnPlane("XY")
 let piramidMid=drawRectangle(bDim/2,bDim/2).sketchOnPlane("XY",hDim/2)
 let piramid = piramidBase.loftWith(piramidMid,{endPoint:[0,0,hDim]})
 .translate(-30,-bDim*1.5,0)
 
+// piramid can be approximated with extrusion to a very small endFactor
+// note that endFactor:0 yields a kernel error! 
 let approxPiramid = drawRectangle(bDim,bDim).sketchOnPlane("XY")
 .extrude(hDim,{extrusionProfile:{profile:'linear',endFactor:0.001}})
 .translate(-30,1.5*bDim,0)
@@ -99,16 +111,21 @@ let halfDome = draw().hLine(bDim/2).ellipse(-bDim/2,bDim/2,bDim/2,bDim/2,0,false
 let cheese = draw().hLine(bDim).vLine(hDim).close()
 .sketchOnPlane("XZ").extrude(bDim)
 .translate([-5,-bDim*1,0])
+
+// based on function declared at top of this file  
 let icosahedron = makeIcosahedron(bDim/2)
 .translate([bDim*1.5,-bDim*1.5,bDim/2])
+  
 let squareRing = draw([bDim/2,0]).hLine(-bDim/4).vLine(hDim/2)
 .hLine(bDim/4).close().sketchOnPlane("XZ").revolve()
 .translate([-45,-bDim*3,0])
+
 let halfPipe = draw().hLine(bDim/2)
 .ellipse(-bDim/2,bDim/2,bDim/2,bDim/2,0,false,true)
 .ellipse(-bDim/2,-bDim/2,bDim/2,bDim/2,0,false,true)
 .close().sketchOnPlane("XZ").extrude(bDim)
 .translate([-30,-bDim*2.5,0])
+
 let donut=drawCircle(bDim/6).translate(bDim/2-bDim/6,bDim/8).sketchOnPlane("XZ").revolve()
 .translate([-15,-bDim*3,0])
 let capsule = draw([bDim/2,hDim/2+hDim/4]).vLine(-hDim/4)
@@ -116,12 +133,15 @@ let capsule = draw([bDim/2,hDim/2+hDim/4]).vLine(-hDim/4)
 .ellipse(bDim/2,-bDim/2,bDim/2,bDim/2,0,false,false)
 .close().sketchOnPlane("XZ").revolve()
 .translate([-45,-bDim*4.5,0])
+
 let text = drawText("RD",{fontSize:bDim})
 .sketchOnPlane("XZ").extrude(hDim/2)
 .translate([-30-bDim/2,-bDim*4-bDim/4,0])
+
 let roundedCube=drawRoundedRectangle(bDim,bDim,bDim/8)
 .sketchOnPlane("XY").extrude(hDim)
 .translate([bDim*1.5,-bDim*3,0])
+
 let octPilar = drawPolysides(bDim/2,8)
 .sketchOnPlane("XY").extrude(hDim)
 .translate([0,-bDim*3,0])
@@ -132,12 +152,14 @@ let spinner = draw()
 .close().sketchOnPlane("XZ").revolve()
 .translate([0,-4.5*bDim,0])
 
+// Clover created by boolean fues on 2D drawings
 let clover1=drawCircle(bDim/3).translate(bDim/5,bDim/4)
 let clover2=drawCircle(bDim/3).translate(-bDim/5,bDim/4)
 let clover3=drawCircle(bDim/3).translate(0,-bDim/6)
 let clover=clover1.fuse(clover2).fuse(clover3).sketchOnPlane("XY")
 .extrude(hDim/2).translate(1.5*bDim,-4.5*bDim,0)
 
+// alternative to using makeSphere function
 let makeBall = draw()
 .ellipse(0,bDim,bDim/2,bDim/2,0,false,true)
 .close().sketchOnPlane("XZ").revolve()
@@ -145,7 +167,6 @@ let makeBall = draw()
 
 let parabol = draw().hLine(bDim/2).ellipse(-bDim/2,bDim,bDim/2,bDim,0,false,true).close().sketchOnPlane("XZ").revolve()
 .translate([-15,-bDim*4.5,0])
-
 
 let shapeArray = [
 {shape: stdCylinder, color:"orange"}
@@ -170,9 +191,5 @@ let shapeArray = [
 ,{shape:spinner, color: "fuchsia"}
 ,{shape:makeBall, color: "blue"}
 ,{shape:clover, color: "green"}
-
-
 ]
-
-
 return shapeArray}
