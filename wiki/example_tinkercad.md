@@ -4,7 +4,7 @@ In the program TinkerCad (www.tinkercad.com) you can create 3D models by combini
 
 ![image](https://github.com/raydeleu/ReplicadManual/assets/38007983/9df9f824-8278-409b-979f-3f39d659a04c)
 
-Most of these shapes can be created easily in Replicad using just a combination of a 2D drawing and one of the methods offered to create 3D solids, such as `.extrude()` , `.loftWith()`, `.revolve()`. 
+Most of these shapes can be created easily in Replicad using just a combination of a 2D drawing and one of the methods offered to create 3D solids, such as `.extrude()` , `.loftWith()`, `.revolve()`. For the piramid, three different approaches are demonstrated. The exact solution is to create a loft between two squares and to use the `endPoint` configuration in the `.loftWith()` method. An approximation is to use two copies of the base that are displaced only a fraction (say 0.001 mm). This avoids the need for constructing a second rectangle halfway up the piramid. Another approximation uses the extrusion with an `endFactor`. As indicated in the code, the `endFactor` cannot be zero, as this yields a kernel error. But with a very small `endFactor` of 0.001 it works fine. The result of the two approximations is almost undistinguishable from the exact version, so for standard use such as 3D printing it is an acceptable approximation. 
 
 <img width="822" alt="image" src="https://github.com/raydeleu/ReplicadManual/assets/38007983/07cfa7f4-607a-4c84-8410-e2b679ac322d">
 
@@ -213,4 +213,3 @@ let shapeArray = [
 ,{shape:clover, color: "green"}
 ]
 return shapeArray} ```
-
