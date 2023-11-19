@@ -102,10 +102,18 @@ let piramid = piramidBase.loftWith(piramidMid,{endPoint:[0,0,hDim]})
 
 // piramid can be approximated with extrusion to a very small endFactor
 // note that endFactor:0 yields a kernel error! 
-let approxPiramid = drawRectangle(bDim,bDim).sketchOnPlane("XY")
+let approxPiramidExtrude = drawRectangle(bDim,bDim).sketchOnPlane("XY")
 .extrude(hDim,{extrusionProfile:{profile:'linear',endFactor:0.001}})
 .translate(-30,1.5*bDim,0)
 
+// piramid can be approximated with loft between to drawings that are 
+// very close to each other  
+let piramidBaseDrawing=drawRectangle(bDim,bDim)
+let baseOne = piramidBaseDrawing.clone().sketchOnPlane("XY")
+let baseTwo = piramidBaseDrawing.clone().sketchOnPlane("XY",0.001)  
+let approxPiramidLoft = baseOne.loftWith(baseTwo,{endPoint:[0,0,hDim]})
+.translate(-45,-bDim*1.5,0)  
+ 
 let halfDome = draw().hLine(bDim/2).ellipse(-bDim/2,bDim/2,bDim/2,bDim/2,0,false,true).close().sketchOnPlane("XZ").revolve()
 .translate([-15,-bDim*1.5,0])
 let cheese = draw().hLine(bDim).vLine(hDim).close()
@@ -187,7 +195,8 @@ let shapeArray = [
 ,{shape:text, color: "green"}
 ,{shape:roundedCube, color: "purple"}
 ,{shape:octPilar, color: "orange"}
-,{shape:approxPiramid, color: "yellow"}
+,{shape:approxPiramidExtrude, color: "yellow"}
+,{shape:approxPiramidLoft, color: "yellow"}  
 ,{shape:spinner, color: "fuchsia"}
 ,{shape:makeBall, color: "blue"}
 ,{shape:clover, color: "green"}
