@@ -4,7 +4,7 @@ When you want to use Replicad you can go to the website https://studio.replicad.
 
 Running the Replicad studio as a web application is extremely easy. For this to work you need to use the Chrome web browser that is available at https://www.google.com/chrome/.  Open the website https://studio.replicad.xyz/workbench in Chrome browser and look for the icon in your browser to install the application as a socalled Progressive Web Application (PWA). 
 
-<img src="./images/install_webapp.png" alt="install web application in browser" width="500">
+<img src="https://github.com/raydeleu/ReplicadManual/blob/main/images/install_webapp.png" alt="install web application in browser" width="500">
 
 When you click this icon, a small application is installed on your computer. For MacOs the location is in your home directory in the folder `Applications\Chrome Apps\`. If you want to manage the apps, go to the address `chrome://apps`. Here you see all applications that are installed in the Chrome browser. You can create a shortcut to the app and indicate whether the app should run inside the browser or in a separate window. The last option is enabled by default. If you want to remove the application you can use the same address. 
 
