@@ -16,12 +16,10 @@ Google describes a Progressive Web App as follows:
 
 There is also a warning that not all applications might be fully functional without an internet connection. In case of Replicad it seems to work. 
 
-[NOTE]
-====
-In the version of September 2023 there are some issues noticeable when working for a longer period without internet connection. The editor window of the workbench no longer functions (on Windows OS) and the visualizer no longer reacts automatically upon changes of the source file. Restarting the visualizer is a workaround. 
-====
+> [!NOTE]
+> In the version of September 2023 there are some issues noticeable when working for a longer period without internet connection. The editor window of the workbench no longer functions (on Windows OS) and the visualizer no longer reacts automatically upon changes of the source file. Restarting the visualizer is a workaround.
 
-=== B.2 Install local server
+## B.2 Install local server
 
 Replicad is an open source project that you can download completely from the github website https://github.com/sgenoud/replicad. The application is written in javascript, so it cannot be compiled to an executable directly. Instead you have to take the files and run it as if it were a website. One approach to achieve this is as follows: 
 
@@ -48,8 +46,6 @@ image::/images/npm_start.png[]
 
 When you want to stop the application you can issue ```ctrl```-```c``` in the terminal window or use the shortcut ```q```-key. At first it might seem that you browser window is still working, but as soon as you refresh the page you will receive the message that the website is no longer responding. 
 
-[CAUTION]
-====
-There is a large difference in required file size between the two methods to run replicad locally. When you use the Progressive Web Application in Google Chrome, a small app of about 1.8 Mbyte is added to your file system. When you download the code of Replicad, the complete source code fits in an archive (zip-format) of 6.9 Mbyte. When you extract the directory `studio` this has a size of almost 30 Mbyte. After building the application using `Nodejs` and `npm` the directory has a size of 471 Mbyte!
-====
+> [CAUTION]
+> There is a large difference in required file size between the two methods to run replicad locally. When you use the Progressive Web Application in Google Chrome, a small app of about 1.8 Mbyte is added to your file system. When you download the code of Replicad, the complete source code fits in an archive (zip-format) of 6.9 Mbyte. When you extract the directory `studio` this has a size of almost 30 Mbyte. After building the application using `Nodejs` and `npm` the directory has a size of 471 Mbyte. 
 
