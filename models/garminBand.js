@@ -1,13 +1,9 @@
 const { sketchRoundedRectangle } = replicad;
 
-// File to create a keeper for the watch band of a Garmin watch
-// created for a colleague whose watch band was always sticking out. 
-// 2024-06-22 
-
 function main() 
 {
   // code to describe the shape
-  const bandWidth = 22.5;    // width of watch band, 22 mm for a Garmin ForeRunner or Samsung Smartwatch? 
+  const bandWidth = 22.5;    // width of watch band, 20mm
   const keeperWidth = 6;    // length of the keeper
   const bandThickness = 3.25*2; // thickness of watch band
   const thickness = 1.5 ; // garmin 2.2, fillet 1.5
@@ -17,7 +13,7 @@ function main()
   innerShape = innerShape.extrude(keeperWidth+2);
   let oBw = bandWidth + 2*thickness;
   let oBt = bandThickness + 2*thickness;
-  let outerShape = sketchRoundedRectangle(oBw,oBt,fillet+2)
+  let outerShape = sketchRoundedRectangle(oBw,oBt,fillet+thickness)
   outerShape = outerShape.extrude(keeperWidth)
   outerShape = outerShape.cut(innerShape)
   outerShape = outerShape.fillet(0.5)
@@ -29,4 +25,3 @@ function main()
 
 return outerShape 
 } 
-
