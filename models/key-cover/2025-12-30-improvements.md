@@ -26,7 +26,7 @@ The biggest challenge was to create the outline of the key fob as it has almost 
 
 The source code for the contour looked like this: 
 
-```
+```javascript
 const { draw, 
 makeOffset, 
 makeBaseBox, 
@@ -71,7 +71,7 @@ return [
 
 I created an offset of this contour with the thickness of the wall, i.e. 2mm, then extruded this shape and beveled the edges.  I created to cut-outs, one to hold the key which was a beveled cube and one to create the hole for the key ring. The complete code then looked like this: 
 
-```
+```javascript
 const { draw, 
 makeOffset, 
 makeBaseBox, 
